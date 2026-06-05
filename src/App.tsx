@@ -128,7 +128,7 @@ export default function App() {
           <div className="hidden lg:block">
             <button
               onClick={() => handleScroll("contact")}
-              className="px-5 py-2.5 font-mono text-xs font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:shadow-[0_0_20px_rgba(37,99,235,0.45)] transition-all cursor-pointer border border-white/10"
+              className="btn-cinematic px-5 py-2.5 font-mono text-xs font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl cursor-pointer border border-blue-500/30"
             >
               Hợp tác giáo dục
             </button>
@@ -190,7 +190,7 @@ export default function App() {
               animate={{ opacity: 1, y: 0 }}
               className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-blue-500/20 bg-blue-500/5 mb-6 self-center lg:self-start"
             >
-              <span className="w-2 h-2 rounded-full bg-blue-500 animate-ping" />
+              <span className="w-2 h-2 rounded-full bg-blue-500 neon-dot" />
               <span className="font-mono text-[9px] md:text-xs text-blue-400 font-bold uppercase tracking-widest">
                 ĐO LƯỜNG SƯ PHẠM VÀ LÃNH ĐẠO PHỤC HỒI
               </span>
@@ -223,13 +223,13 @@ export default function App() {
             >
               <button
                 onClick={() => handleScroll("ai-tools")}
-                className="w-full sm:w-auto px-6 py-3.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-slate-450 text-white font-mono font-bold uppercase text-[11px] tracking-wider rounded-xl flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(37,99,235,0.45)] transition-all cursor-pointer border border-white/10"
+                className="btn-cinematic w-full sm:w-auto px-6 py-3.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-700 text-white font-mono font-bold uppercase text-[11px] tracking-wider rounded-xl flex items-center justify-center gap-2 cursor-pointer border border-blue-500/30"
               >
                 Trải nghiệm Trợ lý AI Giáo dục
               </button>
               <button
                 onClick={() => handleScroll("about")}
-                className="w-full sm:w-auto px-6 py-3.5 glass-card border-white/5 text-white hover:text-blue-400 font-mono font-bold uppercase text-[11px] tracking-wider rounded-xl flex items-center justify-center gap-1.5 hover:bg-white/10 transition-all cursor-pointer"
+                className="btn-cinematic w-full sm:w-auto px-6 py-3.5 glass-card border-white/8 text-white hover:text-blue-400 font-mono font-bold uppercase text-[11px] tracking-wider rounded-xl flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 Tiểu sử cá nhân <ArrowRight className="w-3.5 h-3.5" />
               </button>
@@ -261,10 +261,10 @@ export default function App() {
           <div className="lg:col-span-5 flex-col items-center justify-center relative w-full h-full min-h-[500px] flex">
             {/* Holographic Border Outline container representing professional credentials */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, rotate: 1 }}
+              initial={{ opacity: 0, scale: 0.92, rotate: 2 }}
               animate={{ opacity: 1, scale: 1, rotate: -1 }}
-              transition={{ duration: 0.8 }}
-              className="w-full max-w-[370px] glass-card rounded-3xl p-6 border border-white/8 relative overflow-hidden flex flex-col justify-between shadow-2xl animate-float"
+              transition={{ duration: 1.0, ease: [0.23, 1, 0.32, 1] }}
+              className="w-full max-w-[370px] glass-card card-tilt gradient-border rounded-3xl p-6 border border-white/8 relative overflow-hidden flex flex-col justify-between shadow-2xl animate-float"
             >
               <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-blue-600 via-indigo-600 to-slate-400" />
               
@@ -341,10 +341,16 @@ export default function App() {
 
       {/* Main Structural Layout Modules */}
       <main className="max-w-7xl mx-auto px-4 md:px-8 relative z-20 flex flex-col gap-28 pb-20">
-        
+
         {/* SECTION 1: Biography / About Me */}
         <section id="about" className="scroll-mt-28">
-          <div className="flex flex-col mb-12">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
+            className="flex flex-col mb-12"
+          >
             <div className="flex items-center gap-2 text-blue-400 font-mono text-xs uppercase tracking-widest font-bold mb-3 justify-center lg:justify-start">
               <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
               01 // Tiểu sử Chuyên môn
@@ -352,12 +358,21 @@ export default function App() {
             <h2 className="font-display text-3xl md:text-4xl font-extrabold text-white text-center lg:text-left leading-tight">
               Giao thoa giữa Quản trị Sư phạm & Khoa học Ngôn ngữ
             </h2>
-          </div>
+          </motion.div>
           <AboutBento />
         </section>
 
+        {/* Section Divider */}
+        <div className="section-divider" />
+
         {/* Interactive Virtual Cockpit 3D Globe banner section */}
-        <section className="py-2.5 border-y border-white/5 relative overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-slate-950/20 rounded-3xl p-6">
+        <motion.section
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.9, ease: [0.23, 1, 0.32, 1] }}
+          className="py-2.5 border-y border-white/5 relative overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-slate-950/20 rounded-3xl p-6"
+        >
           <div className="lg:col-span-5 flex flex-col justify-center">
             <div className="inline-flex items-center gap-1 text-[10px] font-mono text-blue-400 uppercase tracking-widest mb-3">
               <Sparkles className="w-3.5 h-3.5" /> Bản đồ động lực học học sinh
@@ -382,11 +397,20 @@ export default function App() {
           <div className="lg:col-span-7 w-full aspect-video min-h-[460px] relative">
             <Interactive3DSpace />
           </div>
-        </section>
+        </motion.section>
+
+        {/* Section Divider */}
+        <div className="section-divider" />
 
         {/* SECTION 2: Expertise Circles mapping */}
         <section id="expertise" className="scroll-mt-28">
-          <div className="flex flex-col mb-12 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
+            className="flex flex-col mb-12 text-center"
+          >
             <div className="flex items-center gap-2 text-indigo-400 font-mono text-xs uppercase tracking-widest font-bold mb-3 justify-center">
               <span className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
               02 // Khối Năng lực Cốt lõi
@@ -397,13 +421,22 @@ export default function App() {
             <p className="font-sans text-xs md:text-sm text-slate-450 max-w-md mx-auto mt-2 leading-relaxed">
               Khám phá các khía cạnh vững chắc kiến tạo văn hóa nội trú lành mạnh và năng lực xã hội văn minh.
             </p>
-          </div>
+          </motion.div>
           <ExpertiseDiagram />
         </section>
 
+        {/* Section Divider */}
+        <div className="section-divider" />
+
         {/* SECTION 3: Resource Center download board */}
         <section id="resources" className="scroll-mt-28">
-          <div className="flex flex-col mb-12">
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.85, ease: [0.23, 1, 0.32, 1] }}
+            className="flex flex-col mb-12"
+          >
             <div className="flex items-center gap-2 text-blue-400 font-mono text-xs uppercase tracking-widest font-bold mb-3 justify-center lg:justify-start">
               <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
               03 // Trung tâm Tài nguyên học thuật
@@ -411,43 +444,71 @@ export default function App() {
             <h2 className="font-display text-3xl md:text-4xl font-extrabold text-white text-center lg:text-left leading-tight">
               Biểu mẫu hành động & Ma trận Đánh giá Đóng góp
             </h2>
-          </div>
+          </motion.div>
           <ResourceHub />
         </section>
 
+        {/* Section Divider */}
+        <div className="section-divider" />
+
         {/* SECTION 4: AI Tools for Educators */}
         <section id="ai-tools" className="scroll-mt-28 relative">
-          <div className="flex flex-col mb-12 text-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.9, ease: [0.23, 1, 0.32, 1] }}
+            className="flex flex-col mb-12 text-center"
+          >
             <div className="flex items-center gap-2 text-blue-400 font-mono text-xs uppercase tracking-widest font-bold mb-3 justify-center">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-500 neon-dot" />
               04 // PHÒNG THÍ NGHIỆM TÍCH HỢP AI QUẢN LÝ
             </div>
-            <h2 className="font-display text-3xl md:text-4xl font-extrabold text-white leading-tight">
+            <h2 className="font-display text-3xl md:text-4xl font-extrabold text-white leading-tight text-glow-blue">
               Không gian làm việc Trí tuệ Nhân tạo tương tác
             </h2>
             <p className="font-sans text-xs md:text-sm text-slate-450 max-w-lg mx-auto mt-2 font-light">
               Khảo sát các đề cương can thiệp, bài soạn giáo án, hay văn bản báo cáo phụ huynh đồng bộ hóa với mô hình ngôn ngữ sâu của Gemini.
             </p>
-          </div>
+          </motion.div>
           <AIEducatorAssistant />
         </section>
 
+        {/* Section Divider */}
+        <div className="section-divider" />
+
         {/* SECTION 5: Professional Blog Cases */}
         <section id="blog" className="scroll-mt-28">
-          <div className="flex flex-col mb-12">
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.85, ease: [0.23, 1, 0.32, 1] }}
+            className="flex flex-col mb-12"
+          >
             <div className="flex items-center gap-2 text-indigo-400 font-mono text-xs uppercase tracking-widest font-bold mb-3 justify-center lg:justify-start">
-              <span className="w-1.5 h-1.5 rounded-full bg-indigo-550" />
+              <span className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
               05 // Nhật ký Nhận thức Giáo dục
             </div>
             <h2 className="font-display text-3xl md:text-4xl font-extrabold text-white text-center lg:text-left leading-tight">
               Đời sống Học sinh & Góc nhìn Ngôn ngữ học Ứng dụng
             </h2>
-          </div>
+          </motion.div>
           <InsightsBlog />
         </section>
 
+        {/* Section Divider */}
+        <div className="section-divider" />
+
         {/* SECTION 6: Contact Panel & Newsletter Subscription */}
-        <section id="contact" className="scroll-mt-28 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <motion.section
+          id="contact"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.9, ease: [0.23, 1, 0.32, 1] }}
+          className="scroll-mt-28 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start"
+        >
           
           {/* Quick contact details sidebar (Cols: 5) */}
           <div className="lg:col-span-5 flex flex-col justify-between h-full min-h-[380px]">
@@ -514,7 +575,7 @@ export default function App() {
           </div>
 
           {/* Core Interactive Message Form (Cols: 7) */}
-          <div className="lg:col-span-7 glass-card rounded-3xl p-6 md:p-8 border border-white/5 relative">
+          <div className="lg:col-span-7 glass-card glass-card-hover gradient-border rounded-3xl p-6 md:p-8 border border-white/5 relative">
             <div className="absolute top-0 left-0 w-full h-[1px] bg-white/5" />
 
             <AnimatePresence mode="wait">
@@ -587,7 +648,7 @@ export default function App() {
                   <div className="md:col-span-2 pt-2">
                     <button
                       type="submit"
-                      className="w-full py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-sans font-bold text-xs tracking-wider uppercase rounded-xl cursor-pointer hover:shadow-[0_0_20px_rgba(37,99,235,0.4)] transition-all border border-white/10"
+                      className="btn-cinematic w-full py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-sans font-bold text-xs tracking-wider uppercase rounded-xl cursor-pointer border border-blue-500/30"
                     >
                       Gửi thư liên hệ bảo mật
                     </button>
@@ -596,11 +657,17 @@ export default function App() {
               )}
             </AnimatePresence>
           </div>
-        </section>
+        </motion.section>
       </main>
 
       {/* Footer Area */}
-      <footer className="border-t border-white/5 py-12 px-4 relative z-20">
+      <motion.footer
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1.0 }}
+        className="border-t border-white/5 py-12 px-4 relative z-20"
+      >
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="text-center md:text-left">
             <span className="font-sans font-extrabold text-sm tracking-wider text-white">TRẦN QUANG LONG</span>
@@ -638,7 +705,7 @@ export default function App() {
             </span>
           </div>
         </div>
-      </footer>
+      </motion.footer>
     </div>
   );
 }
