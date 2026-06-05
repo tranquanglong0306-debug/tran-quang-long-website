@@ -1,0 +1,6 @@
+{
+  "name": "Tran Quang Long Portfolio",
+  "description": "Personal portfolio and AI educational assistant for Tran Quang Long.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

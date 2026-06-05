@@ -1,0 +1,172 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Playfair Display", serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Custom Professional Navy, Slate and Grey values */
+  --color-navy-dark: #050c1a;
+  --color-navy-medium: #0b1730;
+  --color-navy-light: #16264c;
+  --color-slate-grey: #64748b;
+  --color-light-grey: #e2e8f0;
+  --color-gold-accent: #d4af37;
+  --color-neon-blue: #2563eb;
+}
+
+@layer utilities {
+  /* Ultra-realistic Glassmorphism inspired by Apple macOS */
+  .glass-card {
+    background: rgba(11, 23, 48, 0.45);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.03);
+  }
+  
+  .glass-card-hover:hover {
+    background: rgba(15, 32, 67, 0.55);
+    border-color: rgba(37, 99, 235, 0.2);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 15px rgba(37, 99, 235, 0.08);
+  }
+
+  .neon-border-blue {
+    box-shadow: 0 0 20px rgba(37, 99, 235, 0.08);
+    border-color: rgba(37, 99, 235, 0.12);
+  }
+
+  .glass-input {
+    background: rgba(5, 12, 26, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    color: #f8fafc;
+  }
+  
+  .glass-input:focus {
+    outline: none;
+    border-color: rgba(37, 99, 235, 0.4);
+    box-shadow: 0 0 15px rgba(37, 99, 235, 0.15);
+  }
+}
+
+/* Base Body Styles */
+body {
+  background-color: #050c1a;
+  color: #f1f5f9;
+  overflow-x: hidden;
+  font-family: var(--font-sans);
+  letter-spacing: -0.01em;
+}
+
+/* Interactive Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #050c1a;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(37, 99, 235, 0.3);
+}
+
+/* Animations & Floaters */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-8px) scale(1.01);
+  }
+}
+.animate-float {
+  animation: float 7s ease-in-out infinite;
+}
+
+@keyframes float-delayed {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(0.5deg);
+  }
+}
+.animate-float-delayed {
+  animation: float-delayed 9s ease-in-out infinite;
+}
+
+@keyframes slow-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.animate-slow-spin {
+  animation: slow-spin 30s linear infinite;
+}
+
+@keyframes slow-spin-reverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+.animate-slow-spin-reverse {
+  animation: slow-spin-reverse 45s linear infinite;
+}
+
+/* Custom Notion-inspired Grid Backdrop */
+.cyber-grid {
+  background-size: 50px 50px;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+  mask-image: radial-gradient(ellipse at center, black, transparent 85%);
+}
+
+/* Smooth ambient back-lighting gradients */
+.ambient-glow-navy {
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.08) 0%, rgba(5, 12, 26, 0) 75%);
+}
+.ambient-glow-slate {
+  background: radial-gradient(circle, rgba(148, 163, 184, 0.06) 0%, rgba(5, 12, 26, 0) 75%);
+}
+
+/* Markdown Rendering Engine Classes */
+.markdown-body {
+  font-family: var(--font-sans);
+  color: #cbd5e1;
+  line-height: 1.75;
+}
+.markdown-body h1, .markdown-body h2, .markdown-body h3 {
+  color: #fff;
+  font-family: var(--font-sans); /* We pair with elegant weights */
+  font-weight: 700;
+  margin-top: 1.8rem;
+  margin-bottom: 0.8rem;
+  letter-spacing: -0.02e;
+}
+.markdown-body h3 {
+  font-size: 1.2rem;
+}
+.markdown-body p {
+  margin-bottom: 1.2rem;
+}
+.markdown-body ul {
+  list-style-type: square;
+  padding-left: 1.4rem;
+  margin-bottom: 1.1rem;
+}
+.markdown-body li {
+  margin-bottom: 0.6rem;
+}
+.markdown-body strong {
+  color: #fff;
+}
