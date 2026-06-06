@@ -1,8 +1,6 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
-  GraduationCap,
-  Sparkles,
   Mail,
   Linkedin,
   ArrowRight,
@@ -13,9 +11,14 @@ import {
   Languages,
   ArrowLeft,
   Calendar,
-  Clock
+  Clock,
+  Sparkles,
+  ShieldCheck,
+  Brain,
+  FileText
 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
+import Scene3D from "./components/Scene3D";
 import FeaturedArticles from "./components/FeaturedArticles";
 import Categories from "./components/Categories";
 import LatestPosts from "./components/LatestPosts";
@@ -43,7 +46,6 @@ export default function App() {
     setMobileMenu(false);
     if (currentPage !== "home") {
       setCurrentPage("home");
-      // Wait for re-render before scrolling
       setTimeout(() => {
         const element = document.getElementById(id);
         if (element) {
@@ -95,22 +97,23 @@ export default function App() {
   };
 
   return (
-    <div className="relative min-h-screen text-[#f1f5f9] bg-[#050c1a] font-sans selection:bg-blue-600/35 selection:text-white">
-      {/* Space Cyber Grid & Soft Radial Lighting */}
-      <div className="fixed inset-0 cyber-grid pointer-events-none z-0" />
-      <div className="fixed top-1/4 left-1/12 w-96 h-96 ambient-glow-navy blur-3xl pointer-events-none rounded-full z-0 opacity-30" />
-      <div className="fixed bottom-1/3 right-1/10 w-96 h-96 ambient-glow-slate blur-3xl pointer-events-none rounded-full z-0 opacity-30" />
+    <div className="relative min-h-screen text-[#FFFFFF] bg-[#0A0A0A] font-sans selection:bg-white/10 selection:text-white overflow-hidden">
+      {/* 3D Background Canvas */}
+      <Scene3D />
+
+      {/* Subtle overlay grid for tech aesthetic */}
+      <div className="fixed inset-0 cyber-grid pointer-events-none z-10" />
 
       {/* Floating Header Navigation (Apple-style Glassmorphism) */}
-      <header className="fixed top-4 left-4 right-4 z-40 max-w-7xl mx-auto">
-        <div className="glass-card rounded-2xl px-6 py-4 flex items-center justify-between border border-white/5 backdrop-blur-xl shrink-0">
+      <header className="fixed top-6 left-4 right-4 z-40 max-w-6xl mx-auto">
+        <div className="glass-card rounded-xl px-6 py-4 flex items-center justify-between border border-white/5 backdrop-blur-xl shrink-0">
           <div className="flex items-center gap-3 cursor-pointer" onClick={navigateToHome}>
-            <div className="relative w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-slate-400 flex items-center justify-center p-1.5 shadow-[0_0_15px_rgba(37,99,235,0.25)]">
-              <Languages className="w-5 h-5 text-white font-bold animate-pulse" />
+            <div className="relative w-8 h-8 rounded bg-white flex items-center justify-center p-1.5">
+              <span className="font-display font-extrabold text-black text-sm">L</span>
             </div>
             <div className="text-left">
-              <span className="font-sans font-extrabold text-sm md:text-base tracking-wider text-white block">TRẦN QUANG LONG</span>
-              <span className="font-mono text-[9px] text-blue-400 tracking-widest block font-medium uppercase">Blog Cá Nhân & Trợ Lý AI</span>
+              <span className="font-sans font-extrabold text-xs md:text-sm tracking-widest text-white block uppercase">TRẦN QUANG LONG</span>
+              <span className="font-mono text-[8px] text-white/50 tracking-widest block font-medium uppercase">EDUCATIONAL RESEARCH & AI</span>
             </div>
           </div>
 
@@ -120,25 +123,31 @@ export default function App() {
               <>
                 <button
                   onClick={() => handleScroll("featured")}
-                  className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-slate-350 hover:text-white hover:bg-white/5 rounded-xl transition-all duration-300 cursor-pointer"
+                  className="px-4 py-2 text-[10px] font-mono uppercase tracking-widest text-white/60 hover:text-white rounded-lg transition-colors cursor-pointer"
                 >
                   Nổi bật
                 </button>
                 <button
                   onClick={() => handleScroll("latest-posts")}
-                  className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-slate-350 hover:text-white hover:bg-white/5 rounded-xl transition-all duration-300 cursor-pointer"
+                  className="px-4 py-2 text-[10px] font-mono uppercase tracking-widest text-white/60 hover:text-white rounded-lg transition-colors cursor-pointer"
                 >
                   Bài viết
                 </button>
                 <button
+                  onClick={() => handleScroll("ai-projects")}
+                  className="px-4 py-2 text-[10px] font-mono uppercase tracking-widest text-white/60 hover:text-white rounded-lg transition-colors cursor-pointer"
+                >
+                  Dự án AI
+                </button>
+                <button
                   onClick={() => handleScroll("about")}
-                  className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-slate-350 hover:text-white hover:bg-white/5 rounded-xl transition-all duration-300 cursor-pointer"
+                  className="px-4 py-2 text-[10px] font-mono uppercase tracking-widest text-white/60 hover:text-white rounded-lg transition-colors cursor-pointer"
                 >
                   Giới thiệu
                 </button>
                 <button
                   onClick={navigateToAssistant}
-                  className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-blue-400 hover:text-blue-300 hover:bg-white/5 rounded-xl transition-all duration-300 cursor-pointer"
+                  className="px-4 py-2 text-[10px] font-mono uppercase tracking-widest text-white hover:text-white/80 rounded-lg transition-colors cursor-pointer border border-white/20 bg-white/5"
                 >
                   Trợ lý AI
                 </button>
@@ -146,9 +155,9 @@ export default function App() {
             ) : (
               <button
                 onClick={navigateToHome}
-                className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-slate-350 hover:text-white hover:bg-white/5 rounded-xl transition-all duration-300 cursor-pointer flex items-center gap-1.5"
+                className="px-4 py-2 text-[10px] font-mono uppercase tracking-widest text-white/60 hover:text-white rounded-lg transition-colors cursor-pointer flex items-center gap-1.5"
               >
-                <ArrowLeft className="w-4 h-4" /> Trở lại Trang Chủ
+                <ArrowLeft className="w-3.5 h-3.5" /> Trở lại Trang Chủ
               </button>
             )}
           </nav>
@@ -157,14 +166,14 @@ export default function App() {
             {currentPage === "home" ? (
               <button
                 onClick={() => handleScroll("contact")}
-                className="btn-cinematic px-5 py-2.5 font-mono text-xs font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl cursor-pointer border border-blue-500/30"
+                className="btn-cinematic px-5 py-2 text-[10px] font-mono uppercase tracking-widest bg-white text-black font-semibold rounded cursor-pointer border border-white/10"
               >
-                Liên hệ hợp tác
+                Liên hệ
               </button>
             ) : (
               <button
                 onClick={navigateToHome}
-                className="btn-cinematic px-5 py-2.5 font-mono text-xs font-semibold glass-card border-white/10 text-white rounded-xl cursor-pointer"
+                className="btn-cinematic px-5 py-2 text-[10px] font-mono uppercase tracking-widest bg-white/5 text-white font-semibold rounded cursor-pointer border border-white/10"
               >
                 Xem Blog
               </button>
@@ -176,7 +185,7 @@ export default function App() {
             onClick={() => setMobileMenu(!mobileMenu)}
             aria-label="Toggle Menu"
           >
-            {mobileMenu ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {mobileMenu ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
 
@@ -187,46 +196,52 @@ export default function App() {
               initial={{ opacity: 0, y: -15 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -15 }}
-              className="absolute left-0 right-0 top-20 glass-card rounded-2xl p-5 border border-white/8 flex flex-col gap-3 lg:hidden z-50"
+              className="absolute left-0 right-0 top-20 glass-card rounded-xl p-5 border border-white/8 flex flex-col gap-3 lg:hidden z-50"
             >
               {currentPage === "home" ? (
                 <>
                   <button
                     onClick={() => handleScroll("featured")}
-                    className="w-full text-left py-2.5 px-4 rounded-xl text-sm text-slate-300 hover:text-white hover:bg-white/5 transition-colors"
+                    className="w-full text-left py-2 px-4 text-xs font-mono uppercase tracking-wider text-white/70 hover:text-white"
                   >
                     Nổi bật
                   </button>
                   <button
                     onClick={() => handleScroll("latest-posts")}
-                    className="w-full text-left py-2.5 px-4 rounded-xl text-sm text-slate-300 hover:text-white hover:bg-white/5 transition-colors"
+                    className="w-full text-left py-2 px-4 text-xs font-mono uppercase tracking-wider text-white/70 hover:text-white"
                   >
                     Bài viết
                   </button>
                   <button
+                    onClick={() => handleScroll("ai-projects")}
+                    className="w-full text-left py-2 px-4 text-xs font-mono uppercase tracking-wider text-white/70 hover:text-white"
+                  >
+                    Dự án AI
+                  </button>
+                  <button
                     onClick={() => handleScroll("about")}
-                    className="w-full text-left py-2.5 px-4 rounded-xl text-sm text-slate-300 hover:text-white hover:bg-white/5 transition-colors"
+                    className="w-full text-left py-2 px-4 text-xs font-mono uppercase tracking-wider text-white/70 hover:text-white"
                   >
                     Giới thiệu
                   </button>
                   <button
                     onClick={navigateToAssistant}
-                    className="w-full text-left py-2.5 px-4 rounded-xl text-sm text-blue-400 hover:text-blue-300 hover:bg-white/5 transition-colors"
+                    className="w-full text-left py-2 px-4 text-xs font-mono uppercase tracking-wider text-white border border-white/10 rounded bg-white/5"
                   >
                     Trợ lý AI (Trang riêng)
                   </button>
                   <hr className="border-white/5 my-1" />
                   <button
                     onClick={() => handleScroll("contact")}
-                    className="w-full text-center py-3 bg-blue-600 text-white rounded-xl font-mono text-xs font-bold uppercase tracking-wider transition-colors"
+                    className="w-full text-center py-2.5 bg-white text-black rounded font-mono text-xs font-bold uppercase tracking-wider transition-colors"
                   >
-                    Liên hệ hợp tác
+                    Liên hệ
                   </button>
                 </>
               ) : (
                 <button
                   onClick={navigateToHome}
-                  className="w-full text-left py-2.5 px-4 rounded-xl text-sm text-slate-300 hover:text-white hover:bg-white/5 transition-colors flex items-center gap-2"
+                  className="w-full text-left py-2 px-4 text-xs font-mono uppercase tracking-wider text-white flex items-center gap-2"
                 >
                   <ArrowLeft className="w-4 h-4" /> Trở lại Trang Chủ
                 </button>
@@ -247,24 +262,23 @@ export default function App() {
             transition={{ duration: 0.5 }}
           >
             {/* Hero Section */}
-            <section className="relative min-h-[90vh] flex items-center justify-center pt-32 pb-16 px-4 md:px-8 z-10 overflow-hidden">
+            <section className="relative min-h-screen flex items-center justify-center pt-32 pb-16 px-4 md:px-8 z-20 overflow-hidden">
               <div className="max-w-4xl mx-auto text-center relative z-20">
                 <motion.div
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-blue-500/20 bg-blue-500/5 mb-6"
+                  className="inline-flex items-center gap-2 px-3 py-1.5 rounded border border-white/10 bg-white/[0.02] mb-8"
                 >
-                  <span className="w-2 h-2 rounded-full bg-blue-500 neon-dot" />
-                  <span className="font-mono text-[9px] md:text-xs text-blue-400 font-bold uppercase tracking-widest">
-                    Nhật ký Giáo dục & Quản sinh thời đại số
+                  <span className="font-mono text-[9px] md:text-xs text-white/60 font-bold uppercase tracking-widest">
+                    LUXURY EDITORIAL BLOG & AI EXPERIMENTS
                   </span>
                 </motion.div>
 
                 <motion.h1
                   initial={{ opacity: 0, y: 25 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 }}
-                  className="font-display text-4xl md:text-6xl text-white font-extrabold tracking-tight leading-[1.15] mb-6"
+                  transition={{ delay: 0.15, duration: 1.0, ease: [0.22, 1, 0.36, 1] }}
+                  className="font-display text-5xl md:text-8xl text-white font-normal tracking-tight leading-[1.05] mb-8"
                 >
                   Trần Quang Long
                 </motion.h1>
@@ -272,54 +286,57 @@ export default function App() {
                 <motion.p
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 }}
-                  className="font-mono text-xs md:text-sm text-blue-400 uppercase tracking-widest mb-6 font-semibold"
+                  transition={{ delay: 0.3 }}
+                  className="font-mono text-[10px] md:text-xs text-white/40 uppercase tracking-widest mb-8 font-semibold"
                 >
                   Nhà giáo dục &bull; Quản sinh &bull; Nghiên cứu viên AI & Ngôn ngữ học ứng dụng
                 </motion.p>
 
+                {/* Empty container spacer for the 3D rotating object behind the text */}
+                <div className="h-24 md:h-32" />
+
                 <motion.p
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.25 }}
-                  className="font-sans text-base md:text-xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed font-light italic"
+                  transition={{ delay: 0.4 }}
+                  className="font-display text-lg md:text-2xl text-white/80 max-w-2xl mx-auto mb-12 leading-relaxed font-light italic"
                 >
-                  "Kiến tạo môi trường học đường nhân văn và lành mạnh thông qua Kỷ luật Phục hồi, Ngôn ngữ học ứng dụng và Công nghệ Trí tuệ Nhân tạo."
+                  "Xây dựng môi trường giáo dục văn minh thông qua kỷ luật phục hồi, ngôn ngữ học ứng dụng và công nghệ AI."
                 </motion.p>
 
                 <motion.div
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 }}
+                  transition={{ delay: 0.5 }}
                   className="flex flex-col sm:flex-row items-center gap-4 justify-center"
                 >
                   <button
-                    onClick={() => handleScroll("latest-posts")}
-                    className="btn-cinematic w-full sm:w-auto px-7 py-4 bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-700 text-white font-mono font-bold uppercase text-[11px] tracking-wider rounded-xl flex items-center justify-center gap-1.5 cursor-pointer border border-blue-500/30 shadow-lg shadow-blue-500/20"
+                    onClick={() => handleScroll("featured")}
+                    className="btn-cinematic w-full sm:w-auto px-7 py-3.5 bg-white text-black font-mono font-bold uppercase text-[11px] tracking-wider rounded flex items-center justify-center gap-1.5 cursor-pointer border border-white/20"
                   >
-                    Đọc bài viết <ArrowRight className="w-4 h-4 text-white" />
+                    Khám phá bài viết <ArrowRight className="w-3.5 h-3.5 text-black" />
                   </button>
                   <button
                     onClick={navigateToAssistant}
-                    className="btn-cinematic w-full sm:w-auto px-7 py-4 glass-card border-white/8 text-blue-400 hover:text-white font-mono font-bold uppercase text-[11px] tracking-wider rounded-xl flex items-center justify-center gap-1.5 cursor-pointer"
+                    className="btn-cinematic w-full sm:w-auto px-7 py-3.5 glass-card border-white/10 text-white font-mono font-bold uppercase text-[11px] tracking-wider rounded flex items-center justify-center gap-1.5 cursor-pointer"
                   >
-                    Trải nghiệm Trợ lý AI
+                    Khởi chạy Trợ lý AI
                   </button>
                 </motion.div>
               </div>
 
               {/* Scroll down indicator */}
               <div
-                className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-1.5 cursor-pointer text-white/40 hover:text-white transition-colors"
+                className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-1.5 cursor-pointer text-white/40 hover:text-white transition-colors"
                 onClick={() => handleScroll("featured")}
               >
                 <span className="font-mono text-[9px] uppercase tracking-widest">Cuộn xem thêm</span>
-                <ChevronDown className="w-4 h-4 animate-bounce" />
+                <ChevronDown className="w-3.5 h-3.5 animate-bounce" />
               </div>
             </section>
 
             {/* Main Page Elements */}
-            <main className="max-w-7xl mx-auto px-4 md:px-8 relative z-20 flex flex-col gap-24 pb-20">
+            <main className="max-w-5xl mx-auto px-4 md:px-8 relative z-20 flex flex-col gap-28 pb-20">
               
               {/* SECTION 1: Featured Articles */}
               <section id="featured" className="scroll-mt-28">
@@ -329,11 +346,11 @@ export default function App() {
                   viewport={{ once: true, margin: "-80px" }}
                   className="flex flex-col mb-10 text-left"
                 >
-                  <div className="flex items-center gap-2 text-blue-400 font-mono text-xs uppercase tracking-widest font-bold mb-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
-                    Tiêu điểm nghiên cứu
+                  <div className="flex items-center gap-2 text-white/40 font-mono text-[10px] uppercase tracking-widest font-bold mb-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-white/40" />
+                    EDITORIAL CHOICE
                   </div>
-                  <h2 className="font-display text-2xl md:text-3xl font-extrabold text-white">
+                  <h2 className="font-display text-3xl md:text-4xl font-normal text-white">
                     Bài viết nổi bật
                   </h2>
                 </motion.div>
@@ -350,12 +367,12 @@ export default function App() {
                   viewport={{ once: true, margin: "-80px" }}
                   className="flex flex-col items-center mb-6 text-center"
                 >
-                  <div className="flex items-center gap-2 text-indigo-400 font-mono text-xs uppercase tracking-widest font-bold mb-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
-                    Chia sẻ kiến thức
+                  <div className="flex items-center gap-2 text-white/40 font-mono text-[10px] uppercase tracking-widest font-bold mb-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-white/40" />
+                    KNOWLEDGE SHARING
                   </div>
-                  <h2 className="font-display text-2xl md:text-3xl font-extrabold text-white">
-                    Tất cả bài viết
+                  <h2 className="font-display text-3xl md:text-4xl font-normal text-white">
+                    Tất cả chuyên mục
                   </h2>
                 </motion.div>
 
@@ -370,7 +387,80 @@ export default function App() {
 
               <div className="section-divider" />
 
-              {/* SECTION 3: About Box */}
+              {/* SECTION 3: AI Projects Showcase Grid */}
+              <section id="ai-projects" className="scroll-mt-28">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  className="flex flex-col mb-10 text-left"
+                >
+                  <div className="flex items-center gap-2 text-white/40 font-mono text-[10px] uppercase tracking-widest font-bold mb-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-white/40" />
+                    AI WORKSTATION PROTOTYPES
+                  </div>
+                  <h2 className="font-display text-3xl md:text-4xl font-normal text-white">
+                    Dự án Trí Tuệ Nhân Tạo
+                  </h2>
+                </motion.div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {[
+                    {
+                      icon: ShieldCheck,
+                      title: "Cố vấn Can Thiệp Hoà Giải",
+                      desc: "Tạo kịch bản đàm thoại, hòa giải mâu thuẫn học đường dựa trên quy tắc kỷ luật tích cực phục hồi."
+                    },
+                    {
+                      icon: Brain,
+                      title: "Giàn Giáo Thiết Lập Giáo Án",
+                      desc: "Xây dựng khung bài giảng, giàn giáo SLA hỗ trợ tiếp thu ngôn ngữ tự nhiên tối ưu thời gian."
+                    },
+                    {
+                      icon: FileText,
+                      title: "Soạn Thảo Báo Cáo Nhận Xét",
+                      desc: "Tạo mẫu thư thấu cảm thông tin kịp thời, đồng cảm để kết nối chặt chẽ giữa nhà trường & gia đình."
+                    }
+                  ].map((proj, idx) => {
+                    const ProtoIcon = proj.icon;
+                    return (
+                      <motion.div
+                        key={idx}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6, delay: idx * 0.1 }}
+                        className="glass-card rounded-2xl p-6 border border-white/5 text-left flex flex-col justify-between h-full hover:border-white/20 transition-all duration-300"
+                      >
+                        <div>
+                          <div className="p-3 rounded-lg bg-white/5 inline-block mb-4 text-white/70">
+                            <ProtoIcon className="w-5 h-5" />
+                          </div>
+                          <h4 className="font-sans font-bold text-sm text-white mb-2 uppercase tracking-wide">
+                            {proj.title}
+                          </h4>
+                          <p className="font-sans text-xs text-white/50 leading-relaxed font-light">
+                            {proj.desc}
+                          </p>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+
+                <div className="mt-8 text-center">
+                  <button
+                    onClick={navigateToAssistant}
+                    className="btn-cinematic px-6 py-3 border border-white/10 hover:bg-white hover:text-black rounded text-[10px] font-mono uppercase tracking-widest transition-all"
+                  >
+                    Truy cập không gian làm việc AI →
+                  </button>
+                </div>
+              </section>
+
+              <div className="section-divider" />
+
+              {/* SECTION 4: About Box */}
               <section id="about" className="scroll-mt-28">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -378,12 +468,12 @@ export default function App() {
                   viewport={{ once: true, margin: "-80px" }}
                   className="flex flex-col mb-8 text-left"
                 >
-                  <div className="flex items-center gap-2 text-blue-400 font-mono text-xs uppercase tracking-widest font-bold mb-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
-                    Người viết bài
+                  <div className="flex items-center gap-2 text-white/40 font-mono text-[10px] uppercase tracking-widest font-bold mb-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-white/40" />
+                    AUTOBIOGRAPHY
                   </div>
-                  <h2 className="font-display text-2xl md:text-3xl font-extrabold text-white">
-                    Về Trần Quang Long
+                  <h2 className="font-display text-3xl md:text-4xl font-normal text-white">
+                    Về tác giả
                   </h2>
                 </motion.div>
                 <SimpleAbout />
@@ -391,33 +481,33 @@ export default function App() {
 
               <div className="section-divider" />
 
-              {/* SECTION 4: Simple Contact */}
+              {/* SECTION 5: Contact */}
               <section id="contact" className="scroll-mt-28 max-w-4xl mx-auto w-full">
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
                   
                   {/* Left Column info */}
                   <div className="md:col-span-5 flex flex-col justify-between text-left">
                     <div>
-                      <div className="flex items-center gap-2 text-indigo-400 font-mono text-xs uppercase tracking-widest font-bold mb-3">
-                        <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
-                        Liên hệ
+                      <div className="flex items-center gap-2 text-white/40 font-mono text-[10px] uppercase tracking-widest font-bold mb-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-white/40" />
+                        GET IN TOUCH
                       </div>
-                      <h3 className="font-display text-2xl font-extrabold text-white mb-3 leading-tight">
-                        Trò chuyện & Hợp tác
+                      <h3 className="font-display text-3xl font-normal text-white mb-3 leading-tight">
+                        Liên hệ
                       </h3>
-                      <p className="font-sans text-xs sm:text-sm text-slate-400 leading-relaxed font-light mb-6">
-                        Kết nối để cùng phát triển các giải pháp can thiệp hành vi học đường, cố vấn SLA hoặc trao đổi EdTech.
+                      <p className="font-sans text-xs sm:text-sm text-white/40 leading-relaxed font-light mb-6">
+                        Trao đổi ý tưởng hoặc mời hợp tác về can thiệp sư phạm hành vi, dự án EdTech và cố vấn ngôn ngữ học.
                       </p>
                     </div>
 
                     <div className="flex flex-col gap-4">
                       <div className="flex items-start gap-3">
-                        <div className="p-2.5 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 shrink-0">
+                        <div className="p-2.5 rounded bg-white/5 border border-white/10 text-white/70 shrink-0">
                           <Mail className="w-4 h-4" />
                         </div>
                         <div>
-                          <span className="font-mono text-[9px] text-slate-400 block uppercase font-semibold">Gửi Email Trực tiếp</span>
-                          <a href="mailto:tranquanglong0306@gmail.com" className="font-sans text-xs sm:text-sm font-bold text-white hover:text-blue-400 transition-colors">
+                          <span className="font-mono text-[9px] text-white/40 block uppercase font-semibold">Địa chỉ Email</span>
+                          <a href="mailto:tranquanglong0306@gmail.com" className="font-sans text-xs sm:text-sm font-bold text-white hover:text-white/60 transition-colors">
                             tranquanglong0306@gmail.com
                           </a>
                         </div>
@@ -430,60 +520,60 @@ export default function App() {
                     <AnimatePresence mode="wait">
                       {sentMessage ? (
                         <motion.div
-                          initial={{ opacity: 0, scale: 0.95 }}
+                          initial={{ opacity: 0, scale: 0.98 }}
                           animate={{ opacity: 1, scale: 1 }}
                           exit={{ opacity: 0 }}
                           className="flex flex-col items-center justify-center text-center py-10"
                         >
-                          <div className="w-10 h-10 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 flex items-center justify-center mb-3 animate-bounce">
+                          <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 text-white/70 flex items-center justify-center mb-3">
                             <CheckCircle2 className="w-5 h-5" />
                           </div>
-                          <h4 className="font-display font-medium text-base text-white mb-1">Thư đã gửi thành công</h4>
-                          <p className="font-sans text-xs text-slate-450 leading-relaxed">
-                            Quy trình phản hồi thấu đáo sẽ được thu xếp trong thời gian sớm nhất. Trân trọng!
+                          <h4 className="font-display font-medium text-base text-white mb-1">Tin nhắn gửi đi thành công</h4>
+                          <p className="font-sans text-xs text-white/40 leading-relaxed">
+                            Cám ơn bạn đã gửi liên hệ. Tôi sẽ hồi đáp trong thời gian sớm nhất.
                           </p>
                         </motion.div>
                       ) : (
                         <form onSubmit={handleContactSubmit} className="flex flex-col gap-4 text-left">
                           <div className="flex flex-col gap-1">
-                            <label className="font-sans font-semibold text-[11px] text-slate-300">Họ và tên</label>
+                            <label className="font-sans font-semibold text-[10px] text-white/60 uppercase tracking-wider">Họ và tên</label>
                             <input
                               type="text"
                               required
                               placeholder="Nguyễn Văn A"
                               value={contactState.name}
                               onChange={(e) => setContactState({ ...contactState, name: e.target.value })}
-                              className="glass-input p-3 rounded-xl text-xs bg-slate-950/40 text-white"
+                              className="glass-input p-3 rounded text-xs bg-black text-white"
                             />
                           </div>
 
                           <div className="flex flex-col gap-1">
-                            <label className="font-sans font-semibold text-[11px] text-slate-300">Email liên hệ</label>
+                            <label className="font-sans font-semibold text-[10px] text-white/60 uppercase tracking-wider">Email liên hệ</label>
                             <input
                               type="email"
                               required
                               placeholder="ten.ban@tochuc.edu"
                               value={contactState.email}
                               onChange={(e) => setContactState({ ...contactState, email: e.target.value })}
-                              className="glass-input p-3 rounded-xl text-xs bg-slate-950/40 text-white"
+                              className="glass-input p-3 rounded text-xs bg-black text-white"
                             />
                           </div>
 
                           <div className="flex flex-col gap-1">
-                            <label className="font-sans font-semibold text-[11px] text-slate-300">Nội dung tin nhắn</label>
+                            <label className="font-sans font-semibold text-[10px] text-white/60 uppercase tracking-wider">Nội dung tin nhắn</label>
                             <textarea
                               rows={3}
                               required
-                              placeholder="Kế hoạch hợp tác hoặc câu hỏi của bạn tại đây..."
+                              placeholder="Kế hoạch thảo luận của bạn tại đây..."
                               value={contactState.message}
                               onChange={(e) => setContactState({ ...contactState, message: e.target.value })}
-                              className="glass-input p-3 rounded-xl text-xs bg-slate-950/40 text-white leading-relaxed font-light"
+                              className="glass-input p-3 rounded text-xs bg-black text-white leading-relaxed font-light"
                             />
                           </div>
 
                           <button
                             type="submit"
-                            className="btn-cinematic w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-sans font-bold text-xs tracking-wider uppercase rounded-xl cursor-pointer border border-blue-500/30"
+                            className="btn-cinematic w-full py-3 bg-white text-black font-sans font-bold text-xs tracking-wider uppercase rounded cursor-pointer border border-white/10"
                           >
                             Gửi tin nhắn bảo mật
                           </button>
@@ -504,27 +594,27 @@ export default function App() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -15 }}
             transition={{ duration: 0.5 }}
-            className="pt-32 pb-20 px-4 md:px-8 max-w-7xl mx-auto min-h-screen relative z-10"
+            className="pt-32 pb-20 px-4 md:px-8 max-w-6xl mx-auto min-h-screen relative z-20"
           >
             {/* Header Info */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 text-left">
               <div>
                 <button
                   onClick={navigateToHome}
-                  className="mb-4 text-xs font-mono text-slate-400 hover:text-white flex items-center gap-1 cursor-pointer transition-colors"
+                  className="mb-4 text-xs font-mono text-white/40 hover:text-white flex items-center gap-1 cursor-pointer transition-colors"
                 >
                   <ArrowLeft className="w-3.5 h-3.5" /> Quay về Trang Chủ Blog
                 </button>
-                <h2 className="font-display text-3xl md:text-4xl font-extrabold text-white">
-                  Trợ Lý Trí Tuệ Nhân Tạo
+                <h2 className="font-display text-3xl md:text-4xl font-normal text-white">
+                  Trợ Lý AI Sư Phạm
                 </h2>
-                <p className="font-sans text-xs sm:text-sm text-slate-400 font-light mt-1.5">
-                  Không gian làm việc sư phạm chuyên sâu tích hợp mô hình ngôn ngữ lớn của Gemini.
+                <p className="font-sans text-xs sm:text-sm text-white/50 font-light mt-1.5">
+                  Không gian can thiệp phục hồi và soạn giáo án đàm thoại đồng bộ cùng Gemini.
                 </p>
               </div>
 
-              <span className="px-3.5 py-1.5 rounded-full border border-blue-500/20 bg-blue-500/5 text-xs font-mono text-blue-400 flex items-center gap-1.5 self-start md:self-center">
-                <Sparkles className="w-4 h-4 animate-pulse" /> Trực Tuyến & Đồng Bộ
+              <span className="px-3.5 py-1.5 rounded-full border border-white/10 bg-white/5 text-xs font-mono text-white flex items-center gap-1.5 self-start md:self-center">
+                <Sparkles className="w-4 h-4" /> TRỰC TUYẾN & ĐỒNG BỘ
               </span>
             </div>
 
@@ -539,24 +629,24 @@ export default function App() {
       {/* Expanded Blog Modal Detail View (Shared globally) */}
       <AnimatePresence>
         {selectedPost && (
-          <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4">
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="glass-card rounded-3xl w-full max-w-2xl max-h-[85vh] overflow-hidden flex flex-col relative border border-white/10"
+              exit={{ opacity: 0, scale: 0.98 }}
+              className="glass-card rounded-2xl w-full max-w-2xl max-h-[85vh] overflow-hidden flex flex-col relative border border-white/10"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header static strip */}
               <div className="p-6 border-b border-white/5 flex items-start justify-between text-left">
                 <div>
-                  <span className="text-[9px] font-mono font-bold text-blue-400 border border-blue-500/20 bg-blue-500/10 px-2 py-0.5 rounded mb-2 inline-block uppercase">
+                  <span className="text-[8px] font-mono font-bold text-white bg-white/10 px-2 py-0.5 rounded mb-2 inline-block uppercase">
                     {selectedPost.category}
                   </span>
                   <h4 className="font-display text-lg md:text-xl font-bold text-white leading-snug">
                     {selectedPost.title}
                   </h4>
-                  <div className="flex items-center gap-3 font-mono text-[10px] text-slate-400 mt-1">
+                  <div className="flex items-center gap-3 font-mono text-[9px] text-white/40 mt-1">
                     <span className="flex items-center gap-0.5"><Calendar className="w-3.5 h-3.5" /> {selectedPost.date}</span>
                     <span>•</span>
                     <span className="flex items-center gap-0.5"><Clock className="w-3.5 h-3.5" /> {selectedPost.readTime}</span>
@@ -565,23 +655,23 @@ export default function App() {
 
                 <button
                   onClick={() => setSelectedPost(null)}
-                  className="p-1.5 rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 cursor-pointer shrink-0"
+                  className="p-1.5 rounded bg-white/5 border border-white/10 text-white hover:bg-white/10 cursor-pointer shrink-0"
                 >
-                  <X className="w-5 h-5" />
+                  <X className="w-4 h-4" />
                 </button>
               </div>
 
               {/* Scrolling Detailed Article */}
-              <div className="p-6 md:p-8 overflow-y-auto flex-grow markdown-body text-xs sm:text-sm text-slate-300 leading-relaxed text-left">
+              <div className="p-6 md:p-8 overflow-y-auto flex-grow markdown-body text-xs sm:text-sm text-white/70 leading-relaxed text-left">
                 <ReactMarkdown>{selectedPost.content}</ReactMarkdown>
               </div>
 
               {/* Footer strip */}
-              <div className="p-4 bg-white/[0.02] border-t border-white/5 flex items-center justify-between">
-                <span className="font-mono text-[10px] text-slate-400 font-light">Tác giả: Trần Quang Long</span>
+              <div className="p-4 bg-white/[0.01] border-t border-white/5 flex items-center justify-between">
+                <span className="font-mono text-[9px] text-white/40 font-light">Tác giả: Trần Quang Long</span>
                 <button
                   onClick={() => setSelectedPost(null)}
-                  className="px-4 py-2 rounded-xl bg-blue-600 text-white font-mono text-xs font-semibold cursor-pointer hover:bg-blue-500 shadow-md transition-colors"
+                  className="px-4 py-2 rounded bg-white text-black font-mono text-xs font-semibold cursor-pointer hover:bg-white/90 transition-colors"
                 >
                   Đóng bài viết
                 </button>
@@ -597,12 +687,12 @@ export default function App() {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 1.0 }}
-        className="border-t border-white/5 py-12 px-4 relative z-20"
+        className="border-t border-white/5 py-12 px-4 relative z-20 bg-black/40"
       >
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="text-center md:text-left">
-            <span className="font-sans font-extrabold text-sm tracking-wider text-white">TRẦN QUANG LONG</span>
-            <p className="font-mono text-[9px] text-slate-400 mt-1 uppercase font-light">
+            <span className="font-sans font-extrabold text-xs tracking-widest text-white uppercase">TRẦN QUANG LONG</span>
+            <p className="font-mono text-[8px] text-white/40 mt-1 uppercase font-light">
               Cán bộ Đời sống Học sinh & Học viên Thạc sĩ Ngôn ngữ học Ứng dụng
             </p>
           </div>
@@ -613,26 +703,26 @@ export default function App() {
               href="https://linkedin.com"
               target="_blank"
               rel="noreferrer"
-              className="p-2.5 rounded-xl border border-white/5 bg-white/5 hover:bg-blue-500/10 hover:text-blue-400 hover:border-blue-500/20 text-white/50 transition-all cursor-pointer"
-              aria-label="LinkedIn Profile Reference"
+              className="p-2.5 rounded border border-white/5 bg-white/5 hover:bg-white/10 hover:text-white text-white/40 transition-all cursor-pointer"
+              aria-label="LinkedIn"
             >
               <Linkedin className="w-4 h-4" />
             </a>
             <a
               href="mailto:tranquanglong0306@gmail.com"
-              className="p-2.5 rounded-xl border border-white/5 bg-white/5 hover:bg-blue-500/10 hover:text-blue-400 hover:border-blue-500/20 text-white/50 transition-all cursor-pointer"
-              aria-label="Email Address gateway"
+              className="p-2.5 rounded border border-white/5 bg-white/5 hover:bg-white/10 hover:text-white text-white/40 transition-all cursor-pointer"
+              aria-label="Email"
             >
               <Mail className="w-4 h-4" />
             </a>
           </div>
 
           <div className="text-center md:text-right">
-            <span className="font-mono text-[9px] text-slate-400 block font-light">
-              © {new Date().getFullYear()} Trần Quang Long. Bản quyền được bảo lưu.
+            <span className="font-mono text-[9px] text-white/40 block font-light">
+              © {new Date().getFullYear()} Trần Quang Long.
             </span>
-            <span className="font-mono text-[8px] text-blue-400/60 uppercase tracking-widest block mt-1">
-              Vận hành bằng Trí tuệ Nhân tạo Giáo dục Thực nghiệm
+            <span className="font-mono text-[8px] text-white/30 uppercase tracking-widest block mt-1">
+              EDITORIAL BLOG EXPERIENCE
             </span>
           </div>
         </div>
