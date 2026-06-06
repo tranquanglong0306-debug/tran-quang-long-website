@@ -272,7 +272,14 @@ body {
   letter-spacing: -0.02em;
 }
 .markdown-body h3  { font-size: 1.2rem; }
-.markdown-body p   { margin-bottom: 1.2rem; }
-.markdown-body ul  { list-style-type: square; padding-left: 1.4rem; margin-bottom: 1.1rem; }
-.markdown-body li  { margin-bottom: 0.6rem; }
 .markdown-body strong { color: #fff; }
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+.scrollbar-none {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}

@@ -6,6 +6,7 @@ export interface BlogPost {
   readTime: string;
   summary: string;
   content: string;
+  featured?: boolean;
 }
 
 export interface Resource {

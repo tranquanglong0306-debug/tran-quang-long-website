@@ -1,110 +1,14 @@
-export const aboutTimeline = [
-  {
-    year: "2024 - Hiện tại",
-    role: "Cán bộ Quản lý Đời sống Học sinh (Student Life Officer / Supervisor)",
-    institution: "Trường Trung học Quốc tế Elite",
-    description: "Giám sát kỷ luật học sinh, phát triển văn hóa học đường tích cực và tham vấn cho học sinh trung học bằng các giao thức Công lý Phục hồi (Restorative Justice) cùng phương pháp hòa giải mâu thuẫn vòng tròn.",
-    tags: ["Quản lý Lãnh đạo", "Kỷ luật Tích cực", "Sức khỏe Tâm lý Học sinh"]
-  },
-  {
-    year: "2024 - Hiện tại",
-    role: "Học viên Thạc sĩ Ngôn ngữ học Ứng dụng (Applied Linguistics)",
-    institution: "Học viện Sau đại học về Ngôn ngữ & Sư phạm",
-    description: "Thực hiện nghiên cứu chuyên sâu về Thụ đắc Ngôn ngữ Thứ hai (SLA), năng lực giao tiếp xã hội - nhận thức, và việc ứng dụng AI để giàn giáo hỗ trợ giảng dạy ngôn ngữ.",
-    tags: ["Ngôn ngữ học Ứng dụng", "Thuyết SLA", "AI trong Giáo dục"]
-  },
-  {
-    year: "2021 - 2024",
-    role: "Cố vấn Giáo dục Cấp cao & Trưởng nhóm Điều phối Hoạt động",
-    institution: "Học viện Song ngữ Toàn cầu",
-    description: "Thiết kế giáo trình giao tiếp dựa trên nhiệm vụ thực tế (task-based curriculum), điều hành diễn đàn hùng biện song ngữ và xây dựng khung quản lý ký túc xá an toàn, hòa nhập.",
-    tags: ["Định hướng SLA", "Hoạt động Ngoại khóa", "Nghiên cứu Liên văn hóa"]
-  }
-];
+import { BlogPost } from "./types";
 
-export const competencies = [
-  {
-    id: "student-management",
-    title: "Quản lý Học sinh",
-    description: "Xây dựng các hệ thống giám sát khuôn viên trường, cơ cấu ca trực của quản lý bán trú/nội trú và các quy tắc ranh giới chủ động nhằm đảm bảo an toàn tuyệt đối cho học sinh quốc tế.",
-    iconName: "ShieldAlert",
-    color: "from-slate-700 via-slate-800 to-slate-900"
-  },
-  {
-    id: "positive-discipline",
-    title: "Kỷ luật Tích cực",
-    description: "Thay thế các hình thức xử phạt trừng phạt truyền thống bằng vòng tròn Công lý Phục hồi, thỏa thuận tự điều chỉnh hành vi và các hệ thống phản hồi mang tính giáo dục mang tính xây dựng.",
-    iconName: "HeartHandshake",
-    color: "from-blue-700 via-indigo-900 to-slate-900"
-  },
-  {
-    id: "student-wellbeing",
-    title: "Sức khỏe Học đường",
-    description: "Phối hợp chặt chẽ với các chuyên gia tâm lý học đường để tổ chức kiểm tra tâm lý - cảm xúc định kỳ, hội thảo phòng chống bạo lực học đường và xây dựng các vùng an toàn giao tiếp không rào cản ngôn ngữ.",
-    iconName: "Sparkles",
-    color: "from-slate-800 via-blue-950 to-slate-900"
-  },
-  {
-    id: "school-culture",
-    title: "Phát triển Văn hóa Học đường",
-    description: "Tổ chức các lễ hội nghệ thuật đa văn hóa, diễn đàn học sinh, vòng tròn chia sẻ tại sảnh ký túc xá và các sáng kiến cố vấn đồng đẳng do học sinh dẫn dắt nhằm tăng cường tính gắn kết.",
-    iconName: "Users",
-    color: "from-indigo-950 via-slate-800 to-blue-900"
-  },
-  {
-    id: "educational-leadership",
-    title: "Lãnh đạo Giáo dục",
-    description: "Đào tạo đội ngũ hỗ trợ nội trú, biên soạn báo cáo phân tích sự phát triển của học sinh và cố vấn cho Ban Giám hiệu về cải cách cơ cấu hỗ trợ đời sống học sinh.",
-    iconName: "Briefcase",
-    color: "from-slate-900 via-blue-900 to-indigo-950"
-  },
-  {
-    id: "ai-in-education",
-    title: "SLA & AI trong Giáo dục",
-    description: "Kết hợp các công cụ hỗ trợ giao tiếp nhận thức với mô hình phân tích ngôn ngữ của Gemini nhằm hỗ trợ học sinh học ngôn ngữ thứ hai tự tin viết báo cáo học thuật, biên bản và ghi chép hành vi.",
-    iconName: "Terminal",
-    color: "from-blue-950 via-indigo-950 to-slate-900"
-  }
-];
-
-export const resourcesList = [
-  {
-    id: "res-1",
-    title: "Sách hướng dẫn Hòa giải Vòng tròn Phục hồi",
-    type: "Tài liệu PDF",
-    size: "1.2 MB",
-    downloads: "420+ lượt tải",
-    description: "Bao gồm kịch bản đối thoại vòng tròn, bộ quy tắc thẻ nói và các biểu mẫu phản hồi hành vi dành cho học sinh trung học.",
-    fileContents: "https://example.com/mock-restorative-dispute-circle-handbook.pdf"
-  },
-  {
-    id: "res-2",
-    title: "Khung Kỷ luật Tích cực trong Lớp học",
-    type: "Ma trận DOCX",
-    size: "820 KB",
-    downloads: "210+ lượt tải",
-    description: "Bảng quy chiếu tích hợp khớp các hành vi vi phạm ở mức độ nhẹ/trung bình với các hoạt động học tập nhận thức thay vì hình phạt cấm túc thông thường.",
-    fileContents: "https://example.com/mock-positive-discipline-classroom-protocols.docx"
-  },
-  {
-    id: "res-3",
-    title: "Phiếu đánh giá Năng lực Giao tiếp SLA",
-    type: "Bảng tính XLSX",
-    size: "640 KB",
-    downloads: "150+ lượt tải",
-    description: "Bảng theo dõi đo lường sự tương tác xã hội của học sinh, tần suất hình thành cặp nhóm và lưu lượng giao tiếp thực tế tại sảnh sinh hoạt chung.",
-    fileContents: "https://example.com/mock-sla-communicative-competence.xlsx"
-  }
-];
-
-export const mockBlogs = [
+export const mockBlogs: BlogPost[] = [
   {
     id: "post-1",
     title: "Ứng dụng Công lý Phục hồi trong Lớp học Quốc tế",
-    category: "Kỷ luật Tích cực",
+    category: "Student Life",
     date: "Tháng 6, 2026",
     readTime: "5 phút đọc",
     summary: "Cách thức cán bộ giám sát và giáo viên có thể xây dựng lòng tin, giảm thiểu các hành vi tiêu cực lặp lại thông qua kỹ thuật đối thoại vòng tròn thay vì xử phạt cứng nhắc.",
+    featured: true,
     content: `## Ứng dụng Công lý Phục hồi trong Lớp học Quốc tế
 
 Trong môi trường trường quốc tế đa văn hóa và áp lực cao, các hình phạt hành chính truyền thống thường chỉ giải quyết được phần ngọn mà bỏ qua nguyên nhân cốt lõi của sự bất đồng giao tiếp.
@@ -120,12 +24,13 @@ Tại các khối lớp trung học, tôi áp dụng cấu trúc hội nghị h�
   },
   {
     id: "post-2",
-    title: "Thuyết Thụ đắc Ngôn ngữ Thứ hai (SLA) & Sức khỏe Học đường",
-    category: "Ngôn ngữ học Ứng dụng",
+    title: "Stephen Krashen và Giả thuyết Bộ lọc Tình cảm trong Ký túc xá",
+    category: "Applied Linguistics",
     date: "Tháng 5, 2026",
     readTime: "7 phút đọc",
     summary: "Phân tích tầm ảnh hưởng từ nền tảng ngôn ngữ của học sinh tới sự tương tác xã hội, mức độ tự tin và tính hòa nhập hệ thống của học sinh nội trú quốc tế.",
-    content: `## Thuyết Thụ đắc Ngôn ngữ Thứ hai (SLA) & Sức khỏe Học đường
+    featured: true,
+    content: `## Stephen Krashen và Giả thuyết Bộ lọc Tình cảm trong Ký túc xá
 
 Trong học thuyết về Ngôn ngữ của Stephen Krashen, cụ thể là **Giả thuyết Bộ lọc Tình cảm (Affective Filter Hypothesis)**, trạng thái lo âu cao, tự ti hoặc căng thẳng học đường sẽ tạo nên rào cản nhận thức ngăn cản ngôn ngữ đi vào não bộ.
 
@@ -136,12 +41,13 @@ Là một Cán bộ Quản lý Đời sống Học sinh, tôi trực tiếp quan
   },
   {
     id: "post-3",
-    title: "Quy chuẩn Soạn thảo Báo cáo Học đường Đồng thuận & Nhân văn",
-    category: "Lãnh đạo Giáo dục",
+    title: "Tối ưu hóa Báo cáo Học tập đồng thuận bằng Phương pháp 'Kẹp bánh mì'",
+    category: "Educational Technology",
     date: "Tháng 4, 2026",
     readTime: "4 phút đọc",
     summary: "Chiến lược thông tin phản hồi hành vi hoặc chuyên cần nhạy cảm đến phụ huynh một cách tích cực, mang tính hợp tác chặt chẽ.",
-    content: `## Quy chuẩn Soạn thảo Báo cáo Học đường Đồng thuận & Nhân văn
+    featured: true,
+    content: `## Tối ưu hóa Báo cáo Học tập đồng thuận bằng Phương pháp 'Kẹp bánh mì'
 
 Gửi báo cáo cho phụ huynh là một trong những điểm xoay chiều mạnh mẽ nhất trong tiến trình cố vấn học sinh. Một giọng điệu phán xét dễ kích hoạt trạng thái phòng thủ từ phụ huynh, ngược lại nhận xét quá mơ hồ sẽ không thúc đẩy sự thay đổi.
 
@@ -149,5 +55,34 @@ Gửi báo cáo cho phụ huynh là một trong những điểm xoay chiều m�
 1. **Nền tảng của sự Ghi nhận**: Bắt đầu bằng việc chỉ nỗ lực hoặc điểm mạnh xã hội cụ thể của học sinh.
 2. **Xác định Khoảng trống cần Hoàn thiện**: Mô tả khách quan hành vi cần cải thiện thay vì dùng các từ phán xét nhạy cảm.
 3. **Lời mời hợp tác phục hồi**: Đề xuất cụ thể một kế hoạch hỗ trợ chung mà phụ huynh thế có thể đồng hành cùng nhà trường tại nhà.`
+  },
+  {
+    id: "post-4",
+    title: "Ứng dụng LLM làm Giàn giáo Học tập Ngôn ngữ (Scaffolding)",
+    category: "AI in Education",
+    date: "Tháng 3, 2026",
+    readTime: "6 phút đọc",
+    summary: "Cách tận dụng các mô hình ngôn ngữ lớn làm trợ thủ đắc lực giúp học sinh vượt qua rào cản viết học thuật và tự động hóa ghi chép.",
+    featured: false,
+    content: `## Ứng dụng LLM làm Giàn giáo Học tập Ngôn ngữ
+
+Sử dụng AI trong giáo dục không chỉ là để chấm điểm tự động hay phát hiện đạo văn. Sức mạnh thực sự nằm ở khả năng làm giàn giáo hỗ trợ học tập (scaffolding) cá nhân hóa cho từng học sinh.
+
+#### AI như một Người đối thoại kiên nhẫn
+- Cung cấp phản hồi ngữ pháp theo thời gian thực.
+- Gợi ý từ vựng theo ngữ cảnh đàm thoại.
+- Giúp giảm bộ lọc lo âu khi học sinh giao tiếp 1-1 với máy trước khi nói trước lớp.`
+  },
+  {
+    id: "post-5",
+    title: "Xây dựng Văn hóa Ký túc xá tự quản & Tôn trọng sự Đa dạng",
+    category: "Student Life",
+    date: "Tháng 2, 2026",
+    readTime: "5 phút đọc",
+    summary: "Thiết lập quy chế tự quản và cách tổ chức các buổi sinh hoạt chung định kỳ để học sinh quốc tế tự giải quyết mâu thuẫn nội bộ.",
+    featured: false,
+    content: `## Xây dựng Văn hóa Ký túc xá tự quản & Tôn trọng sự Đa dạng
+
+Cuộc sống nội trú đòi hỏi sự hòa nhập cao giữa các nền văn hóa khác nhau. Bằng cách trao quyền tự quản cho học sinh, chúng ta tạo dựng một môi trường nơi tính tự lập và sự tôn trọng lẫn nhau được đề cao.`
   }
 ];
