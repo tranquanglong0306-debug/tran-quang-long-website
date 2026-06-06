@@ -1,11 +1,22 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore, doc, getDocFromServer } from 'firebase/firestore';
-import firebaseConfig from '../../firebase-applet-config.json';
+
+const firebaseConfig = {
+  projectId: "mesmerizing-craft-68gvj",
+  appId: "1:685101545562:web:55eec9e5347bd56a514063",
+  apiKey: "AIzaSyDZ2AUFtNuusuPKthYWxncsGOp7fQae-WY",
+  authDomain: "mesmerizing-craft-68gvj.firebaseapp.com",
+  firestoreDatabaseId: "ai-studio-963f1088-955c-4777-9e2e-a23f9818698f",
+  storageBucket: "mesmerizing-craft-68gvj.firebasestorage.app",
+  messagingSenderId: "685101545562",
+  measurementId: ""
+};
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app, firebaseConfig.firestoreDatabaseId); // CRITICAL
 export const auth = getAuth(app);
+
 
 export enum OperationType {
   CREATE = 'create',

@@ -8,7 +8,7 @@ import WebGLErrorBoundary from "./components/ui/WebGLErrorBoundary";
 import { SHAPES } from "./lib/constants";
 import { BlogPost } from "./types";
 import { X } from "lucide-react";
-import ReactMarkdown from "react-markdown";
+import MarkdownRenderer from "./components/ui/MarkdownRenderer";
 
 export const App: React.FC = () => {
   const [activeSection, setActiveSection] = useState<string | null>(null);
@@ -361,7 +361,7 @@ export const App: React.FC = () => {
               </h1>
 
               <div className="prose-custom">
-                <ReactMarkdown>{selectedBlog.content}</ReactMarkdown>
+                <MarkdownRenderer>{selectedBlog.content}</MarkdownRenderer>
               </div>
             </motion.div>
           </div>

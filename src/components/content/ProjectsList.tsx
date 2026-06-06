@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Sparkles, Loader2 } from "lucide-react";
-import ReactMarkdown from "react-markdown";
+import MarkdownRenderer from "../ui/MarkdownRenderer";
 
 interface ProjectItem {
   title: string;
@@ -290,7 +290,7 @@ export const ProjectsList: React.FC<ProjectsListProps> = ({ projects }) => {
                 Gemini Advisory Output
               </span>
               <div className="prose-custom text-xs">
-                <ReactMarkdown>{aiResult}</ReactMarkdown>
+                <MarkdownRenderer>{aiResult}</MarkdownRenderer>
               </div>
             </div>
           )}
