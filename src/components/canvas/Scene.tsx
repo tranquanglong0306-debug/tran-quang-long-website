@@ -1,8 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Preload } from "@react-three/drei";
+import { Preload, Sparkles } from "@react-three/drei";
 import Shape from "./Shape";
-import Particles from "./Particles";
 import CameraRig from "./CameraRig";
 import { SHAPES } from "../../lib/constants";
 import * as THREE from "three";
@@ -84,8 +83,8 @@ export const Scene: React.FC<SceneProps> = ({
         <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} castShadow />
         <pointLight position={[-10, -10, -10]} intensity={0.5} color="#c2410c" />
 
-        {/* Floating background particles */}
-        <Particles />
+        {/* Floating background sparkles (built-in Drei component, zero load issues) */}
+        <Sparkles count={180} scale={15} size={1.6} speed={0.4} color="#c2410c" />
 
         {/* Custom Group wrapping shapes to receive wheel rotation */}
         <InteractiveGroup

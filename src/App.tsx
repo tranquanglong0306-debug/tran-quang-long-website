@@ -13,7 +13,6 @@ import MarkdownRenderer from "./components/ui/MarkdownRenderer";
 export const App: React.FC = () => {
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const [hoveredSection, setHoveredSection] = useState<string | null>(null);
-  const [webglSupported, setWebglSupported] = useState(true);
   const [selectedBlog, setSelectedBlog] = useState<BlogPost | null>(null);
   
   // Loading Preloader states
@@ -21,20 +20,6 @@ export const App: React.FC = () => {
   const [loadingProgress, setLoadingProgress] = useState(0);
 
   const cursorRef = useRef<HTMLDivElement>(null);
-
-  // WebGL Support Detection
-  useEffect(() => {
-    try {
-      const canvas = document.createElement("canvas");
-      const support = !!(
-        window.WebGLRenderingContext &&
-        (canvas.getContext("webgl") || canvas.getContext("experimental-webgl"))
-      );
-      setWebglSupported(support);
-    } catch (e) {
-      setWebglSupported(false);
-    }
-  }, []);
 
   // Simulate loader progress
   useEffect(() => {
@@ -261,21 +246,16 @@ export const App: React.FC = () => {
       </div>
 
       {/* 3D WebGL Canvas Scene or Fallback HTML */}
-      {webglSupported ? (
-        <WebGLErrorBoundary fallback={webglFallbackLayout}>
-          <Suspense fallback={<Loader />}>
-            <Scene
-              activeSection={activeSection}
-              setActiveSection={setActiveSection}
-              hoveredSection={hoveredSection}
-              setHoveredSection={setHoveredSection}
-            />
-          </Suspense>
-        </WebGLErrorBoundary>
-      ) : (
-        // WebGL Fallback HTML layout
-        webglFallbackLayout
-      )}
+      <WebGLErrorBoundary fallback={webglFallbackLayout}>
+        <Suspense fallback={<Loader />}>
+          <Scene
+            activeSection={activeSection}
+            setActiveSection={setActiveSection}
+            hoveredSection={hoveredSection}
+            setHoveredSection={setHoveredSection}
+          />
+        </Suspense>
+      </WebGLErrorBoundary>
 
       {/* Side-Over HUD Navigation Menu (Bottom Right) */}
       <nav
