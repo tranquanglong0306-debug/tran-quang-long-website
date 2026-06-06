@@ -1,0 +1,196 @@
+@import "tailwindcss";
+
+:root {
+  /* Background */
+  --bg-primary: #0b0b0c;        /* Deep charcoal */
+  --bg-secondary: #1a1410;      /* Warm dark */
+  --bg-panel: rgba(11, 11, 12, 0.95);
+  
+  /* Text */
+  --text-primary: #ffffff;
+  --text-secondary: #a3a3a3;
+  --text-muted: #6b6b6b;
+  
+  /* Accent */
+  --accent: #c2410c;            /* Terracotta - chủ đạo */
+  --accent-hover: #ea580c;
+  --accent-glow: rgba(194, 65, 12, 0.4);
+  
+  /* Shapes colors (mỗi shape 1 màu) */
+  --shape-about: #c2410c;
+  --shape-work: #e8dcc4;
+  --shape-skills: #3a3a3a;
+  --shape-philosophy: #6b2a1a;
+  --shape-journal: #2d4a3e;
+  --shape-contact: #1a1a1a;
+  
+  /* Utilities */
+  --border: rgba(255, 255, 255, 0.1);
+  --shadow: 0 0 60px rgba(194, 65, 12, 0.25);
+
+  /* Spaces */
+  --space-1: 8px;   --space-2: 16px;   --space-3: 24px;
+  --space-4: 32px;  --space-5: 48px;   --space-6: 64px;
+  --space-7: 96px;  --space-8: 128px;  --space-9: 192px;
+}
+
+@theme {
+  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Instrument Serif", serif;
+
+  --color-bg-dark: var(--bg-primary);
+  --color-fg-light: var(--text-primary);
+  --color-gray-muted: var(--text-muted);
+  --color-gray-light: var(--text-secondary);
+  --color-gray-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+}
+
+@layer utilities {
+  /* Hide scrollbar utility */
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .num-tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Typography Scales as defined in the request */
+.text-display {
+  font-family: var(--font-display), serif;
+  font-size: clamp(60px, 11vw, 160px);
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.text-display-italic {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.h1 {
+  font-family: var(--font-display), serif;
+  font-size: clamp(48px, 7vw, 88px);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+}
+
+.h2 {
+  font-family: var(--font-display), serif;
+  font-size: clamp(32px, 5vw, 56px);
+  line-height: 1.0;
+}
+
+.h3 {
+  font-family: var(--font-display), serif;
+  font-size: 24px;
+  line-height: 1.1;
+}
+
+.body {
+  font-family: var(--font-sans), sans-serif;
+  font-size: clamp(16px, 2.5vw, 18px);
+  line-height: 1.65;
+  letter-spacing: 0;
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+
+.meta {
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+/* Base Body Styles using theme variables */
+body {
+  background-color: var(--bg-primary);
+  background-image: radial-gradient(circle at top right, var(--bg-secondary) 0%, var(--bg-primary) 70%);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+/* 3D Focal Text styling in center */
+.center-hero-text {
+  font-family: var(--font-display);
+  font-size: clamp(70px, 15vw, 220px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 0.9;
+  color: var(--text-primary);
+  text-transform: uppercase;
+}
+
+/* Custom Markdown Rendering in Panel */
+.prose-custom {
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.7;
+}
+.prose-custom h3 {
+  font-family: var(--font-display);
+  font-size: 24px;
+  color: var(--text-primary);
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.prose-custom p {
+  margin-bottom: 1rem;
+}
+.prose-custom ul {
+  list-style-type: square;
+  padding-left: 1.25rem;
+  margin-bottom: 1rem;
+}
+.prose-custom li {
+  margin-bottom: 0.5rem;
+}
+
+/* Cyber grid overlay */
+.cyber-grid {
+  background-size: 80px 80px;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.005) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.005) 1px, transparent 1px);
+  mask-image: radial-gradient(ellipse at center, black, transparent 80%);
+}
+
+/* Custom Cursor */
+#custom-cursor {
+  width: 6px;
+  height: 6px;
+  background-color: var(--accent);
+  box-shadow: 0 0 10px var(--accent-glow);
+  border-radius: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 9999;
+  transition: width 0.15s, height 0.15s, background-color 0.15s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-delay: 0s !important;
+    animation-duration: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-delay: 0s !important;
+    transition-duration: 0s !important;
+    scroll-behavior: auto !important;
+  }
+  #custom-cursor {
+    display: none !important;
+  }
+}
+
