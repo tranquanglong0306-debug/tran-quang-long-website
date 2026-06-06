@@ -4,7 +4,15 @@ import { createServer as createViteServer } from "vite";
 import { GoogleGenAI } from "@google/genai";
 import dotenv from "dotenv";
 
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
+import firebaseConfig from "./firebase-applet-config.json";
+
 dotenv.config();
+
+// Initialize Firebase
+const firebaseApp = initializeApp(firebaseConfig);
+const db = getFirestore(firebaseApp, firebaseConfig.firestoreDatabaseId);
 
 const app = express();
 const PORT = parseInt(process.env.PORT || "3000", 10);
@@ -186,6 +194,28 @@ app.get("/api/blog", (req, res) => {
 
 app.get("/api/resources", (req, res) => {
   res.json(downloadableResources);
+});
+
+app.post("/api/contact", async (req, res): Promise<any> => {
+  const { name, email, message } = req.body;
+  
+  if (!name || !email || !message) {
+    return res.status(400).json({ error: "Missing required fields." });
+  }
+
+  try {
+    await addDoc(collection(db, "contactMessages"), {
+      name,
+      email,
+      subject: "Liên hệ từ Portfolio Active Theory",
+      message,
+      createdAt: new Date()
+    });
+    return res.json({ success: true });
+  } catch (error: any) {
+    console.error("Firebase Error in server.ts:", error);
+    return res.status(500).json({ error: error.message || "Failed to save message." });
+  }
 });
 
 // Vite Middleware Routing Setup
