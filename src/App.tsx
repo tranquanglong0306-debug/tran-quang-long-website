@@ -4,6 +4,7 @@ import Scene from "./components/canvas/Scene";
 import SidePanel from "./components/ui/SidePanel";
 import NavHint from "./components/ui/NavHint";
 import Loader from "./components/ui/Loader";
+import WebGLErrorBoundary from "./components/ui/WebGLErrorBoundary";
 import { SHAPES } from "./lib/constants";
 import { BlogPost } from "./types";
 import { X } from "lucide-react";
@@ -156,6 +157,18 @@ export const App: React.FC = () => {
     },
   };
 
+  const webglFallbackLayout = (
+    <div className="absolute inset-0 z-10 flex flex-col justify-center items-center p-8 bg-[#0B0B0C]">
+      <div className="max-w-md text-center space-y-4 font-sans">
+        <span className="meta text-accent">WebGL Acceleration Not Active</span>
+        <h2 className="h2 text-white">Quang Long Portfolio</h2>
+        <p className="body">
+          Thiết bị hoặc trình duyệt của bạn không hỗ trợ tăng tốc WebGL 3D. Bạn vẫn có thể tương tác đầy đủ nội dung bằng mục lục phía dưới.
+        </p>
+      </div>
+    </div>
+  );
+
   return (
     <div className="relative w-screen h-screen bg-[#0A0A0A] text-white overflow-hidden font-sans select-none">
       {/* Accessibility Preloader Overlay */}
@@ -249,25 +262,19 @@ export const App: React.FC = () => {
 
       {/* 3D WebGL Canvas Scene or Fallback HTML */}
       {webglSupported ? (
-        <Suspense fallback={<Loader />}>
-          <Scene
-            activeSection={activeSection}
-            setActiveSection={setActiveSection}
-            hoveredSection={hoveredSection}
-            setHoveredSection={setHoveredSection}
-          />
-        </Suspense>
+        <WebGLErrorBoundary fallback={webglFallbackLayout}>
+          <Suspense fallback={<Loader />}>
+            <Scene
+              activeSection={activeSection}
+              setActiveSection={setActiveSection}
+              hoveredSection={hoveredSection}
+              setHoveredSection={setHoveredSection}
+            />
+          </Suspense>
+        </WebGLErrorBoundary>
       ) : (
         // WebGL Fallback HTML layout
-        <div className="absolute inset-0 z-10 flex flex-col justify-center items-center p-8 bg-[#0B0B0C]">
-          <div className="max-w-md text-center space-y-4 font-sans">
-            <span className="meta text-accent">WebGL Not Supported</span>
-            <h2 className="h2 text-white">Quang Long Portfolio</h2>
-            <p className="body">
-              Thiết bị hoặc trình duyệt của bạn không hỗ trợ WebGL 3D. Bạn vẫn có thể truy cập đầy đủ nội dung bằng các liên kết phía dưới.
-            </p>
-          </div>
-        </div>
+        webglFallbackLayout
       )}
 
       {/* Side-Over HUD Navigation Menu (Bottom Right) */}
