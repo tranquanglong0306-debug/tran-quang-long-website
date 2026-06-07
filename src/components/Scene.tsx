@@ -64,7 +64,7 @@ export const Scene: React.FC<SceneProps> = ({ isMobile, isTablet }) => {
           type="cube"
           position={[-spacingX, 0, 0]}
           panelName="about"
-          label="About Me"
+          label="Giới thiệu"
           glowColor="rgba(59, 130, 246, 0.5)"
         />
 
@@ -72,7 +72,7 @@ export const Scene: React.FC<SceneProps> = ({ isMobile, isTablet }) => {
           type="torus"
           position={[0, spacingY, 0]}
           panelName="skills"
-          label="Skills"
+          label="Kỹ năng"
           glowColor="rgba(147, 51, 234, 0.5)"
         />
 
@@ -80,7 +80,7 @@ export const Scene: React.FC<SceneProps> = ({ isMobile, isTablet }) => {
           type="icosahedron"
           position={[spacingX, 0, 0]}
           panelName="projects"
-          label="Projects"
+          label="Dự án"
           glowColor="rgba(219, 39, 119, 0.5)"
         />
 
@@ -88,7 +88,7 @@ export const Scene: React.FC<SceneProps> = ({ isMobile, isTablet }) => {
           type="cone"
           position={[0, -spacingY, 0]}
           panelName="contact"
-          label="Contact"
+          label="Liên hệ"
           glowColor="rgba(8, 145, 178, 0.5)"
         />
       </Canvas>

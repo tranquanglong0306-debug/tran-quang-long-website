@@ -48,36 +48,36 @@ export const App: React.FC = () => {
     <div className="absolute inset-0 z-10 flex flex-col justify-center items-center p-8 bg-gradient-to-b from-[#050505] to-[#120722]">
       <div className="max-w-md text-center space-y-6 font-sans">
         <h2 className="text-4xl font-extrabold tracking-tight text-white bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
-          Quang Long Portfolio
+          Hồ sơ Quang Long
         </h2>
         <p className="text-sm text-neutral-400 leading-relaxed">
-          Your browser or device does not support WebGL 3D, or hardware acceleration is inactive. 
-          You can still interact with all sections and features using the directory below.
+          Trình duyệt hoặc thiết bị của bạn không hỗ trợ WebGL 3D, hoặc tính năng tăng tốc phần cứng bị tắt. 
+          Bạn vẫn có thể tương tác với tất cả chuyên mục bằng cách chọn danh mục bên dưới.
         </p>
         <div className="grid grid-cols-2 gap-3 pt-2">
           <button 
             onClick={() => setActivePanel('about')} 
             className="px-4 py-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-blue-500/50 rounded-xl text-xs tracking-wider uppercase font-semibold text-white transition-all cursor-pointer"
           >
-            About Me
+            Giới thiệu
           </button>
           <button 
             onClick={() => setActivePanel('skills')} 
             className="px-4 py-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-purple-500/50 rounded-xl text-xs tracking-wider uppercase font-semibold text-white transition-all cursor-pointer"
           >
-            Skills
+            Kỹ năng
           </button>
           <button 
             onClick={() => setActivePanel('projects')} 
             className="px-4 py-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-pink-500/50 rounded-xl text-xs tracking-wider uppercase font-semibold text-white transition-all cursor-pointer"
           >
-            Projects
+            Dự án
           </button>
           <button 
             onClick={() => setActivePanel('contact')} 
             className="px-4 py-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-cyan-500/50 rounded-xl text-xs tracking-wider uppercase font-semibold text-white transition-all cursor-pointer"
           >
-            Contact
+            Liên hệ
           </button>
         </div>
       </div>
@@ -96,7 +96,7 @@ export const App: React.FC = () => {
           TRAN QUANG LONG
         </h1>
         <p className="text-[9px] font-bold tracking-[0.3em] text-neutral-500 uppercase">
-          Student Life & Applied Linguistics
+          Đời sống Học sinh & Ngôn ngữ học Ứng dụng
         </p>
       </header>
 
@@ -104,7 +104,7 @@ export const App: React.FC = () => {
       <div className="absolute top-6 right-6 z-30 pointer-events-none text-right flex flex-col space-y-1 hidden sm:flex">
         <span className="text-[9px] tracking-[0.2em] text-neutral-500 uppercase font-bold flex items-center justify-end gap-1.5">
           <Sparkles className="w-3 h-3 text-purple-400" />
-          Active Space Experience
+          Trải nghiệm Không gian 3D
         </span>
         <span className="text-[10px] text-neutral-400 font-mono tracking-wider">
           LOC: 10.7769° N, 106.7009° E
@@ -129,7 +129,7 @@ export const App: React.FC = () => {
               Quang Long
             </h2>
             <p className="text-[10px] sm:text-xs tracking-[0.4em] text-neutral-400 uppercase font-bold text-center">
-              P O R T F O L I O
+              HỒ SƠ NĂNG LỰC
             </p>
           </motion.div>
         </motion.div>
@@ -138,7 +138,7 @@ export const App: React.FC = () => {
       {/* Interactive Helper Text HUD (Bottom Center) */}
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 pointer-events-none flex items-center space-x-1.5 text-[10px] tracking-[0.25em] text-neutral-500 uppercase font-bold">
         <HelpCircle className="w-3.5 h-3.5 text-neutral-500" />
-        <span>Click orbiting shapes to explore</span>
+        <span>Click các hình khối để khám phá</span>
       </div>
 
       {/* 3D WebGL Canvas Scene */}

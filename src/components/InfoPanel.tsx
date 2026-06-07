@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   X, User, MapPin, Briefcase, Clock, CheckCircle, 
   Mail, Linkedin, Github, Twitter, Send, Code, 
-  Terminal, Server, Globe, BookOpen, ExternalLink, ShieldAlert
+  BookOpen, ExternalLink, ShieldAlert
 } from 'lucide-react';
 import { useAppState } from '../store';
 
@@ -57,7 +57,7 @@ export const InfoPanel: React.FC<InfoPanelProps> = ({ isMobile, isTablet }) => {
         setSubmitStatus('error');
       }
     } catch (err) {
-      console.error('Submit form error:', err);
+      console.error('Lỗi khi gửi form liên hệ:', err);
       setSubmitStatus('error');
     }
   };
@@ -77,13 +77,12 @@ export const InfoPanel: React.FC<InfoPanelProps> = ({ isMobile, isTablet }) => {
         <div className="relative group">
           <div className="absolute inset-0 bg-blue-500 rounded-full blur-md opacity-70 group-hover:opacity-100 transition-opacity duration-300"></div>
           <div className="relative w-28 h-28 rounded-full border-2 border-blue-400 overflow-hidden bg-[#1e293b] flex items-center justify-center">
-            {/* Generate Image mock or simple letter representation */}
             <span className="text-4xl font-bold font-sans text-blue-400 tracking-wider">QL</span>
           </div>
         </div>
         <div>
-          <h3 className="text-2xl font-bold text-white tracking-wide">Tran Quang Long</h3>
-          <p className="text-sm text-blue-400 tracking-wider font-medium uppercase mt-1">Student Life & Applied Linguistics Specialist</p>
+          <h3 className="text-2xl font-bold text-white tracking-wide">Trần Quang Long</h3>
+          <p className="text-sm text-blue-400 tracking-wider font-medium uppercase mt-1">Chuyên gia Đời sống Học sinh & Ngôn ngữ học Ứng dụng</p>
         </div>
       </div>
 
@@ -91,33 +90,33 @@ export const InfoPanel: React.FC<InfoPanelProps> = ({ isMobile, isTablet }) => {
         <div className="flex items-start space-x-3 text-sm">
           <Briefcase className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />
           <div>
-            <span className="text-neutral-400 font-medium">Role: </span>
-            <span className="text-neutral-200">Director of Student Life Operations</span>
+            <span className="text-neutral-400 font-medium">Vai trò: </span>
+            <span className="text-neutral-200">Trưởng bộ phận Đời sống Học sinh (Student Life Director)</span>
           </div>
         </div>
         <div className="flex items-start space-x-3 text-sm">
           <MapPin className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />
           <div>
-            <span className="text-neutral-400 font-medium">Location: </span>
-            <span className="text-neutral-200">Ho Chi Minh City, Vietnam</span>
+            <span className="text-neutral-400 font-medium">Địa điểm: </span>
+            <span className="text-neutral-200">Thành phố Hồ Chí Minh, Việt Nam</span>
           </div>
         </div>
         <div className="flex items-start space-x-3 text-sm">
           <Clock className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />
           <div>
-            <span className="text-neutral-400 font-medium">Availability: </span>
-            <span className="text-emerald-400 font-medium">Open to Research & Institutional Consultations</span>
+            <span className="text-neutral-400 font-medium">Trạng thái: </span>
+            <span className="text-emerald-400 font-medium">Sẵn sàng nghiên cứu & cố vấn giáo dục</span>
           </div>
         </div>
       </div>
 
       <div className="space-y-4 border-t border-white/10 pt-6">
-        <h4 className="text-xs uppercase tracking-[0.2em] text-neutral-400 font-bold">Biography</h4>
+        <h4 className="text-xs uppercase tracking-[0.2em] text-neutral-400 font-bold">Tiểu sử bản thân</h4>
         <p className="text-sm text-neutral-300 leading-relaxed">
-          I am a specialist in student life operations and applied linguistics in international school settings. My administrative philosophy focuses on Restorative Justice and Positive Discipline, creating communities where behavioral correction leads to social-emotional growth.
+          Tôi là một chuyên gia trong lĩnh vực quản trị đời sống học sinh và ngôn ngữ học ứng dụng trong môi trường học đường quốc tế. Triết lý hành chính của tôi tập trung vào Công lý Phục hồi (Restorative Justice) và Kỷ luật Tích cực (Positive Discipline), nhằm xây dựng những cộng đồng nơi sửa đổi hành vi đi kèm với phát triển trí tuệ cảm xúc và xã hội.
         </p>
         <p className="text-sm text-neutral-300 leading-relaxed">
-          Academically, I research how Second Language Acquisition (SLA) theories connect with student well-being, constructing communicative environments that lower the cognitive affective filter. I design structures that help multicultural student bodies collaborate and thrive.
+          Về mặt học thuật, tôi nghiên cứu cách áp dụng các lý thuyết Thụ đắc Ngôn ngữ Thứ hai (SLA) vào cải thiện sức khỏe tinh thần học sinh, thiết lập môi trường giao tiếp thực tế giúp hạ thấp bộ lọc nhận thức (affective filter). Tôi thiết kế các giải pháp hỗ trợ giúp học sinh đa văn hóa cùng cộng tác và phát triển toàn diện.
         </p>
       </div>
     </div>
@@ -127,26 +126,26 @@ export const InfoPanel: React.FC<InfoPanelProps> = ({ isMobile, isTablet }) => {
   const renderSkills = () => {
     const skillCategories = [
       {
-        title: 'Education & Student Life',
+        title: 'Quản trị Giáo dục & Đời sống Học sinh',
         icon: <BookOpen className="w-4 h-4 text-purple-400" />,
         skills: [
-          { name: 'Positive Discipline', level: 95 },
-          { name: 'Restorative Justice', level: 90 },
-          { name: 'Student Well-being Systems', level: 88 },
-          { name: 'Conflict Resolution', level: 92 }
+          { name: 'Kỷ luật Tích cực (Positive Discipline)', level: 95 },
+          { name: 'Công lý Phục hồi (Restorative Justice)', level: 90 },
+          { name: 'Hệ thống Sức khỏe Tinh thần Học sinh', level: 88 },
+          { name: 'Giải quyết Mâu thuẫn (Conflict Resolution)', level: 92 }
         ]
       },
       {
-        title: 'Applied Linguistics',
-        icon: <Globe className="w-4 h-4 text-purple-400" />,
+        title: 'Ngôn ngữ học Ứng dụng',
+        icon: <User className="w-4 h-4 text-purple-400" />,
         skills: [
-          { name: 'SLA Scaffolding', level: 94 },
-          { name: 'Communicative Competence', level: 90 },
-          { name: 'Sociolinguistic Analysis', level: 85 }
+          { name: 'Dàn ý hỗ trợ SLA (SLA Scaffolding)', level: 94 },
+          { name: 'Năng lực Giao tiếp Thực tế', level: 90 },
+          { name: 'Phân tích Ngôn ngữ Xã hội (Sociolinguistics)', level: 85 }
         ]
       },
       {
-        title: 'Technology & Web Stack',
+        title: 'Công nghệ & Lập trình Web',
         icon: <Code className="w-4 h-4 text-purple-400" />,
         skills: [
           { name: 'React & Vite', level: 85 },
@@ -160,7 +159,7 @@ export const InfoPanel: React.FC<InfoPanelProps> = ({ isMobile, isTablet }) => {
     return (
       <div className="space-y-6">
         <p className="text-sm text-neutral-300 leading-relaxed border-b border-white/5 pb-4">
-          A blend of pedagogical expertise, communicative research, and technology to implement modern student administration systems.
+          Sự kết hợp giữa chuyên môn sư phạm, nghiên cứu giao tiếp và ứng dụng công nghệ để quản lý dữ liệu đời sống học sinh hiện đại.
         </p>
 
         <div className="space-y-6">
@@ -199,22 +198,22 @@ export const InfoPanel: React.FC<InfoPanelProps> = ({ isMobile, isTablet }) => {
   const renderProjects = () => {
     const projects = [
       {
-        title: 'Restorative Circles Mediation Suite',
-        desc: 'A web application for international school counselors to manage restorative circles, logging student conversations and signing digital behavioral growth contracts.',
+        title: 'Nền tảng Hỗ trợ Hòa giải Công lý Phục hồi',
+        desc: 'Ứng dụng web dành cho cố vấn học đường trường quốc tế để quản lý các buổi thảo luận vòng tròn, lưu trữ biên bản cam kết sửa đổi hành vi kỹ thuật số.',
         tech: ['React', 'TypeScript', 'Node.js', 'Firebase'],
         demoUrl: '#',
         githubUrl: '#'
       },
       {
-        title: 'SLA Social Lounge Assessment Logger',
-        desc: 'An observation dashboard measuring students\' conversational confidence levels in social lounges to map English language acquisition curves in real time.',
+        title: 'Bảng Đo lường Tốc độ Thụ đắc Ngôn ngữ SLA',
+        desc: 'Bảng theo dõi hành vi tương tác đo lường sự tự tin giao tiếp tiếng Anh của học sinh tại các không gian sinh hoạt tự do để tối ưu hóa bộ lọc cảm xúc.',
         tech: ['Three.js', 'React', 'TailwindCSS', 'Zustand'],
         demoUrl: '#',
         githubUrl: '#'
       },
       {
-        title: 'Glassmorphic 3D Research Repository',
-        desc: 'A visual-first interactive educational archive highlighting papers in applied linguistics, positive discipline frameworks, and curriculum evaluations.',
+        title: 'Kho lưu trữ Nghiên cứu Tương tác 3D',
+        desc: 'Kho tư liệu lưu trữ các bài nghiên cứu về ngôn ngữ học ứng dụng, kỷ luật tích cực và hệ thống khảo thí giáo dục quốc tế dưới giao diện 3D trực quan.',
         tech: ['React Three Fiber', 'Framer Motion', 'Tailwind'],
         demoUrl: '#',
         githubUrl: '#'
@@ -224,7 +223,7 @@ export const InfoPanel: React.FC<InfoPanelProps> = ({ isMobile, isTablet }) => {
     return (
       <div className="space-y-6">
         <p className="text-sm text-neutral-300 leading-relaxed border-b border-white/5 pb-4">
-          Key administrative platforms and interactive systems developed to support student services operations and linguistic analytics.
+          Các dự án và hệ thống quản trị tiêu biểu được phát triển nhằm hỗ trợ dịch vụ học sinh và nghiên cứu dữ liệu ngôn ngữ học.
         </p>
 
         <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-1 scrollbar-thin">
@@ -257,7 +256,7 @@ export const InfoPanel: React.FC<InfoPanelProps> = ({ isMobile, isTablet }) => {
                   className="flex items-center space-x-1.5 text-xs text-neutral-300 hover:text-white font-medium transition-colors"
                 >
                   <ExternalLink className="w-3.5 h-3.5" />
-                  <span>Live Demo</span>
+                  <span>Trải nghiệm</span>
                 </a>
                 <a 
                   href={proj.githubUrl} 
@@ -280,7 +279,7 @@ export const InfoPanel: React.FC<InfoPanelProps> = ({ isMobile, isTablet }) => {
   const renderContact = () => (
     <div className="space-y-6">
       <p className="text-sm text-neutral-300 leading-relaxed">
-        Let's connect! Reach out for guest lecturing, restorative conference design, linguistics research collaboration, or technical feedback.
+        Kết nối với tôi để trao đổi chuyên môn về giảng dạy, xây dựng quy trình kỷ luật tích cực, thiết kế hội nghị phục hồi học đường hoặc cộng tác nghiên cứu.
       </p>
 
       {/* Social Media Links */}
@@ -322,7 +321,7 @@ export const InfoPanel: React.FC<InfoPanelProps> = ({ isMobile, isTablet }) => {
       {/* Contact Form */}
       <form onSubmit={handleFormSubmit} className="space-y-4">
         <div className="space-y-1">
-          <label htmlFor="name" className="text-xs uppercase tracking-wider text-neutral-400 font-bold">Name</label>
+          <label htmlFor="name" className="text-xs uppercase tracking-wider text-neutral-400 font-bold">Họ và tên</label>
           <input 
             type="text" 
             id="name" 
@@ -331,12 +330,12 @@ export const InfoPanel: React.FC<InfoPanelProps> = ({ isMobile, isTablet }) => {
             onChange={handleFormChange}
             required
             className="w-full bg-white/5 border border-white/10 focus:border-cyan-400 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none transition-all"
-            placeholder="John Doe"
+            placeholder="Nguyễn Văn A"
           />
         </div>
         
         <div className="space-y-1">
-          <label htmlFor="email" className="text-xs uppercase tracking-wider text-neutral-400 font-bold">Email</label>
+          <label htmlFor="email" className="text-xs uppercase tracking-wider text-neutral-400 font-bold">Địa chỉ Email</label>
           <input 
             type="email" 
             id="email" 
@@ -345,12 +344,12 @@ export const InfoPanel: React.FC<InfoPanelProps> = ({ isMobile, isTablet }) => {
             onChange={handleFormChange}
             required
             className="w-full bg-white/5 border border-white/10 focus:border-cyan-400 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none transition-all"
-            placeholder="john@example.com"
+            placeholder="example@email.com"
           />
         </div>
 
         <div className="space-y-1">
-          <label htmlFor="message" className="text-xs uppercase tracking-wider text-neutral-400 font-bold">Message</label>
+          <label htmlFor="message" className="text-xs uppercase tracking-wider text-neutral-400 font-bold">Nội dung lời nhắn</label>
           <textarea 
             id="message" 
             name="message" 
@@ -359,21 +358,21 @@ export const InfoPanel: React.FC<InfoPanelProps> = ({ isMobile, isTablet }) => {
             onChange={handleFormChange}
             required
             className="w-full bg-white/5 border border-white/10 focus:border-cyan-400 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none transition-all resize-none"
-            placeholder="Hi Long, I would like to discuss..."
+            placeholder="Tôi muốn cộng tác nghiên cứu về..."
           />
         </div>
 
         {submitStatus === 'success' && (
           <div className="flex items-center space-x-2 text-emerald-400 text-xs bg-emerald-950/20 border border-emerald-900/30 p-3 rounded-lg">
             <CheckCircle className="w-4 h-4 shrink-0" />
-            <span>Thank you! Your message has been sent successfully.</span>
+            <span>Cảm ơn bạn! Lời nhắn của bạn đã được gửi đi thành công.</span>
           </div>
         )}
 
         {submitStatus === 'error' && (
           <div className="flex items-center space-x-2 text-rose-400 text-xs bg-rose-950/20 border border-rose-900/30 p-3 rounded-lg">
             <ShieldAlert className="w-4 h-4 shrink-0" />
-            <span>Failed to send message. Please try again later.</span>
+            <span>Không thể gửi lời nhắn. Vui lòng thử lại sau.</span>
           </div>
         )}
 
@@ -387,7 +386,7 @@ export const InfoPanel: React.FC<InfoPanelProps> = ({ isMobile, isTablet }) => {
           ) : (
             <>
               <Send className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
-              <span>Send Message</span>
+              <span>Gửi lời nhắn</span>
             </>
           )}
         </button>
@@ -407,10 +406,10 @@ export const InfoPanel: React.FC<InfoPanelProps> = ({ isMobile, isTablet }) => {
 
   const getHeaderTitle = () => {
     switch (activePanel) {
-      case 'about': return 'About Me';
-      case 'skills': return 'Skills & Tech';
-      case 'projects': return 'Projects';
-      case 'contact': return 'Get in Touch';
+      case 'about': return 'Giới thiệu';
+      case 'skills': return 'Kỹ năng chuyên môn';
+      case 'projects': return 'Dự án tiêu biểu';
+      case 'contact': return 'Kết nối với tôi';
       default: return '';
     }
   };
@@ -470,7 +469,7 @@ export const InfoPanel: React.FC<InfoPanelProps> = ({ isMobile, isTablet }) => {
                 <button 
                   onClick={handleClose}
                   className="p-1.5 border border-white/10 rounded-lg text-neutral-400 hover:text-white hover:bg-white/5 transition-all duration-200 cursor-pointer"
-                  aria-label="Close panel"
+                  aria-label="Đóng panel"
                 >
                   <X className="w-4.5 h-4.5" />
                 </button>
@@ -487,7 +486,7 @@ export const InfoPanel: React.FC<InfoPanelProps> = ({ isMobile, isTablet }) => {
 
             {/* Footer metadata */}
             <footer className="text-[10px] text-neutral-500 uppercase tracking-widest text-center pt-4 border-t border-white/5">
-              Tran Quang Long Portfolio © 2026
+              Hồ sơ năng lực Trần Quang Long © 2026
             </footer>
           </motion.div>
         </>
