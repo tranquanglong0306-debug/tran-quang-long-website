@@ -13,8 +13,8 @@ export const Scene: React.FC<SceneProps> = ({ isMobile, isTablet }) => {
   const { activePanel } = useAppState();
 
   // Adjust spacing based on screen size
-  const spacingX = isMobile ? 1.6 : isTablet ? 2.2 : 2.8;
-  const spacingY = isMobile ? 1.5 : isTablet ? 1.8 : 2.0;
+  const spacingX = isMobile ? 1.7 : isTablet ? 2.3 : 2.9;
+  const spacingY = isMobile ? 1.4 : isTablet ? 1.8 : 2.1;
 
   return (
     <div className={`absolute inset-0 w-full h-full transition-all duration-700 ${activePanel ? 'blur-sm scale-95 pointer-events-none opacity-40' : 'blur-0 scale-100'}`}>
@@ -59,34 +59,48 @@ export const Scene: React.FC<SceneProps> = ({ isMobile, isTablet }) => {
           speed={1.5} 
         />
 
-        {/* Floating Objects representing sections */}
+        {/* 5 Floating Objects in a Pentagonal Orbit Layout */}
+        
+        {/* 1. About Me (Cube) - Left-most position */}
         <FloatingObject
           type="cube"
-          position={[-spacingX, 0, 0]}
+          position={[-spacingX, spacingY * 0.15, 0]}
           panelName="about"
           label="Giới thiệu"
           glowColor="rgba(59, 130, 246, 0.5)"
         />
 
+        {/* 2. Skills (Torus) - Top-Left position */}
         <FloatingObject
           type="torus"
-          position={[0, spacingY, 0]}
+          position={[-spacingX * 0.5, spacingY * 0.9, 0]}
           panelName="skills"
           label="Kỹ năng"
           glowColor="rgba(147, 51, 234, 0.5)"
         />
 
+        {/* 3. Projects (Icosahedron) - Top-Right position */}
         <FloatingObject
           type="icosahedron"
-          position={[spacingX, 0, 0]}
+          position={[spacingX * 0.5, spacingY * 0.9, 0]}
           panelName="projects"
           label="Dự án"
           glowColor="rgba(219, 39, 119, 0.5)"
         />
 
+        {/* 4. Blog (Dodecahedron) - Right-most position */}
+        <FloatingObject
+          type="dodecahedron"
+          position={[spacingX, spacingY * 0.15, 0]}
+          panelName="blog"
+          label="Blog chia sẻ"
+          glowColor="rgba(245, 158, 11, 0.5)"
+        />
+
+        {/* 5. Contact (Cone) - Bottom-Center position */}
         <FloatingObject
           type="cone"
-          position={[0, -spacingY, 0]}
+          position={[0, -spacingY * 0.85, 0]}
           panelName="contact"
           label="Liên hệ"
           glowColor="rgba(8, 145, 178, 0.5)"

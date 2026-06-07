@@ -134,8 +134,14 @@ export const App: React.FC = () => {
             Dự án
           </button>
           <button 
+            onClick={() => setActivePanel('blog')} 
+            className="px-4 py-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-amber-500/50 rounded-xl text-xs tracking-wider uppercase font-semibold text-white transition-all cursor-pointer"
+          >
+            Blog
+          </button>
+          <button 
             onClick={() => setActivePanel('contact')} 
-            className="px-4 py-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-cyan-500/50 rounded-xl text-xs tracking-wider uppercase font-semibold text-white transition-all cursor-pointer"
+            className="col-span-2 px-4 py-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-cyan-500/50 rounded-xl text-xs tracking-wider uppercase font-semibold text-white transition-all cursor-pointer"
           >
             Liên hệ
           </button>

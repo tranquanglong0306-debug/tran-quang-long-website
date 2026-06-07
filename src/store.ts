@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-type PanelType = 'about' | 'skills' | 'projects' | 'contact' | null;
+type PanelType = 'about' | 'skills' | 'projects' | 'blog' | 'contact' | null;
 
 interface AppState {
   activePanel: PanelType;

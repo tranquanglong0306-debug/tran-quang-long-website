@@ -103,7 +103,7 @@ Là một Cán bộ Quản lý Đời sống Học sinh, tôi chứng kiến tr�
   };
 
   useEffect(() => {
-    if (activePanel === 'about') {
+    if (activePanel === 'blog') {
       fetchBlogPosts();
     }
   }, [activePanel]);
@@ -204,49 +204,55 @@ Là một Cán bộ Quản lý Đời sống Học sinh, tôi chứng kiến tr�
           Về mặt học thuật, tôi nghiên cứu cách áp dụng các lý thuyết Thụ đắc Ngôn ngữ Thứ hai (SLA) vào cải thiện sức khỏe tinh thần học sinh, thiết lập môi trường giao tiếp thực tế giúp hạ thấp bộ lọc nhận thức (affective filter). Tôi thiết kế các giải pháp hỗ trợ giúp học sinh đa văn hóa cùng cộng tác và phát triển toàn diện.
         </p>
       </div>
+    </div>
+  );
 
-      {/* Educational & Research Posts Section */}
-      <div className="space-y-4 border-t border-white/10 pt-6">
-        <h4 className="text-xs uppercase tracking-[0.2em] text-neutral-400 font-bold flex items-center gap-1.5">
-          <FileText className="w-4 h-4 text-blue-400" />
-          Bài viết Giáo dục & Nghiên cứu
-        </h4>
-        
-        {loadingPosts ? (
-          <div className="flex items-center justify-center py-6">
-            <div className="w-5 h-5 border-2 border-blue-400 border-t-transparent rounded-full animate-spin" />
-          </div>
-        ) : posts.length === 0 ? (
-          <p className="text-xs text-neutral-500 italic">Chưa có bài viết nào được đăng.</p>
-        ) : (
-          <div className="space-y-3">
-            {posts.map((post) => (
-              <div 
-                key={post.id}
-                onClick={() => setSelectedPost(post)}
-                className="bg-white/5 border border-white/5 hover:border-blue-500/30 rounded-xl p-4 transition-all duration-300 cursor-pointer hover:bg-white/[0.08] group"
-              >
-                <div className="flex items-center gap-2 mb-1.5">
-                  <span className="text-[9px] bg-blue-950/40 text-blue-300 px-2 py-0.5 rounded border border-blue-900/30 font-medium font-sans">
-                    {post.category}
-                  </span>
-                  <span className="text-[9px] text-neutral-500 font-mono">{post.date}</span>
-                </div>
-                <h5 className="text-xs font-bold text-white group-hover:text-blue-400 transition-colors line-clamp-1">
-                  {post.title}
-                </h5>
-                <p className="text-[11px] text-neutral-400 leading-relaxed line-clamp-2 mt-1 font-sans">
-                  {post.summary}
-                </p>
-                <div className="flex items-center gap-1 text-[10px] text-blue-400 font-semibold mt-2.5 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <span>Xem chi tiết</span>
-                  <ArrowRight className="w-3 h-3" />
-                </div>
+  // Render Blog section
+  const renderBlog = () => (
+    <div className="space-y-6">
+      <p className="text-sm text-neutral-300 leading-relaxed border-b border-white/5 pb-4 font-sans">
+        Nơi chia sẻ thông tin, các bài viết nghiên cứu và tài liệu thực hành về quản lý đời sống học sinh và ngôn ngữ học ứng dụng.
+      </p>
+
+      {loadingPosts ? (
+        <div className="flex flex-col items-center justify-center py-20 space-y-2">
+          <div className="w-6 h-6 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" />
+          <span className="text-xs text-neutral-500 font-mono">Đang tải bài viết...</span>
+        </div>
+      ) : posts.length === 0 ? (
+        <div className="text-center py-20 text-neutral-500 border border-dashed border-white/10 rounded-2xl">
+          Chưa có bài viết nào được đăng.
+        </div>
+      ) : (
+        <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-1 scrollbar-thin">
+          {posts.map((post) => (
+            <div 
+              key={post.id}
+              onClick={() => setSelectedPost(post)}
+              className="bg-white/5 border border-white/10 hover:border-amber-500/50 rounded-xl p-5 transition-all duration-300 cursor-pointer hover:bg-white/[0.08] group shadow-lg"
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-[9px] bg-amber-950/40 text-amber-300 px-2 py-0.5 rounded border border-amber-900/30 font-medium font-sans">
+                  {post.category}
+                </span>
+                <span className="text-[9px] text-neutral-500 font-mono font-sans">
+                  {post.date} · {post.readTime}
+                </span>
               </div>
-            ))}
-          </div>
-        )}
-      </div>
+              <h4 className="text-sm font-bold text-white group-hover:text-amber-400 transition-colors duration-300">
+                {post.title}
+              </h4>
+              <p className="text-xs text-neutral-300 mt-2 leading-relaxed font-sans line-clamp-2">
+                {post.summary}
+              </p>
+              <div className="flex items-center gap-1 text-[10px] text-amber-400 font-bold mt-3.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                <span>Đọc bài viết</span>
+                <ArrowRight className="w-3 h-3" />
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 
@@ -527,6 +533,7 @@ Là một Cán bộ Quản lý Đời sống Học sinh, tôi chứng kiến tr�
       case 'about': return <User className="w-6 h-6 text-blue-400" />;
       case 'skills': return <Code className="w-6 h-6 text-purple-400" />;
       case 'projects': return <Github className="w-6 h-6 text-pink-400" />;
+      case 'blog': return <FileText className="w-6 h-6 text-amber-400" />;
       case 'contact': return <Mail className="w-6 h-6 text-cyan-400" />;
       default: return null;
     }
@@ -537,6 +544,7 @@ Là một Cán bộ Quản lý Đời sống Học sinh, tôi chứng kiến tr�
       case 'about': return 'Giới thiệu';
       case 'skills': return 'Kỹ năng chuyên môn';
       case 'projects': return 'Dự án tiêu biểu';
+      case 'blog': return 'Blog chia sẻ';
       case 'contact': return 'Kết nối với tôi';
       default: return '';
     }
@@ -547,6 +555,7 @@ Là một Cán bộ Quản lý Đời sống Học sinh, tôi chứng kiến tr�
       case 'about': return 'border-blue-500/25';
       case 'skills': return 'border-purple-500/25';
       case 'projects': return 'border-pink-500/25';
+      case 'blog': return 'border-amber-500/25';
       case 'contact': return 'border-cyan-500/25';
       default: return 'border-white/20';
     }
@@ -557,6 +566,7 @@ Là một Cán bộ Quản lý Đời sống Học sinh, tôi chứng kiến tr�
       case 'about': return 'shadow-[0_0_50px_rgba(59,130,246,0.15)]';
       case 'skills': return 'shadow-[0_0_50px_rgba(147,51,234,0.15)]';
       case 'projects': return 'shadow-[0_0_50px_rgba(219,39,119,0.15)]';
+      case 'blog': return 'shadow-[0_0_50px_rgba(245,158,11,0.15)]';
       case 'contact': return 'shadow-[0_0_50px_rgba(8,145,178,0.15)]';
       default: return 'shadow-2xl';
     }
@@ -608,6 +618,7 @@ Là một Cán bộ Quản lý Đời sống Học sinh, tôi chứng kiến tr�
                 {activePanel === 'about' && renderAbout()}
                 {activePanel === 'skills' && renderSkills()}
                 {activePanel === 'projects' && renderProjects()}
+                {activePanel === 'blog' && renderBlog()}
                 {activePanel === 'contact' && renderContact()}
               </div>
             </div>

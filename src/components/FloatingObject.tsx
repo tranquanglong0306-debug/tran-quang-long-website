@@ -5,9 +5,9 @@ import * as THREE from 'three';
 import { useAppState } from '../store';
 
 interface FloatingObjectProps {
-  type: 'cube' | 'torus' | 'icosahedron' | 'cone';
+  type: 'cube' | 'torus' | 'icosahedron' | 'cone' | 'dodecahedron';
   position: [number, number, number];
-  panelName: 'about' | 'skills' | 'projects' | 'contact';
+  panelName: 'about' | 'skills' | 'projects' | 'blog' | 'contact';
   label: string;
   glowColor: string;
 }
@@ -29,6 +29,7 @@ export const FloatingObject: React.FC<FloatingObjectProps> = ({
       case 'about': return '#3b82f6'; // blue
       case 'skills': return '#a855f7'; // purple
       case 'projects': return '#ec4899'; // pink
+      case 'blog': return '#f59e0b'; // amber/orange
       case 'contact': return '#06b6d4'; // cyan
       default: return '#ffffff';
     }
@@ -84,6 +85,8 @@ export const FloatingObject: React.FC<FloatingObjectProps> = ({
         return <torusGeometry args={[0.45, 0.18, 16, 100]} />;
       case 'icosahedron':
         return <icosahedronGeometry args={[0.6, 0]} />;
+      case 'dodecahedron':
+        return <dodecahedronGeometry args={[0.55, 0]} />;
       case 'cone':
         return <coneGeometry args={[0.45, 0.9, 32]} />;
       default:
