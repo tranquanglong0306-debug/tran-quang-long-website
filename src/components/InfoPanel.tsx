@@ -3,9 +3,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   X, User, MapPin, Briefcase, Clock, CheckCircle, 
   Mail, Linkedin, Github, Twitter, Send, Code, 
-  BookOpen, ExternalLink, ShieldAlert
+  BookOpen, ExternalLink, ShieldAlert, FileText, ArrowRight
 } from 'lucide-react';
 import { useAppState } from '../store';
+import { db } from '../lib/firebase';
+import { collection, getDocs, query, orderBy, Timestamp, addDoc } from 'firebase/firestore';
+import MarkdownRenderer from './ui/MarkdownRenderer';
 
 interface InfoPanelProps {
   isMobile: boolean;
@@ -17,10 +20,92 @@ export const InfoPanel: React.FC<InfoPanelProps> = ({ isMobile, isTablet }) => {
   const [formState, setFormState] = useState({ name: '', email: '', message: '' });
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
+  // Blog states
+  const [posts, setPosts] = useState<any[]>([]);
+  const [loadingPosts, setLoadingPosts] = useState(false);
+  const [selectedPost, setSelectedPost] = useState<any | null>(null);
+
   // Reset form when panel switches
   useEffect(() => {
     setFormState({ name: '', email: '', message: '' });
     setSubmitStatus('idle');
+  }, [activePanel]);
+
+  // Fetch blog posts from Firestore
+  const fetchBlogPosts = async () => {
+    setLoadingPosts(true);
+    try {
+      const q = query(collection(db, 'blogPosts'), orderBy('createdAt', 'desc'));
+      const querySnapshot = await getDocs(q);
+      const fetched: any[] = [];
+      querySnapshot.forEach((docSnap) => {
+        fetched.push({
+          id: docSnap.id,
+          ...docSnap.data()
+        });
+      });
+      
+      if (fetched.length === 0) {
+        // Seed default educational posts if Firestore collection is empty
+        const defaultPosts = [
+          {
+            title: "Restorative Justice in the International Classroom",
+            category: "Positive Discipline",
+            readTime: "5 min read",
+            date: "June 2026",
+            summary: "Cách người quản lý học sinh xây dựng niềm tin và hòa giải mâu thuẫn học đường bằng đối thoại vòng tròn.",
+            content: `### Giới thiệu về Công lý Phục hồi
+
+Trong môi trường học thuật quốc tế đầy áp lực, các phương pháp kỷ luật trừng phạt truyền thống thường không giải quyết được nguồn gốc của sự mất kết nối trong giao tiếp. Khi một học sinh vi phạm kỷ luật, việc cấm túc chỉ tạm thời đưa các em ra khỏi lớp học nhưng không dạy cho các em kỹ năng giao tiếp cần thiết.
+
+### Khung Công lý Phục hồi
+Thay vì đặt câu hỏi: **"Quy tắc nào đã bị vi phạm và ai đã làm điều đó?"**, chúng tôi tập trung vào:
+1. **Chuyện gì đã xảy ra và các em đã nghĩ gì vào thời điểm đó?**
+2. **Những ai đã bị ảnh hưởng và ảnh hưởng như thế nào?**
+3. **Cần làm gì để sửa chữa sai lầm và thiết lập lại trật tự?**
+
+### Triển khai trong thực tế
+Khi giải quyết các tranh chấp ở cấp trung học, tôi sử dụng cấu trúc hội nghị nhỏ. Điều này giúp các em học sinh ngồi lại với nhau, chia sẻ góc nhìn một cách an toàn và ký kết một cam kết cùng phát triển. Chúng tôi nhấn mạnh việc **kỷ luật tích cực** và **hòa giải đồng đẳng**, trao quyền cho học sinh tự chịu trách nhiệm về hành vi của mình.`,
+            createdAt: Timestamp.now()
+          },
+          {
+            title: "Second Language Acquisition (SLA) in Student Well-being",
+            category: "Applied Linguistics",
+            readTime: "7 min read",
+            date: "May 2026",
+            summary: "Phân tích cách nền tảng ngôn ngữ ảnh hưởng đến tâm lý giao tiếp và sự hòa nhập của học sinh trường quốc tế.",
+            content: `### Lý thuyết SLA và Sức khỏe tinh thần học sinh
+
+Đối với học sinh trường quốc tế, việc học ngôn ngữ không diễn ra trong môi trường chân không. Theo Giả thuyết Bộ lọc Nhận thức (Affective Filter Hypothesis) của Stephen Krashen, mức độ lo âu cao, lòng tự tôn thấp và căng thẳng học đường sẽ dựng lên một rào cản tinh thần ngăn cản thông tin truyền tải đến trung tâm tiếp thu ngôn ngữ của não bộ.
+
+### Kết nối với đời sống học sinh
+Là một Cán bộ Quản lý Đời sống Học sinh, tôi chứng kiến trực tiếp các vấn đề về ngôn ngữ dẫn đến xung đột hành vi hoặc sự cô lập trong lớp học:
+- **Rào cản ngôn ngữ hệ thống:** Nếu học sinh cảm thấy năng lực giao tiếp tiếng Anh của mình bị nghi ngờ, các em sẽ tự cô lập bản thân trong các nhóm nhỏ cùng ngôn ngữ mẹ đẻ, làm gia tăng sự chia rẽ xã hội.
+- **Dàn giáo xã hội nhận thức:** Bằng cách tích hợp các hoạt động nhóm ít tính cạnh tranh tại các sảnh chung (chơi board game, phát thanh học đường, hội đồng tự quản), chúng tôi giúp hạ thấp bộ lọc nhận thức, đồng thời thúc đẩy năng lực giao tiếp tự nhiên và cảm giác thuộc về môi trường học đường.`,
+            createdAt: Timestamp.now()
+          }
+        ];
+        
+        for (const post of defaultPosts) {
+          await addDoc(collection(db, 'blogPosts'), post);
+        }
+        
+        fetchBlogPosts();
+        return;
+      }
+      
+      setPosts(fetched);
+    } catch (err) {
+      console.error('Lỗi khi fetch bài viết:', err);
+    } finally {
+      setLoadingPosts(false);
+    }
+  };
+
+  useEffect(() => {
+    if (activePanel === 'about') {
+      fetchBlogPosts();
+    }
   }, [activePanel]);
 
   if (!activePanel) return null;
@@ -118,6 +203,49 @@ export const InfoPanel: React.FC<InfoPanelProps> = ({ isMobile, isTablet }) => {
         <p className="text-sm text-neutral-300 leading-relaxed">
           Về mặt học thuật, tôi nghiên cứu cách áp dụng các lý thuyết Thụ đắc Ngôn ngữ Thứ hai (SLA) vào cải thiện sức khỏe tinh thần học sinh, thiết lập môi trường giao tiếp thực tế giúp hạ thấp bộ lọc nhận thức (affective filter). Tôi thiết kế các giải pháp hỗ trợ giúp học sinh đa văn hóa cùng cộng tác và phát triển toàn diện.
         </p>
+      </div>
+
+      {/* Educational & Research Posts Section */}
+      <div className="space-y-4 border-t border-white/10 pt-6">
+        <h4 className="text-xs uppercase tracking-[0.2em] text-neutral-400 font-bold flex items-center gap-1.5">
+          <FileText className="w-4 h-4 text-blue-400" />
+          Bài viết Giáo dục & Nghiên cứu
+        </h4>
+        
+        {loadingPosts ? (
+          <div className="flex items-center justify-center py-6">
+            <div className="w-5 h-5 border-2 border-blue-400 border-t-transparent rounded-full animate-spin" />
+          </div>
+        ) : posts.length === 0 ? (
+          <p className="text-xs text-neutral-500 italic">Chưa có bài viết nào được đăng.</p>
+        ) : (
+          <div className="space-y-3">
+            {posts.map((post) => (
+              <div 
+                key={post.id}
+                onClick={() => setSelectedPost(post)}
+                className="bg-white/5 border border-white/5 hover:border-blue-500/30 rounded-xl p-4 transition-all duration-300 cursor-pointer hover:bg-white/[0.08] group"
+              >
+                <div className="flex items-center gap-2 mb-1.5">
+                  <span className="text-[9px] bg-blue-950/40 text-blue-300 px-2 py-0.5 rounded border border-blue-900/30 font-medium font-sans">
+                    {post.category}
+                  </span>
+                  <span className="text-[9px] text-neutral-500 font-mono">{post.date}</span>
+                </div>
+                <h5 className="text-xs font-bold text-white group-hover:text-blue-400 transition-colors line-clamp-1">
+                  {post.title}
+                </h5>
+                <p className="text-[11px] text-neutral-400 leading-relaxed line-clamp-2 mt-1 font-sans">
+                  {post.summary}
+                </p>
+                <div className="flex items-center gap-1 text-[10px] text-blue-400 font-semibold mt-2.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <span>Xem chi tiết</span>
+                  <ArrowRight className="w-3 h-3" />
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -489,6 +617,52 @@ export const InfoPanel: React.FC<InfoPanelProps> = ({ isMobile, isTablet }) => {
               Hồ sơ năng lực Trần Quang Long © 2026
             </footer>
           </motion.div>
+
+          {/* Blog Detail Overlay Modal */}
+          <AnimatePresence>
+            {selectedPost && (
+              <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  onClick={() => setSelectedPost(null)}
+                  className="fixed inset-0 bg-black/85 backdrop-blur-md pointer-events-auto"
+                  aria-hidden="true"
+                />
+                
+                <motion.div
+                  initial={{ scale: 0.95, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.95, opacity: 0 }}
+                  transition={{ duration: 0.25 }}
+                  className="relative bg-[#0F0F0F] border border-white/10 w-full max-w-2xl max-h-[85vh] overflow-y-auto scrollbar-none p-6 sm:p-8 z-10 shadow-2xl font-sans pointer-events-auto rounded-3xl"
+                  role="dialog"
+                  aria-modal="true"
+                  aria-labelledby="modal-blog-title"
+                >
+                  <button
+                    onClick={() => setSelectedPost(null)}
+                    className="absolute top-4 right-4 p-1.5 border border-white/10 text-neutral-400 hover:text-white transition-colors cursor-pointer rounded-lg hover:bg-white/5"
+                    aria-label="Đóng bài viết"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                  
+                  <div className="text-[10px] uppercase tracking-widest text-blue-400 font-bold mb-2">
+                    {selectedPost.category} — {selectedPost.date}
+                  </div>
+                  <h1 id="modal-blog-title" className="text-xl sm:text-2xl font-bold text-white mb-6 leading-tight border-b border-white/5 pb-4 tracking-wide font-sans">
+                    {selectedPost.title}
+                  </h1>
+
+                  <div className="prose-custom max-h-[50vh] overflow-y-auto pr-1 scrollbar-thin">
+                    <MarkdownRenderer>{selectedPost.content}</MarkdownRenderer>
+                  </div>
+                </motion.div>
+              </div>
+            )}
+          </AnimatePresence>
         </>
       )}
     </AnimatePresence>

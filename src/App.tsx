@@ -4,10 +4,16 @@ import { Sparkles, HelpCircle } from 'lucide-react';
 import Scene from './components/Scene';
 import InfoPanel from './components/InfoPanel';
 import WebGLErrorBoundary from './components/ui/WebGLErrorBoundary';
+import AdminDashboard from './components/AdminDashboard';
 import { useAppState } from './store';
 
 export const App: React.FC = () => {
   const { activePanel, setActivePanel } = useAppState();
+  const [isAdminRoute, setIsAdminRoute] = useState(false);
+
+  useEffect(() => {
+    setIsAdminRoute(window.location.pathname === '/admin');
+  }, []);
   
   // Responsive states
   const [dimensions, setDimensions] = useState({
@@ -92,6 +98,10 @@ export const App: React.FC = () => {
   }, [mousePos]);
 
   const { isMobile, isTablet } = dimensions;
+
+  if (isAdminRoute) {
+    return <AdminDashboard />;
+  }
 
   // Fallback layout when WebGL crashes or is not supported
   const webglFallbackLayout = (
