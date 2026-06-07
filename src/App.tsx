@@ -1,352 +1,156 @@
-import React, { useState, useEffect, useRef, Suspense } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import Scene from "./components/canvas/Scene";
-import SidePanel from "./components/ui/SidePanel";
-import NavHint from "./components/ui/NavHint";
-import Loader from "./components/ui/Loader";
-import WebGLErrorBoundary from "./components/ui/WebGLErrorBoundary";
-import { SHAPES } from "./lib/constants";
-import { BlogPost } from "./types";
-import { X } from "lucide-react";
-import MarkdownRenderer from "./components/ui/MarkdownRenderer";
+import React, { useState, useEffect, Suspense } from 'react';
+import { motion } from 'framer-motion';
+import { Sparkles, HelpCircle } from 'lucide-react';
+import Scene from './components/Scene';
+import InfoPanel from './components/InfoPanel';
+import WebGLErrorBoundary from './components/ui/WebGLErrorBoundary';
+import { useAppState } from './store';
 
 export const App: React.FC = () => {
-  const [activeSection, setActiveSection] = useState<string | null>(null);
-  const [hoveredSection, setHoveredSection] = useState<string | null>(null);
-  const [selectedBlog, setSelectedBlog] = useState<BlogPost | null>(null);
+  const { activePanel, setActivePanel } = useAppState();
   
-  // Loading Preloader states
-  const [loading, setLoading] = useState(true);
-  const [loadingProgress, setLoadingProgress] = useState(0);
+  // Responsive states
+  const [dimensions, setDimensions] = useState({
+    isMobile: false,
+    isTablet: false
+  });
 
-  const cursorRef = useRef<HTMLDivElement>(null);
-
-  // Simulate loader progress
   useEffect(() => {
-    const timer = setInterval(() => {
-      setLoadingProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(timer);
-          setTimeout(() => setLoading(false), 450); // Dismiss loader
-          return 100;
-        }
-        return prev + 2.0; // Increment loader speed
+    const handleResize = () => {
+      const width = window.innerWidth;
+      setDimensions({
+        isMobile: width < 640,
+        isTablet: width >= 640 && width < 1024
       });
-    }, 25);
-    return () => clearInterval(timer);
+    };
+
+    // Initial check
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Custom cursor movement and hover scaling
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      if (cursorRef.current) {
-        cursorRef.current.style.left = `${e.clientX}px`;
-        cursorRef.current.style.top = `${e.clientY}px`;
-      }
-    };
-
-    const handleMouseOver = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      const isInteractive =
-        target.tagName === "BUTTON" ||
-        target.tagName === "A" ||
-        target.tagName === "SELECT" ||
-        target.tagName === "TEXTAREA" ||
-        target.tagName === "INPUT" ||
-        target.closest("canvas") ||
-        target.closest("[role='button']") ||
-        target.classList.contains("nav-item");
-
-      if (isInteractive) {
-        cursorRef.current?.classList.add("scale-[2.8]", "bg-white/30");
-      } else {
-        cursorRef.current?.classList.remove("scale-[2.8]", "bg-white/30");
-      }
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mouseover", handleMouseOver);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseover", handleMouseOver);
-    };
-  }, []);
-
-  // Keyboard navigation & global key listeners
+  // Global keyboard listener
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // 1. ESC close active panel
-      if (e.key === "Escape") {
-        setActiveSection(null);
-      }
-
-      // 2. Keyboard Navigation through shapes (when drawer is closed)
-      if (activeSection === null) {
-        const names = SHAPES.map((s) => s.label);
-
-        if (e.key === "ArrowRight" || e.key === "ArrowDown") {
-          e.preventDefault();
-          setHoveredSection((prev) => {
-            if (!prev) return names[0];
-            const currIdx = names.indexOf(prev);
-            const nextIdx = (currIdx + 1) % names.length;
-            return names[nextIdx];
-          });
-        } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
-          e.preventDefault();
-          setHoveredSection((prev) => {
-            if (!prev) return names[names.length - 1];
-            const currIdx = names.indexOf(prev);
-            const prevIdx = (currIdx - 1 + names.length) % names.length;
-            return names[prevIdx];
-          });
-        } else if (e.key === "Enter" || e.key === " ") {
-          if (hoveredSection) {
-            e.preventDefault();
-            setActiveSection(hoveredSection);
-            setHoveredSection(null);
-          }
-        }
+      if (e.key === 'Escape') {
+        setActivePanel(null);
       }
     };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [setActivePanel]);
 
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [activeSection, hoveredSection]);
+  const { isMobile, isTablet } = dimensions;
 
-  // Framer Motion staggered letter animations for H1 hero
-  const letterContainerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.08,
-        delayChildren: 0.2,
-      },
-    },
-  };
-
-  const letterVariants = {
-    hidden: { y: 80, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        damping: 14,
-        stiffness: 110,
-      },
-    },
-  };
-
+  // Fallback layout when WebGL crashes or is not supported
   const webglFallbackLayout = (
-    <div className="absolute inset-0 z-10 flex flex-col justify-center items-center p-8 bg-[#0B0B0C]">
-      <div className="max-w-md text-center space-y-4 font-sans">
-        <span className="meta text-accent">WebGL Acceleration Not Active</span>
-        <h2 className="h2 text-white">Quang Long Portfolio</h2>
-        <p className="body">
-          Thiết bị hoặc trình duyệt của bạn không hỗ trợ tăng tốc WebGL 3D. Bạn vẫn có thể tương tác đầy đủ nội dung bằng mục lục phía dưới.
+    <div className="absolute inset-0 z-10 flex flex-col justify-center items-center p-8 bg-gradient-to-b from-[#050505] to-[#120722]">
+      <div className="max-w-md text-center space-y-6 font-sans">
+        <h2 className="text-4xl font-extrabold tracking-tight text-white bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
+          Quang Long Portfolio
+        </h2>
+        <p className="text-sm text-neutral-400 leading-relaxed">
+          Your browser or device does not support WebGL 3D, or hardware acceleration is inactive. 
+          You can still interact with all sections and features using the directory below.
         </p>
+        <div className="grid grid-cols-2 gap-3 pt-2">
+          <button 
+            onClick={() => setActivePanel('about')} 
+            className="px-4 py-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-blue-500/50 rounded-xl text-xs tracking-wider uppercase font-semibold text-white transition-all cursor-pointer"
+          >
+            About Me
+          </button>
+          <button 
+            onClick={() => setActivePanel('skills')} 
+            className="px-4 py-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-purple-500/50 rounded-xl text-xs tracking-wider uppercase font-semibold text-white transition-all cursor-pointer"
+          >
+            Skills
+          </button>
+          <button 
+            onClick={() => setActivePanel('projects')} 
+            className="px-4 py-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-pink-500/50 rounded-xl text-xs tracking-wider uppercase font-semibold text-white transition-all cursor-pointer"
+          >
+            Projects
+          </button>
+          <button 
+            onClick={() => setActivePanel('contact')} 
+            className="px-4 py-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-cyan-500/50 rounded-xl text-xs tracking-wider uppercase font-semibold text-white transition-all cursor-pointer"
+          >
+            Contact
+          </button>
+        </div>
       </div>
     </div>
   );
 
   return (
-    <div className="relative w-screen h-screen bg-[#0A0A0A] text-white overflow-hidden font-sans select-none">
-      {/* Accessibility Preloader Overlay */}
-      <AnimatePresence>
-        {loading && (
-          <motion.div
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-            className="fixed inset-0 z-[60] flex flex-col justify-center items-center bg-[#0B0B0C] font-sans pointer-events-auto"
-          >
-            <div className="w-24 h-[1px] bg-white/10 overflow-hidden relative mb-4">
-              <motion.div
-                initial={{ left: "-100%" }}
-                animate={{ left: "100%" }}
-                transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
-                className="w-1/2 h-full bg-accent absolute top-0"
-              />
-            </div>
-            <span className="text-[9px] tracking-[0.3em] text-neutral-500 uppercase num-tabular select-none pointer-events-none">
-              Loading Workspace {Math.round(loadingProgress)}%
-            </span>
-          </motion.div>
-        )}
-      </AnimatePresence>
+    <div className="relative w-screen h-screen bg-gradient-to-b from-[#050505] to-[#1a0b2e] overflow-hidden select-none text-white font-sans">
+      
+      {/* Background Cyber Grid */}
+      <div className="absolute inset-0 cyber-grid pointer-events-none z-0 opacity-40" />
 
-      {/* Keyboard Accessibility Skip Link */}
-      <a
-        href="#main-nav"
-        className="sr-only focus:not-sr-only fixed top-4 left-4 bg-accent text-white px-4 py-2 z-50 text-xs tracking-wider uppercase font-sans border border-white/20"
-      >
-        Skip to navigation
-      </a>
-
-      {/* Custom Cursor */}
-      <div id="custom-cursor" ref={cursorRef} className="hidden sm:block pointer-events-none" />
-
-      {/* Cyber Grid Overlay */}
-      <div className="absolute inset-0 cyber-grid pointer-events-none z-0" />
-
-      {/* Vignette depth overlay */}
-      <div className="absolute inset-0 bg-radial-gradient from-transparent via-[#0A0A0A]/50 to-[#0A0A0A] pointer-events-none z-0" />
-
-      {/* HUD Header (Top Left) */}
-      <header className="absolute top-8 left-8 z-30 pointer-events-auto flex flex-col gap-1">
-        <h1 className="meta text-white font-semibold">
+      {/* Futuristic HUD Header Overlay */}
+      <header className="absolute top-6 left-6 z-30 pointer-events-none flex flex-col space-y-1">
+        <h1 className="text-sm font-extrabold tracking-[0.25em] text-white/95">
           TRAN QUANG LONG
         </h1>
-        <p className="text-[9px] tracking-[0.3em] text-neutral-500 uppercase">
+        <p className="text-[9px] font-bold tracking-[0.3em] text-neutral-500 uppercase">
           Student Life & Applied Linguistics
         </p>
       </header>
 
-      {/* HUD Meta Information (Top Right) */}
-      <div className="absolute top-8 right-8 z-30 pointer-events-none text-right flex flex-col gap-1 hidden md:flex">
-        <span className="text-[9px] tracking-[0.3em] text-neutral-600 uppercase">
-          Active Theory / Concept
+      {/* Metadata / Coordinates HUD Overlay (Top Right) */}
+      <div className="absolute top-6 right-6 z-30 pointer-events-none text-right flex flex-col space-y-1 hidden sm:flex">
+        <span className="text-[9px] tracking-[0.2em] text-neutral-500 uppercase font-bold flex items-center justify-end gap-1.5">
+          <Sparkles className="w-3 h-3 text-purple-400" />
+          Active Space Experience
         </span>
-        <span className="num-tabular text-[10px] text-neutral-400 font-mono">
+        <span className="text-[10px] text-neutral-400 font-mono tracking-wider">
           LOC: 10.7769° N, 106.7009° E
         </span>
       </div>
 
-      {/* Focal Typography Title in the center (Under Canvas) */}
-      <div className="absolute inset-0 flex flex-col justify-center items-center pointer-events-none z-0 select-none">
-        <div className="relative text-center">
-          {/* Staggered letter reveal for title */}
-          <motion.h2
-            variants={letterContainerVariants}
-            initial="hidden"
-            animate={loading ? "hidden" : "visible"}
-            className="center-hero-text opacity-[0.04] select-none flex justify-center"
+      {/* Center Title and Breathing Text */}
+      <div className="absolute inset-0 flex flex-col justify-center items-center pointer-events-none z-10">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.2, ease: 'easeOut' }}
+          className="text-center px-4"
+        >
+          {/* Glassmorphic Container with Subtle Glow & Infinite Breathing scale */}
+          <motion.div
+            animate={{ scale: [1, 1.04, 1] }}
+            transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
+            className="px-8 py-5 rounded-3xl bg-white/[0.03] backdrop-blur-md border border-white/10 shadow-[0_0_50px_rgba(255,255,255,0.02)] flex flex-col items-center justify-center space-y-1 max-w-[90vw]"
           >
-            {"QUANG LONG".split("").map((char, index) => (
-              <motion.span key={index} variants={letterVariants}>
-                {char === " " ? "\u00A0" : char}
-              </motion.span>
-            ))}
-          </motion.h2>
-
-          {/* Subtle hovered shape guidance text */}
-          <div className="absolute -bottom-8 left-0 right-0 text-center h-4 transition-all duration-300">
-            {hoveredSection && activeSection === null && (
-              <span className="text-[10px] tracking-[0.3em] text-neutral-500 uppercase animate-pulse">
-                Press ENTER to explore {hoveredSection}
-              </span>
-            )}
-          </div>
-        </div>
+            <h2 className="text-5xl sm:text-7xl font-extrabold tracking-tight text-white font-sans text-center bg-clip-text bg-gradient-to-r from-white via-white to-neutral-400 drop-shadow-[0_0_15px_rgba(255,255,255,0.25)]">
+              Quang Long
+            </h2>
+            <p className="text-[10px] sm:text-xs tracking-[0.4em] text-neutral-400 uppercase font-bold text-center">
+              P O R T F O L I O
+            </p>
+          </motion.div>
+        </motion.div>
       </div>
 
-      {/* 3D WebGL Canvas Scene or Fallback HTML */}
+      {/* Interactive Helper Text HUD (Bottom Center) */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 pointer-events-none flex items-center space-x-1.5 text-[10px] tracking-[0.25em] text-neutral-500 uppercase font-bold">
+        <HelpCircle className="w-3.5 h-3.5 text-neutral-500" />
+        <span>Click orbiting shapes to explore</span>
+      </div>
+
+      {/* 3D WebGL Canvas Scene */}
       <WebGLErrorBoundary fallback={webglFallbackLayout}>
-        <Suspense fallback={<Loader />}>
-          <Scene
-            activeSection={activeSection}
-            setActiveSection={setActiveSection}
-            hoveredSection={hoveredSection}
-            setHoveredSection={setHoveredSection}
-          />
+        <Suspense fallback={null}>
+          <Scene isMobile={isMobile} isTablet={isTablet} />
         </Suspense>
       </WebGLErrorBoundary>
 
-      {/* Side-Over HUD Navigation Menu (Bottom Right) */}
-      <nav
-        id="main-nav"
-        className="absolute bottom-8 right-8 z-30 pointer-events-auto flex flex-col gap-3 text-right"
-        aria-label="Side Navigation Menu"
-      >
-        {SHAPES.map((sec) => (
-          <button
-            key={sec.id}
-            onClick={() => setActiveSection(sec.label)}
-            onFocus={() => setHoveredSection(sec.label)}
-            onBlur={() => setHoveredSection(null)}
-            className={`nav-item text-xs uppercase tracking-widest font-medium transition-all duration-300 flex items-center justify-end gap-3 cursor-pointer focus:outline-none focus:text-accent ${
-              activeSection?.toLowerCase() === sec.id || hoveredSection?.toLowerCase() === sec.id
-                ? "text-white scale-105"
-                : "text-neutral-500 hover:text-neutral-300"
-            }`}
-            aria-label={`Mở phân mục ${sec.label}`}
-          >
-            <span className="num-tabular text-[9px] font-mono text-neutral-600">{sec.index}</span>
-            <span>{sec.label}</span>
-          </button>
-        ))}
-      </nav>
+      {/* Sliding Information Panel (Modal Drawer) */}
+      <InfoPanel isMobile={isMobile} isTablet={isTablet} />
 
-      {/* Accessibility Keyboard Navigation Hints */}
-      <NavHint hoveredSection={hoveredSection} />
-
-      {/* HUD Footers Tagline (Bottom Left) */}
-      <footer className="absolute bottom-8 left-8 z-30 pointer-events-none hidden sm:block flex flex-col gap-1">
-        <p className="text-[9px] tracking-[0.3em] text-neutral-500 uppercase">
-          Restorative justice • Affective filter hypothesis
-        </p>
-        <p className="text-[9px] tracking-[0.2em] text-neutral-600 uppercase num-tabular">
-          © 2026 / PREVALENCE OF PRACTICE
-        </p>
-      </footer>
-
-      {/* sliding Drawer content panels */}
-      <SidePanel
-        activeSection={activeSection}
-        onClose={() => setActiveSection(null)}
-        onSelectBlogPost={setSelectedBlog}
-      />
-
-      {/* Blog Detail Overlay Modal */}
-      <AnimatePresence>
-        {selectedBlog && (
-          <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setSelectedBlog(null)}
-              className="fixed inset-0 bg-black/85 backdrop-blur-md pointer-events-auto"
-              aria-hidden="true"
-            />
-            
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              transition={{ duration: 0.25 }}
-              className="relative bg-[#0F0F0F] border border-white/10 w-full max-w-2xl max-h-[85vh] overflow-y-auto scrollbar-none p-8 z-10 shadow-2xl font-sans pointer-events-auto"
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="modal-blog-title"
-            >
-              <button
-                onClick={() => setSelectedBlog(null)}
-                className="absolute top-4 right-4 p-1.5 border border-white/10 text-neutral-500 hover:text-white transition-colors cursor-pointer"
-                aria-label="Close article modal"
-              >
-                <X className="w-4 h-4" />
-              </button>
-              
-              <div className="text-[10px] uppercase tracking-widest text-neutral-500 mb-2">
-                {selectedBlog.category} — {selectedBlog.date}
-              </div>
-              <h1 id="modal-blog-title" className="text-xl font-medium font-display text-white mb-6 leading-tight border-b border-white/5 pb-4">
-                {selectedBlog.title}
-              </h1>
-
-              <div className="prose-custom">
-                <MarkdownRenderer>{selectedBlog.content}</MarkdownRenderer>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
     </div>
   );
 };
