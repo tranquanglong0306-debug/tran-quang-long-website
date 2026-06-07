@@ -15,6 +15,11 @@ export const App: React.FC = () => {
     isTablet: false
   });
 
+  // Cursor coordinates
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [trailPos, setTrailPos] = useState({ x: 0, y: 0 });
+  const [cursorHovered, setCursorHovered] = useState(false);
+
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
@@ -24,7 +29,6 @@ export const App: React.FC = () => {
       });
     };
 
-    // Initial check
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -40,6 +44,52 @@ export const App: React.FC = () => {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [setActivePanel]);
+
+  // Track Mouse movement globally
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+    };
+
+    const handleMouseOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const isInteractive =
+        target.tagName === "BUTTON" ||
+        target.tagName === "A" ||
+        target.closest("a") ||
+        target.closest("button") ||
+        target.closest("canvas") ||
+        target.closest("[role='button']") ||
+        target.classList.contains("nav-item");
+
+      setCursorHovered(!!isInteractive);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseover', handleMouseOver);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseover', handleMouseOver);
+    };
+  }, []);
+
+  // Smooth lagging trail animation (lerp)
+  useEffect(() => {
+    let animId: number;
+    const updateTrail = () => {
+      setTrailPos((prev) => {
+        const dx = mousePos.x - prev.x;
+        const dy = mousePos.y - prev.y;
+        return {
+          x: prev.x + dx * 0.16, // Lerp coefficient (0.16 is perfect balance of delay and responsiveness)
+          y: prev.y + dy * 0.16
+        };
+      });
+      animId = requestAnimationFrame(updateTrail);
+    };
+    animId = requestAnimationFrame(updateTrail);
+    return () => cancelAnimationFrame(animId);
+  }, [mousePos]);
 
   const { isMobile, isTablet } = dimensions;
 
@@ -90,8 +140,26 @@ export const App: React.FC = () => {
       {/* Background Cyber Grid */}
       <div className="absolute inset-0 cyber-grid pointer-events-none z-0 opacity-40" />
 
+      {/* Futuristic HUD Viewfinder brackets */}
+      <div className="absolute top-6 left-6 w-5 h-5 border-t border-l border-white/20 pointer-events-none z-30 hidden sm:block" />
+      <div className="absolute top-6 right-6 w-5 h-5 border-t border-r border-white/20 pointer-events-none z-30 hidden sm:block" />
+      <div className="absolute bottom-6 left-6 w-5 h-5 border-b border-l border-white/20 pointer-events-none z-30 hidden sm:block" />
+      <div className="absolute bottom-6 right-6 w-5 h-5 border-b border-r border-white/20 pointer-events-none z-30 hidden sm:block" />
+
+      {/* Lagging Cursor Dot */}
+      <div 
+        className="hidden sm:block fixed pointer-events-none z-50 rounded-full bg-white mix-blend-difference w-1.5 h-1.5 -translate-x-1/2 -translate-y-1/2"
+        style={{ left: `${mousePos.x}px`, top: `${mousePos.y}px` }}
+      />
+      
+      {/* Lagging Cursor Ring */}
+      <div 
+        className={`hidden sm:block fixed pointer-events-none z-50 rounded-full border border-white/25 -translate-x-1/2 -translate-y-1/2 transition-all duration-200 ${cursorHovered ? 'w-10 h-10 border-white/50 bg-white/5 shadow-[0_0_15px_rgba(255,255,255,0.08)]' : 'w-7 h-7'}`}
+        style={{ left: `${trailPos.x}px`, top: `${trailPos.y}px` }}
+      />
+
       {/* Futuristic HUD Header Overlay */}
-      <header className="absolute top-6 left-6 z-30 pointer-events-none flex flex-col space-y-1">
+      <header className="absolute top-10 left-10 z-30 pointer-events-none flex flex-col space-y-1">
         <h1 className="text-sm font-extrabold tracking-[0.25em] text-white/95">
           TRAN QUANG LONG
         </h1>
@@ -101,9 +169,9 @@ export const App: React.FC = () => {
       </header>
 
       {/* Metadata / Coordinates HUD Overlay (Top Right) */}
-      <div className="absolute top-6 right-6 z-30 pointer-events-none text-right flex flex-col space-y-1 hidden sm:flex">
+      <div className="absolute top-10 right-10 z-30 pointer-events-none text-right flex flex-col space-y-1 hidden sm:flex">
         <span className="text-[9px] tracking-[0.2em] text-neutral-500 uppercase font-bold flex items-center justify-end gap-1.5">
-          <Sparkles className="w-3 h-3 text-purple-400" />
+          <Sparkles className="w-3 h-3 text-purple-400 animate-pulse" />
           Trải nghiệm Không gian 3D
         </span>
         <span className="text-[10px] text-neutral-400 font-mono tracking-wider">
@@ -136,7 +204,7 @@ export const App: React.FC = () => {
       </div>
 
       {/* Interactive Helper Text HUD (Bottom Center) */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 pointer-events-none flex items-center space-x-1.5 text-[10px] tracking-[0.25em] text-neutral-500 uppercase font-bold">
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 pointer-events-none flex items-center space-x-1.5 text-[10px] tracking-[0.25em] text-neutral-500 uppercase font-bold">
         <HelpCircle className="w-3.5 h-3.5 text-neutral-500" />
         <span>Click các hình khối để khám phá</span>
       </div>
