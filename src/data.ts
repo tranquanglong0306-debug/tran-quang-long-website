@@ -1,88 +1,145 @@
 import { BlogPost } from "./types";
 
+export interface Project {
+  title: string;
+  category: string;
+  desc: string;
+  tech: string;
+  demoUrl: string;
+  githubUrl: string;
+}
+
 export const mockBlogs: BlogPost[] = [
   {
     id: "post-1",
-    title: "Ứng dụng Công lý Phục hồi trong Lớp học Quốc tế",
+    title: "[Briefing 01] Restorative Circles in High-Stakes Classrooms",
     category: "Student Life",
-    date: "Tháng 6, 2026",
-    readTime: "5 phút đọc",
-    summary: "Cách thức cán bộ giám sát và giáo viên có thể xây dựng lòng tin, giảm thiểu các hành vi tiêu cực lặp lại thông qua kỹ thuật đối thoại vòng tròn thay vì xử phạt cứng nhắc.",
+    date: "June 2026",
+    readTime: "5 min read",
+    summary: "A study on utilizing structured circle dialogue protocols to resolve peer conflicts and minimize repeat behavioral infractions in multicultural school environments.",
     featured: true,
-    content: `## Ứng dụng Công lý Phục hồi trong Lớp học Quốc tế
+    content: `## [Briefing 01] Restorative Circles in High-Stakes Classrooms
 
-Trong môi trường trường quốc tế đa văn hóa và áp lực cao, các hình phạt hành chính truyền thống thường chỉ giải quyết được phần ngọn mà bỏ qua nguyên nhân cốt lõi của sự bất đồng giao tiếp.
+### Context & Telemetry
+In high-stress international academic environments, conventional punitive administrative measures fail to address the core communicational deficits that trigger behavior anomalies. 
 
-#### Khung Đối thoại Phục hồi
-Thay vì hỏi **"Ai đã vi phạm nội quy và xử lý thế nào?"**, chúng ta chuyển trọng tâm sang:
-1. **Chuyện gì đã xảy ra, và mọi người đang suy nghĩ gì vào thời điểm đó?**
-2. **Những ai đã bị ảnh hưởng, và ảnh hưởng như thế nào?**
-3. **Cần làm gì để khắc phục mâu thuẫn này và đưa mối quan hệ trở lại bình thường?**
+### The Restorative Inquiry Framework
+Rather than asking **"Who broke the regulation and what is the punishment?"**, our operational protocol shifts the focus to:
+1. **What occurred, and what was the cognitive state of the actors at that instant?**
+2. **Who has been affected, and what is the nature of the impact?**
+3. **What corrective actions are required to repair the relationship and restore systemic equilibrium?**
 
-#### Triển khai trong Thực tế Quản lý
-Tại các khối lớp trung học, tôi áp dụng cấu trúc hội nghị hòa giải mini. Điều này mời gọi học sinh ngồi lại với nhau, chia sẻ góc nhìn một cách an toàn và cùng ký vào bản cam kết phát triển chung. Chúng ta nhấn mạnh **kỷ luật tích cực** và **hòa giải đồng đẳng**, trao quyền để các em tự điều chỉnh hành vi của chính mình.`
+### Operational Implementation
+At the high school level, we deploy micro-mediation conferences. This structure brings students together, allowing them to express their perspectives safely, and sign a mutual growth commitment. We emphasize **positive discipline** and **peer-led mediation**, empowering students to regulate their own behavior.`
   },
   {
     id: "post-2",
-    title: "Stephen Krashen và Giả thuyết Bộ lọc Tình cảm trong Ký túc xá",
+    title: "[Briefing 02] Affective Filter Attenuation in Residential Life",
     category: "Applied Linguistics",
-    date: "Tháng 5, 2026",
-    readTime: "7 phút đọc",
-    summary: "Phân tích tầm ảnh hưởng từ nền tảng ngôn ngữ của học sinh tới sự tương tác xã hội, mức độ tự tin và tính hòa nhập hệ thống của học sinh nội trú quốc tế.",
+    date: "May 2026",
+    readTime: "7 min read",
+    summary: "Investigation into utilizing sociocognitive scaffolding to lower linguistic anxiety and enhance natural communicative output in international dormitories.",
     featured: true,
-    content: `## Stephen Krashen và Giả thuyết Bộ lọc Tình cảm trong Ký túc xá
+    content: `## [Briefing 02] Affective Filter Attenuation in Residential Life
 
-Trong học thuyết về Ngôn ngữ của Stephen Krashen, cụ thể là **Giả thuyết Bộ lọc Tình cảm (Affective Filter Hypothesis)**, trạng thái lo âu cao, tự ti hoặc căng thẳng học đường sẽ tạo nên rào cản nhận thức ngăn cản ngôn ngữ đi vào não bộ.
+### Affective Filter Hypothesis
+In Stephen Krashen's Second Language Acquisition theory, high anxiety, low self-esteem, and school-related stress construct a cognitive barrier that blocks language input from reaching the brain's acquisition center.
 
-#### Liên kết giữa Đời sống Học sinh và Ngôn ngữ học
-Là một Cán bộ Quản lý Đời sống Học sinh, tôi trực tiếp quan sát thấy các khó khăn ngôn ngữ thường bộc lộ qua sự thu mình hoặc các bộc phát hành vi tiêu cực.
-- **Rào cản Ngôn ngữ Hệ thống**: Khi học sinh cảm thấy năng lực nói tiếng Anh của mình bị phán xét, các em sẽ co cụm lại trong các nhóm đồng hương, tăng độ chia rẽ xã hội.
-- **Giàn giáo Xã hội - Nhận thức (Sociocognitive Scaffolding)**: Bằng cách tạo ra các trò chơi tương tác, hoạt động đội nhóm cấp thấp tại phòng sinh hoạt chung, chúng ta hạ thấp bộ lọc tình cảm xuống, giúp học sinh tăng lưu lượng giao tiếp tự nhiên và cảm giác thuộc về tập thể.`
+### Correlation with Student Life
+As a Student Life Officer, I observe that linguistic anxiety often manifests as social withdrawal or externalized behavioral friction.
+- **Systemic Language Barriers**: When students perceive their English communication skills are being evaluated, they retreat into native-language subgroups, increasing social division.
+- **Sociocognitive Scaffolding**: By integrating low-stakes group activities (board games, student podcasts, self-governing councils) in common areas, we lower the affective filter, fostering natural communicative output and a sense of belonging.`
   },
   {
     id: "post-3",
-    title: "Tối ưu hóa Báo cáo Học tập đồng thuận bằng Phương pháp 'Kẹp bánh mì'",
-    category: "Educational Technology",
-    date: "Tháng 4, 2026",
-    readTime: "4 phút đọc",
-    summary: "Chiến lược thông tin phản hồi hành vi hoặc chuyên cần nhạy cảm đến phụ huynh một cách tích cực, mang tính hợp tác chặt chẽ.",
+    title: "[Briefing 03] Report Comment Optimization: The Sandwich Protocol",
+    category: "Educational Tech",
+    date: "April 2026",
+    readTime: "4 min read",
+    summary: "Empathetic communication strategies designed to translate raw pedagogical observations into collaborative, trust-building feedback loop with parents.",
     featured: true,
-    content: `## Tối ưu hóa Báo cáo Học tập đồng thuận bằng Phương pháp 'Kẹp bánh mì'
+    content: `## [Briefing 03] Report Comment Optimization: The Sandwich Protocol
 
-Gửi báo cáo cho phụ huynh là một trong những điểm xoay chiều mạnh mẽ nhất trong tiến trình cố vấn học sinh. Một giọng điệu phán xét dễ kích hoạt trạng thái phòng thủ từ phụ huynh, ngược lại nhận xét quá mơ hồ sẽ không thúc đẩy sự thay đổi.
+### Context
+Progress reporting is one of the most critical touchpoints in student advisory. A punitive tone triggers defensive reactions from parents, while vague comments fail to drive behavioral correction.
 
-#### Phương pháp nhận xét 'Kẹp bánh mì' cải tiến:
-1. **Nền tảng của sự Ghi nhận**: Bắt đầu bằng việc chỉ nỗ lực hoặc điểm mạnh xã hội cụ thể của học sinh.
-2. **Xác định Khoảng trống cần Hoàn thiện**: Mô tả khách quan hành vi cần cải thiện thay vì dùng các từ phán xét nhạy cảm.
-3. **Lời mời hợp tác phục hồi**: Đề xuất cụ thể một kế hoạch hỗ trợ chung mà phụ huynh thế có thể đồng hành cùng nhà trường tại nhà.`
+### The Modified 'Sandwich' Commentary Framework
+1. **The Affirmation Base**: Identify a specific social or academic effort exhibited by the student.
+2. **The Growth Gap**: Describe the objective behavioral area needing improvement, using non-judgmental language.
+3. **The Collaborative Invitation**: Propose a specific, actionable joint support plan that parents can reinforce at home.`
   },
   {
     id: "post-4",
-    title: "Ứng dụng LLM làm Giàn giáo Học tập Ngôn ngữ (Scaffolding)",
+    title: "[Briefing 04] LLMs as Cognitive Scaffolds for L2 Learners",
     category: "AI in Education",
-    date: "Tháng 3, 2026",
-    readTime: "6 phút đọc",
-    summary: "Cách tận dụng các mô hình ngôn ngữ lớn làm trợ thủ đắc lực giúp học sinh vượt qua rào cản viết học thuật và tự động hóa ghi chép.",
+    date: "March 2026",
+    readTime: "6 min read",
+    summary: "Analyzing the integration of Large Language Models as personalized real-time scaffolding tools for students navigating academic writing barriers.",
     featured: false,
-    content: `## Ứng dụng LLM làm Giàn giáo Học tập Ngôn ngữ
+    content: `## [Briefing 04] LLMs as Cognitive Scaffolds for L2 Learners
 
-Sử dụng AI trong giáo dục không chỉ là để chấm điểm tự động hay phát hiện đạo văn. Sức mạnh thực sự nằm ở khả năng làm giàn giáo hỗ trợ học tập (scaffolding) cá nhân hóa cho từng học sinh.
+### AI as Personalized Scaffolding
+Using AI in education extends beyond automated grading or plagiarism checks. The primary value lies in creating personalized scaffolding that adjusts to individual student development.
 
-#### AI như một Người đối thoại kiên nhẫn
-- Cung cấp phản hồi ngữ pháp theo thời gian thực.
-- Gợi ý từ vựng theo ngữ cảnh đàm thoại.
-- Giúp giảm bộ lọc lo âu khi học sinh giao tiếp 1-1 với máy trước khi nói trước lớp.`
+### Practical Scaffolding Techniques
+- Provides real-time grammatical feedback and explanations.
+- Suggests contextual vocabulary in conversations.
+- Lowers the anxiety barrier by allowing students to practice 1-1 with AI before public speaking.`
   },
   {
     id: "post-5",
-    title: "Xây dựng Văn hóa Ký túc xá tự quản & Tôn trọng sự Đa dạng",
+    title: "[Briefing 05] Self-Governing Student Ecosystems: Diversity & Protocol",
     category: "Student Life",
-    date: "Tháng 2, 2026",
-    readTime: "5 phút đọc",
-    summary: "Thiết lập quy chế tự quản và cách tổ chức các buổi sinh hoạt chung định kỳ để học sinh quốc tế tự giải quyết mâu thuẫn nội bộ.",
+    date: "February 2026",
+    readTime: "5 min read",
+    summary: "Structuring autonomous student-led mediation forums within residential halls to cultivate peer conflict resolution protocols.",
     featured: false,
-    content: `## Xây dựng Văn hóa Ký túc xá tự quản & Tôn trọng sự Đa dạng
+    content: `## [Briefing 05] Self-Governing Student Ecosystems: Diversity & Protocol
 
-Cuộc sống nội trú đòi hỏi sự hòa nhập cao giữa các nền văn hóa khác nhau. Bằng cách trao quyền tự quản cho học sinh, chúng ta tạo dựng một môi trường nơi tính tự lập và sự tôn trọng lẫn nhau được đề cao.`
+### Context
+Residential life requires high intercultural adaptability. By establishing self-governance structures, we cultivate environments where autonomy and mutual respect are actively practiced.`
+  }
+];
+
+export const mockProjects: Project[] = [
+  {
+    title: 'Restorative Mediator AI',
+    category: 'AI IN EDUCATION',
+    desc: 'Cố vấn đối thoại học đường dựa trên mô hình ngôn ngữ lớn giúp giáo viên điều phối các cuộc họp hòa giải mâu thuẫn.',
+    tech: 'React, Next.js, Gemini API, Tailwind CSS',
+    demoUrl: '#',
+    githubUrl: '#'
+  },
+  {
+    title: 'SLA Lesson Scaffold AI',
+    category: 'AI IN EDUCATION',
+    desc: 'Hệ thống tự động hóa xây dựng giàn giáo bài giảng (scaffolding) phù hợp với mức độ tiếp thụ ngôn ngữ khác nhau của học sinh.',
+    tech: 'TypeScript, Gemini API, Node.js',
+    demoUrl: '#',
+    githubUrl: '#'
+  },
+  {
+    title: 'Report Card Sandwich AI',
+    category: 'AI IN EDUCATION',
+    desc: 'Hỗ trợ giáo viên soạn thảo nhận xét học bạ theo phương pháp kẹp bánh mì giúp phản hồi tích cực và hợp tác với phụ huynh.',
+    tech: 'React, Vite, OpenAI API',
+    demoUrl: '#',
+    githubUrl: '#'
+  },
+  {
+    title: 'Restorative Justice Platform',
+    category: 'SYSTEM INTEGRATION',
+    desc: 'Nền tảng quản lý hành chính ghi nhận biên bản đối thoại hòa giải và tiến trình cam kết sửa đổi hành vi của học sinh.',
+    tech: 'React, Firebase Auth, Firestore SDK',
+    demoUrl: '#',
+    githubUrl: '#'
+  },
+  {
+    title: 'SLA Interactive Dashboard',
+    category: 'DATA VISUALIZATION',
+    desc: 'Bảng theo dõi và trực quan hóa thời gian thực về độ tự tin ngôn ngữ của học sinh trong các không gian sinh hoạt chung.',
+    tech: 'Three.js, D3.js, React, Zustand',
+    demoUrl: '#',
+    githubUrl: '#'
   }
 ];

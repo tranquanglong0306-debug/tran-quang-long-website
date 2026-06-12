@@ -1,5 +1,4 @@
 import React, { useState, useEffect, Suspense } from 'react';
-import { Sparkles, HelpCircle } from 'lucide-react';
 import Scene from './components/Scene';
 import InfoPanel from './components/InfoPanel';
 import HeroSection from './components/HeroSection';
@@ -87,7 +86,7 @@ export const App: React.FC = () => {
         const dx = mousePos.x - prev.x;
         const dy = mousePos.y - prev.y;
         return {
-          x: prev.x + dx * 0.16, // Lerp coefficient (0.16 is perfect balance of delay and responsiveness)
+          x: prev.x + dx * 0.16,
           y: prev.y + dy * 0.16
         };
       });
@@ -105,43 +104,43 @@ export const App: React.FC = () => {
 
   // Fallback layout when WebGL crashes or is not supported
   const webglFallbackLayout = (
-    <div className="absolute inset-0 z-10 flex flex-col justify-center items-center p-8 bg-gradient-to-b from-[#050505] to-[#120722]">
+    <div className="absolute inset-0 z-10 flex flex-col justify-center items-center p-8 bg-bg-dark">
       <div className="max-w-md text-center space-y-6 font-sans">
-        <h2 className="text-4xl font-extrabold tracking-tight text-white bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
-          Hồ sơ Quang Long
+        <h2 className="text-2xl font-bold tracking-wider text-white">
+          TRẦN QUANG LONG
         </h2>
-        <p className="text-sm text-neutral-400 leading-relaxed">
+        <p className="text-xs text-neutral-400 leading-relaxed">
           Trình duyệt hoặc thiết bị của bạn không hỗ trợ WebGL 3D, hoặc tính năng tăng tốc phần cứng bị tắt. 
           Bạn vẫn có thể tương tác với tất cả chuyên mục bằng cách chọn danh mục bên dưới.
         </p>
         <div className="grid grid-cols-2 gap-3 pt-2">
           <button 
             onClick={() => setActivePanel('about')} 
-            className="px-4 py-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-blue-500/50 rounded-xl text-xs tracking-wider uppercase font-semibold text-white transition-all cursor-pointer"
+            className="px-4 py-3 bg-bg-secondary hover:bg-white/5 border border-border-subtle hover:border-accent-gold/50 text-xs tracking-wider uppercase font-semibold text-white transition-all cursor-pointer animate-none"
           >
             Giới thiệu
           </button>
           <button 
             onClick={() => setActivePanel('skills')} 
-            className="px-4 py-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-purple-500/50 rounded-xl text-xs tracking-wider uppercase font-semibold text-white transition-all cursor-pointer"
+            className="px-4 py-3 bg-bg-secondary hover:bg-white/5 border border-border-subtle hover:border-accent-gold/50 text-xs tracking-wider uppercase font-semibold text-white transition-all cursor-pointer animate-none"
           >
             Kỹ năng
           </button>
           <button 
             onClick={() => setActivePanel('projects')} 
-            className="px-4 py-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-pink-500/50 rounded-xl text-xs tracking-wider uppercase font-semibold text-white transition-all cursor-pointer"
+            className="px-4 py-3 bg-bg-secondary hover:bg-white/5 border border-border-subtle hover:border-accent-gold/50 text-xs tracking-wider uppercase font-semibold text-white transition-all cursor-pointer animate-none"
           >
             Dự án
           </button>
           <button 
             onClick={() => setActivePanel('blog')} 
-            className="px-4 py-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-amber-500/50 rounded-xl text-xs tracking-wider uppercase font-semibold text-white transition-all cursor-pointer"
+            className="px-4 py-3 bg-bg-secondary hover:bg-white/5 border border-border-subtle hover:border-accent-gold/50 text-xs tracking-wider uppercase font-semibold text-white transition-all cursor-pointer animate-none"
           >
             Blog
           </button>
           <button 
             onClick={() => setActivePanel('contact')} 
-            className="col-span-2 px-4 py-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-cyan-500/50 rounded-xl text-xs tracking-wider uppercase font-semibold text-white transition-all cursor-pointer"
+            className="col-span-2 px-4 py-3 bg-bg-secondary hover:bg-white/5 border border-border-subtle hover:border-accent-gold/50 text-xs tracking-wider uppercase font-semibold text-white transition-all cursor-pointer animate-none"
           >
             Liên hệ
           </button>
@@ -151,61 +150,40 @@ export const App: React.FC = () => {
   );
 
   return (
-    <div className="relative w-screen h-screen bg-gradient-to-b from-[#050505] to-[#1a0b2e] overflow-hidden select-none text-white font-sans">
+    <div className="relative w-screen h-screen bg-bg-dark overflow-hidden select-none text-white font-sans">
       
-      {/* Background Cyber Grid */}
-      <div className="absolute inset-0 cyber-grid pointer-events-none z-0 opacity-40" />
-
-      {/* Futuristic HUD Viewfinder brackets */}
-      <div className="absolute top-6 left-6 w-5 h-5 border-t border-l border-white/20 pointer-events-none z-30 hidden sm:block" />
-      <div className="absolute top-6 right-6 w-5 h-5 border-t border-r border-white/20 pointer-events-none z-30 hidden sm:block" />
-      <div className="absolute bottom-6 left-6 w-5 h-5 border-b border-l border-white/20 pointer-events-none z-30 hidden sm:block" />
-      <div className="absolute bottom-6 right-6 w-5 h-5 border-b border-r border-white/20 pointer-events-none z-30 hidden sm:block" />
-
       {/* Lagging Cursor Dot */}
       <div 
-        className="hidden sm:block fixed pointer-events-none z-50 rounded-full bg-white mix-blend-difference w-1.5 h-1.5 -translate-x-1/2 -translate-y-1/2"
+        className="hidden sm:block fixed pointer-events-none z-50 rounded-full bg-accent-gold w-1.5 h-1.5 -translate-x-1/2 -translate-y-1/2"
         style={{ left: `${mousePos.x}px`, top: `${mousePos.y}px` }}
       />
       
       {/* Lagging Cursor Ring */}
       <div 
-        className={`hidden sm:block fixed pointer-events-none z-50 rounded-full border border-white/25 -translate-x-1/2 -translate-y-1/2 transition-all duration-200 ${cursorHovered ? 'w-10 h-10 border-white/50 bg-white/5 shadow-[0_0_15px_rgba(255,255,255,0.08)]' : 'w-7 h-7'}`}
+        className={`hidden sm:block fixed pointer-events-none z-50 rounded-full border border-accent-gold/30 -translate-x-1/2 -translate-y-1/2 transition-all duration-200 ${cursorHovered ? 'w-10 h-10 border-accent-gold/60 bg-accent-gold/5 shadow-[0_0_15px_rgba(212,168,83,0.15)]' : 'w-7 h-7'}`}
         style={{ left: `${trailPos.x}px`, top: `${trailPos.y}px` }}
       />
 
-      {/* Futuristic HUD Header Overlay */}
-      <header className="absolute top-10 left-10 z-30 pointer-events-none flex flex-col space-y-1">
-        <h1 className="text-sm font-extrabold tracking-[0.25em] text-white/95">
-          TRAN QUANG LONG
+      {/* Editorial HUD Header Overlay */}
+      <header className="absolute top-8 left-8 z-30 pointer-events-none flex flex-col">
+        <h1 className="text-xs font-bold tracking-[0.3em] text-white/90">
+          TRẦN QUANG LONG
         </h1>
-        <p className="text-[9px] font-bold tracking-[0.3em] text-neutral-500 uppercase">
-          Đời sống Học sinh & Ngôn ngữ học Ứng dụng
-        </p>
+        <span className="text-[9px] tracking-[0.3em] text-neutral-500 uppercase mt-0.5">
+          Student Life · Applied Linguistics
+        </span>
       </header>
 
-      {/* Metadata / Coordinates HUD Overlay (Top Right) */}
-      <div className="absolute top-10 right-10 z-30 pointer-events-none text-right flex flex-col space-y-1 hidden sm:flex">
-        <span className="text-[9px] tracking-[0.2em] text-neutral-500 uppercase font-bold flex items-center justify-end gap-1.5">
-          <Sparkles className="w-3 h-3 text-purple-400 animate-pulse" />
-          Trải nghiệm Không gian 3D
-        </span>
-        <span className="text-[10px] text-neutral-400 font-mono tracking-wider">
-          LOC: 10.7769° N, 106.7009° E
-        </span>
-      </div>
-
-      {/* ── Mission Control Hero Section ── */}
+      {/* ── Main Editorial Hero Section ── */}
       <HeroSection
         isMobile={isMobile}
         onExplore={() => setActivePanel('about')}
         onContact={() => setActivePanel('contact')}
       />
 
-      {/* Interactive Helper Text HUD (Bottom Center) */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 pointer-events-none flex items-center space-x-1.5 text-[10px] tracking-[0.25em] text-neutral-500 uppercase font-bold">
-        <HelpCircle className="w-3.5 h-3.5 text-neutral-500" />
-        <span>Click các hình khối để khám phá</span>
+      {/* Minimal Helper Text HUD (Bottom Center) */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 pointer-events-none text-[8px] tracking-[0.35em] text-neutral-500 uppercase font-medium">
+        Tương tác với các hình khối 3D để xem thông tin
       </div>
 
       {/* 3D WebGL Canvas Scene */}
