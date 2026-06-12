@@ -227,6 +227,16 @@ Là một Cán bộ Quản lý Đời sống Học sinh, tôi chứng kiến tr�
               onClick={() => setSelectedPost(post)}
               className="bg-bg-secondary border border-border-subtle hover:border-accent-gold/40 p-5 transition-all duration-300 cursor-pointer group"
             >
+              {post.coverImage && (
+                <div className="w-full h-36 overflow-hidden mb-3 border border-border-subtle bg-black/20">
+                  <img 
+                    src={post.coverImage} 
+                    alt={post.title} 
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }}
+                  />
+                </div>
+              )}
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-[9px] text-accent-gold tracking-[0.1em] font-medium">
                   {post.category}
@@ -604,6 +614,17 @@ Là một Cán bộ Quản lý Đời sống Học sinh, tôi chứng kiến tr�
                   <h1 id="modal-blog-title" className="text-lg sm:text-xl font-bold text-white mb-6 leading-tight border-b border-border-subtle pb-4 tracking-wide font-sans">
                     {selectedPost.title}
                   </h1>
+
+                  {selectedPost.coverImage && (
+                    <div className="w-full h-48 sm:h-64 overflow-hidden mb-6 border border-border-subtle bg-black/20">
+                      <img 
+                        src={selectedPost.coverImage} 
+                        alt={selectedPost.title} 
+                        className="w-full h-full object-cover"
+                        onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }}
+                      />
+                    </div>
+                  )}
 
                   <div className="prose-custom max-h-[50vh] overflow-y-auto pr-1 scrollbar-thin">
                     <MarkdownRenderer>{selectedPost.content}</MarkdownRenderer>

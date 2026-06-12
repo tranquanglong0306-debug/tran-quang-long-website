@@ -41,7 +41,9 @@ export const AdminDashboard: React.FC = () => {
     category: 'Applied Linguistics',
     readTime: '5 min read',
     summary: '',
-    content: ''
+    content: '',
+    slug: '',
+    coverImage: ''
   });
   const [formStatus, setFormStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
@@ -108,9 +110,19 @@ export const AdminDashboard: React.FC = () => {
 
   // Form handle changes
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    let newSlug = formState.slug;
+    if (name === 'title' && !editId) {
+      newSlug = value
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, '') // remove invalid chars
+        .replace(/\s+/g, '-') // collapse whitespace and replace by -
+        .replace(/-+/g, '-'); // collapse dashes
+    }
     setFormState({
       ...formState,
-      [e.target.name]: e.target.value
+      [name]: value,
+      slug: name === 'title' && !editId ? newSlug : (name === 'slug' ? value : newSlug)
     });
   };
 
@@ -135,6 +147,8 @@ export const AdminDashboard: React.FC = () => {
         date: dateString,
         summary: formState.summary,
         content: formState.content,
+        slug: formState.slug || '',
+        coverImage: formState.coverImage || '',
         createdAt: Timestamp.now()
       };
 
@@ -146,7 +160,9 @@ export const AdminDashboard: React.FC = () => {
           category: postData.category,
           readTime: postData.readTime,
           summary: postData.summary,
-          content: postData.content
+          content: postData.content,
+          slug: postData.slug,
+          coverImage: postData.coverImage
         });
         setEditId(null);
       } else {
@@ -160,7 +176,9 @@ export const AdminDashboard: React.FC = () => {
         category: 'Applied Linguistics',
         readTime: '5 min read',
         summary: '',
-        content: ''
+        content: '',
+        slug: '',
+        coverImage: ''
       });
       fetchPosts();
       
@@ -179,7 +197,9 @@ export const AdminDashboard: React.FC = () => {
       category: post.category,
       readTime: post.readTime,
       summary: post.summary,
-      content: post.content
+      content: post.content,
+      slug: post.slug || '',
+      coverImage: post.coverImage || ''
     });
     // Scroll form into view
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -193,7 +213,9 @@ export const AdminDashboard: React.FC = () => {
       category: 'Applied Linguistics',
       readTime: '5 min read',
       summary: '',
-      content: ''
+      content: '',
+      slug: '',
+      coverImage: ''
     });
   };
 
@@ -358,6 +380,19 @@ export const AdminDashboard: React.FC = () => {
                 />
               </div>
 
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-neutral-400 uppercase">Slug (URL)</label>
+                <input 
+                  type="text"
+                  name="slug"
+                  required
+                  value={formState.slug}
+                  onChange={handleInputChange}
+                  placeholder="restorative-justice-classroom"
+                  className="w-full bg-white/5 border border-white/10 focus:border-purple-500 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none transition-all font-mono"
+                />
+              </div>
+
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <label className="text-xs font-bold text-neutral-400 uppercase">Danh mục</label>
@@ -386,6 +421,18 @@ export const AdminDashboard: React.FC = () => {
                     className="w-full bg-white/5 border border-white/10 focus:border-purple-500 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none transition-all"
                   />
                 </div>
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-neutral-400 uppercase">Ảnh đại diện (Cover Image URL)</label>
+                <input 
+                  type="text"
+                  name="coverImage"
+                  value={formState.coverImage}
+                  onChange={handleInputChange}
+                  placeholder="https://example.com/image.jpg"
+                  className="w-full bg-white/5 border border-white/10 focus:border-purple-500 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none transition-all"
+                />
               </div>
 
               <div className="space-y-1">
