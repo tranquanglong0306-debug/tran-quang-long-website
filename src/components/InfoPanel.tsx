@@ -150,9 +150,9 @@ Là một Cán bộ Quản lý Đời sống Học sinh, tôi chứng kiến tr�
 
   // Define panel width styles
   const getPanelWidthClass = () => {
-    if (isMobile) return 'w-full h-[85vh] bottom-0 left-0 rounded-t-3xl border-t border-[#1a1a24]';
-    if (isTablet) return 'w-[80vw] h-full right-0 top-0 border-l border-[#1a1a24]';
-    return 'w-[480px] h-full right-0 top-0 border-l border-[#1a1a24]';
+    if (isMobile) return 'w-full h-[85vh] bottom-0 left-0 rounded-t-3xl border-t border-border-color';
+    if (isTablet) return 'w-[80vw] h-full right-0 top-0 border-l border-border-color';
+    return 'w-[480px] h-full right-0 top-0 border-l border-border-color';
   };
 
   // Render About section
@@ -161,7 +161,7 @@ Là một Cán bộ Quản lý Đời sống Học sinh, tôi chứng kiến tr�
       <div className="flex flex-col items-center text-center space-y-4">
         {/* Profile Image Border */}
         <div className="relative">
-          <div className="w-24 h-24 rounded-full border border-accent-gold overflow-hidden bg-bg-secondary flex items-center justify-center">
+          <div className="w-24 h-24 rounded-full border border-accent-gold overflow-hidden bg-bg-surface flex items-center justify-center">
             <span className="text-3xl font-bold text-accent-gold tracking-wider">QL</span>
           </div>
         </div>
@@ -171,7 +171,7 @@ Là một Cán bộ Quản lý Đời sống Học sinh, tôi chứng kiến tr�
         </div>
       </div>
 
-      <div className="space-y-3.5 border-t border-border-subtle pt-6">
+      <div className="space-y-3.5 border-t border-border-color pt-6">
         <ul className="space-y-3 text-sm">
           <li className="flex items-center gap-2.5 text-neutral-200">
             <span className="w-1.5 h-1.5 rounded-full bg-accent-gold shrink-0" />
@@ -188,7 +188,7 @@ Là một Cán bộ Quản lý Đời sống Học sinh, tôi chứng kiến tr�
         </ul>
       </div>
 
-      <div className="space-y-4 border-t border-border-subtle pt-6">
+      <div className="space-y-4 border-t border-border-color pt-6">
         <h4 className="text-[10px] uppercase tracking-[0.25em] text-accent-gold font-bold">Tiểu sử bản thân</h4>
         <p className="text-sm text-neutral-400 leading-relaxed">
           Nghiên cứu tập trung vào kỷ luật phục hồi, SLA và ứng dụng AI trong giáo dục.
@@ -206,7 +206,7 @@ Là một Cán bộ Quản lý Đời sống Học sinh, tôi chứng kiến tr�
   // Render Blog section
   const renderBlog = () => (
     <div className="space-y-6 font-sans">
-      <p className="text-xs text-neutral-400 leading-relaxed border-b border-border-subtle pb-4">
+      <p className="text-xs text-neutral-400 leading-relaxed border-b border-border-color pb-4">
         Nơi chia sẻ thông tin, các bài viết nghiên cứu và tài liệu thực hành về quản lý đời sống học sinh và ngôn ngữ học ứng dụng.
       </p>
 
@@ -216,7 +216,7 @@ Là một Cán bộ Quản lý Đời sống Học sinh, tôi chứng kiến tr�
           <span className="text-[10px] text-neutral-500 font-mono">Đang tải bài viết...</span>
         </div>
       ) : posts.length === 0 ? (
-        <div className="text-center py-20 text-neutral-500 border border-dashed border-border-subtle rounded-xl text-xs">
+        <div className="text-center py-20 text-neutral-500 border border-dashed border-border-color rounded-xl text-xs">
           Chưa có bài viết nào được đăng.
         </div>
       ) : (
@@ -295,7 +295,7 @@ Là một Cán bộ Quản lý Đời sống Học sinh, tôi chứng kiến tr�
 
     return (
       <div className="space-y-6 font-sans">
-        <p className="text-xs text-neutral-400 leading-relaxed border-b border-border-subtle pb-4">
+        <p className="text-xs text-neutral-400 leading-relaxed border-b border-border-color pb-4">
           Sự kết hợp giữa chuyên môn sư phạm, nghiên cứu giao tiếp và ứng dụng công nghệ để quản lý dữ liệu đời sống học sinh hiện đại.
         </p>
 
@@ -303,7 +303,7 @@ Là một Cán bộ Quản lý Đời sống Học sinh, tôi chứng kiến tr�
           {skillCategories.map((cat, idx) => (
             <div key={idx} className="space-y-3">
               <h4 className="text-[10px] font-bold text-accent-gold tracking-[0.2em] uppercase">{cat.title}</h4>
-              <div className="bg-bg-secondary p-4 border border-border-subtle">
+              <div className="bg-bg-surface p-4 border border-border-color">
                 <ul className="space-y-2 text-sm text-neutral-300">
                   {cat.skills.map((skill, sIdx) => (
                     <li key={sIdx} className="flex items-center gap-2">
@@ -324,7 +324,7 @@ Là một Cán bộ Quản lý Đời sống Học sinh, tôi chứng kiến tr�
   const renderProjects = () => {
     return (
       <div className="space-y-6 font-sans">
-        <p className="text-xs text-neutral-400 leading-relaxed border-b border-border-subtle pb-4">
+        <p className="text-xs text-neutral-400 leading-relaxed border-b border-border-color pb-4">
           Các dự án và hệ thống quản trị tiêu biểu được phát triển nhằm hỗ trợ dịch vụ học sinh và nghiên cứu dữ liệu ngôn ngữ học.
         </p>
 
@@ -332,7 +332,7 @@ Là một Cán bộ Quản lý Đời sống Học sinh, tôi chứng kiến tr�
           {mockProjects.map((proj, idx) => (
             <div 
               key={idx}
-              className="bg-bg-secondary border border-border-subtle hover:border-accent-gold/45 p-5 transition-all duration-300 group"
+              className="bg-bg-surface border border-border-color hover:border-accent-gold/45 p-5 transition-all duration-300 group"
             >
               <span className="text-[9px] text-accent-gold tracking-[0.2em] font-medium block mb-2">
                 {proj.category}
@@ -348,7 +348,7 @@ Là một Cán bộ Quản lý Đời sống Học sinh, tôi chứng kiến tr�
                 {proj.tech}
               </div>
 
-              <div className="flex items-center space-x-4 mt-4 pt-3 border-t border-border-subtle">
+              <div className="flex items-center space-x-4 mt-4 pt-3 border-t border-border-color">
                 <a 
                   href={proj.demoUrl} 
                   target="_blank" 
@@ -386,12 +386,12 @@ Là một Cán bộ Quản lý Đời sống Học sinh, tôi chứng kiến tr�
       </div>
 
       {/* Social Media Links */}
-      <div className="flex justify-around items-center bg-bg-secondary border border-border-subtle p-3">
+      <div className="flex justify-around items-center bg-bg-surface border border-border-color p-3">
         <a 
           href="https://github.com" 
           target="_blank" 
           rel="noopener noreferrer"
-          className="p-2 text-neutral-400 hover:text-accent-gold hover:bg-white/5 border border-border-subtle transition-all duration-300"
+          className="p-2 text-neutral-400 hover:text-accent-gold hover:bg-white/5 border border-border-color transition-all duration-300"
         >
           <Github className="w-4 h-4" />
         </a>
@@ -399,7 +399,7 @@ Là một Cán bộ Quản lý Đời sống Học sinh, tôi chứng kiến tr�
           href="https://linkedin.com" 
           target="_blank" 
           rel="noopener noreferrer"
-          className="p-2 text-neutral-400 hover:text-accent-gold hover:bg-white/5 border border-border-subtle transition-all duration-300"
+          className="p-2 text-neutral-400 hover:text-accent-gold hover:bg-white/5 border border-border-color transition-all duration-300"
         >
           <Linkedin className="w-4 h-4" />
         </a>
@@ -407,7 +407,7 @@ Là một Cán bộ Quản lý Đời sống Học sinh, tôi chứng kiến tr�
           href="mailto:tranqlong0306@gmail.com" 
           target="_blank" 
           rel="noopener noreferrer"
-          className="p-2 text-neutral-400 hover:text-accent-gold hover:bg-white/5 border border-border-subtle transition-all duration-300"
+          className="p-2 text-neutral-400 hover:text-accent-gold hover:bg-white/5 border border-border-color transition-all duration-300"
         >
           <Mail className="w-4 h-4" />
         </a>
@@ -415,7 +415,7 @@ Là một Cán bộ Quản lý Đời sống Học sinh, tôi chứng kiến tr�
           href="https://twitter.com" 
           target="_blank" 
           rel="noopener noreferrer"
-          className="p-2 text-neutral-400 hover:text-accent-gold hover:bg-white/5 border border-border-subtle transition-all duration-300"
+          className="p-2 text-neutral-400 hover:text-accent-gold hover:bg-white/5 border border-border-color transition-all duration-300"
         >
           <Twitter className="w-4 h-4" />
         </a>
@@ -432,7 +432,7 @@ Là một Cán bộ Quản lý Đời sống Học sinh, tôi chứng kiến tr�
             value={formState.name}
             onChange={handleFormChange}
             required
-            className="w-full bg-[#0a0a10] border border-border-subtle focus:border-accent-gold rounded px-4 py-2.5 text-sm text-white focus:outline-none transition-all"
+            className="w-full bg-bg-surface border border-border-color focus:border-accent-gold rounded px-4 py-2.5 text-sm text-white focus:outline-none transition-all"
             placeholder="Nguyễn Văn A"
           />
         </div>
@@ -446,7 +446,7 @@ Là một Cán bộ Quản lý Đời sống Học sinh, tôi chứng kiến tr�
             value={formState.email}
             onChange={handleFormChange}
             required
-            className="w-full bg-[#0a0a10] border border-border-subtle focus:border-accent-gold rounded px-4 py-2.5 text-sm text-white focus:outline-none transition-all"
+            className="w-full bg-bg-surface border border-border-color focus:border-accent-gold rounded px-4 py-2.5 text-sm text-white focus:outline-none transition-all"
             placeholder="example@email.com"
           />
         </div>
@@ -460,7 +460,7 @@ Là một Cán bộ Quản lý Đời sống Học sinh, tôi chứng kiến tr�
             value={formState.message}
             onChange={handleFormChange}
             required
-            className="w-full bg-[#0a0a10] border border-border-subtle focus:border-accent-gold rounded px-4 py-2.5 text-sm text-white focus:outline-none transition-all resize-none"
+            className="w-full bg-bg-surface border border-border-color focus:border-accent-gold rounded px-4 py-2.5 text-sm text-white focus:outline-none transition-all resize-none"
             placeholder="Tôi muốn cộng tác nghiên cứu về..."
           />
         </div>
@@ -482,10 +482,10 @@ Là một Cán bộ Quản lý Đời sống Học sinh, tôi chứng kiến tr�
         <button 
           type="submit" 
           disabled={submitStatus === 'loading'}
-          className="w-full flex items-center justify-center space-x-2 bg-accent-gold hover:bg-accent-gold/90 text-[#050508] font-semibold py-2.5 rounded text-sm transition-all duration-300 shadow-md group cursor-pointer disabled:opacity-55 disabled:cursor-not-allowed"
+          className="w-full flex items-center justify-center space-x-2 bg-accent-gold hover:bg-accent-gold/90 text-[#121212] font-semibold py-2.5 rounded text-sm transition-all duration-300 shadow-md group cursor-pointer disabled:opacity-55 disabled:cursor-not-allowed"
         >
           {submitStatus === 'loading' ? (
-            <div className="w-5 h-5 border-2 border-[#050508] border-t-transparent rounded-full animate-spin" />
+            <div className="w-5 h-5 border-2 border-[#121212] border-t-transparent rounded-full animate-spin" />
           ) : (
             <>
               <Send className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
@@ -547,14 +547,14 @@ Là một Cán bộ Quản lý Đời sống Học sinh, tôi chứng kiến tr�
           >
             <div>
               {/* Header */}
-              <header className="flex items-center justify-between border-b border-border-subtle pb-4 mb-6">
+              <header className="flex items-center justify-between border-b border-border-color pb-4 mb-6">
                 <div className="flex items-center space-x-2.5">
                   {getHeaderIcon()}
                   <h2 className="text-base font-bold font-sans tracking-wide uppercase text-white">{getHeaderTitle()}</h2>
                 </div>
                 <button 
                   onClick={handleClose}
-                  className="p-1.5 border border-border-subtle rounded text-neutral-400 hover:text-white hover:bg-white/5 transition-all duration-200 cursor-pointer"
+                  className="p-1.5 border border-border-color rounded text-neutral-400 hover:text-white hover:bg-white/5 transition-all duration-200 cursor-pointer"
                   aria-label="Đóng panel"
                 >
                   <X className="w-4 h-4" />
@@ -572,7 +572,7 @@ Là một Cán bộ Quản lý Đời sống Học sinh, tôi chứng kiến tr�
             </div>
 
             {/* Footer metadata */}
-            <footer className="text-[9px] text-neutral-600 uppercase tracking-widest text-center pt-4 border-t border-border-subtle">
+            <footer className="text-[9px] text-neutral-600 uppercase tracking-widest text-center pt-4 border-t border-border-color">
               Hồ sơ năng lực Trần Quang Long © 2026
             </footer>
           </motion.div>
@@ -595,14 +595,14 @@ Là một Cán bộ Quản lý Đời sống Học sinh, tôi chứng kiến tr�
                   animate={{ scale: 1, opacity: 1 }}
                   exit={{ scale: 0.95, opacity: 0 }}
                   transition={{ duration: 0.25 }}
-                  className="relative bg-bg-dark border border-border-subtle w-full max-w-2xl max-h-[85vh] overflow-y-auto scrollbar-none p-6 sm:p-8 z-10 shadow-2xl font-sans pointer-events-auto"
+                  className="relative bg-bg-dark border border-border-color w-full max-w-2xl max-h-[85vh] overflow-y-auto scrollbar-none p-6 sm:p-8 z-10 shadow-2xl font-sans pointer-events-auto"
                   role="dialog"
                   aria-modal="true"
                   aria-labelledby="modal-blog-title"
                 >
                   <button
                     onClick={() => setSelectedPost(null)}
-                    className="absolute top-4 right-4 p-1.5 border border-border-subtle text-neutral-400 hover:text-white transition-colors cursor-pointer rounded hover:bg-white/5"
+                    className="absolute top-4 right-4 p-1.5 border border-border-color text-neutral-400 hover:text-white transition-colors cursor-pointer rounded hover:bg-white/5"
                     aria-label="Đóng bài viết"
                   >
                     <X className="w-4 h-4" />
@@ -611,12 +611,12 @@ Là một Cán bộ Quản lý Đời sống Học sinh, tôi chứng kiến tr�
                   <div className="text-[9px] uppercase tracking-widest text-accent-gold font-bold mb-2">
                     {selectedPost.category} — {selectedPost.date}
                   </div>
-                  <h1 id="modal-blog-title" className="text-lg sm:text-xl font-bold text-white mb-6 leading-tight border-b border-border-subtle pb-4 tracking-wide font-sans">
+                  <h1 id="modal-blog-title" className="text-lg sm:text-xl font-bold text-white mb-6 leading-tight border-b border-border-color pb-4 tracking-wide font-sans">
                     {selectedPost.title}
                   </h1>
 
                   {selectedPost.coverImage && (
-                    <div className="w-full h-48 sm:h-64 overflow-hidden mb-6 border border-border-subtle bg-black/20">
+                    <div className="w-full h-48 sm:h-64 overflow-hidden mb-6 border border-border-color bg-black/20">
                       <img 
                         src={selectedPost.coverImage} 
                         alt={selectedPost.title} 

@@ -17,7 +17,7 @@ const ScrollIndicator: React.FC<ScrollIndicatorProps> = ({ scrollY }) => (
     <span className="text-[9px] tracking-[0.35em] text-gray-muted/65 uppercase font-medium">
       Scroll
     </span>
-    <div className="w-[1px] h-12 bg-white/10 relative overflow-hidden">
+    <div className="w-[1px] h-12 bg-[#333333] relative overflow-hidden">
       <div className="absolute inset-x-0 top-0 h-full bg-accent-gold scroll-line-animation" />
     </div>
   </motion.div>
@@ -43,14 +43,6 @@ const HeroSection: React.FC<HeroSectionProps> = ({ isMobile, onExplore, onContac
 
   return (
     <div className="relative w-full h-[100vh] flex flex-col justify-center items-center overflow-hidden bg-bg-dark">
-      {/* ── BACKGROUND LAYERS (solid, dot grid, subtle corner gradient) ── */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        {/* CSS Dot Grid */}
-        <div className="absolute inset-0 dot-grid opacity-60" />
-        {/* Corner Blur */}
-        <div className="absolute inset-0 corner-blur" />
-      </div>
-
       {/* ── FOREGROUND CONTENT ── */}
       <div className="relative z-10 flex flex-col items-center justify-center text-center px-6 max-w-4xl">
         
@@ -71,7 +63,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ isMobile, onExplore, onContac
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: 'easeOut', delay: 0.1 }}
-          className="editorial-title text-center tracking-tight mb-6 leading-none"
+          className="editorial-title text-center tracking-tight mb-6 leading-none animate-none"
           style={{
             fontSize: 'clamp(2.5rem, 6.5vw, 5.5rem)',
           }}
@@ -79,12 +71,12 @@ const HeroSection: React.FC<HeroSectionProps> = ({ isMobile, onExplore, onContac
           TRẦN QUANG LONG
         </motion.h1>
 
-        {/* Fine gold rule */}
+        {/* Fine bronze/gold rule */}
         <motion.div
           initial={{ scaleX: 0, opacity: 0 }}
           animate={{ scaleX: 1, opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="w-16 h-[1px] bg-accent-gold mb-6"
+          className="w-16 h-[1px] bg-accent-gold mb-6 animate-none"
         />
 
         {/* Subtitle / Statement */}
@@ -92,7 +84,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ isMobile, onExplore, onContac
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4, ease: 'easeOut' }}
-          className="editorial-body max-w-xl text-center leading-relaxed mb-10 text-gray-light"
+          className="editorial-body max-w-xl text-center leading-relaxed mb-10 text-gray-light animate-none"
           style={{
             fontSize: 'clamp(1.1rem, 2vw, 1.35rem)',
             fontWeight: 300,

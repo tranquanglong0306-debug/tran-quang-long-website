@@ -116,31 +116,31 @@ export const App: React.FC = () => {
         <div className="grid grid-cols-2 gap-3 pt-2">
           <button 
             onClick={() => setActivePanel('about')} 
-            className="px-4 py-3 bg-bg-secondary hover:bg-white/5 border border-border-subtle hover:border-accent-gold/50 text-xs tracking-wider uppercase font-semibold text-white transition-all cursor-pointer animate-none"
+            className="px-4 py-3 bg-bg-surface hover:bg-white/5 border border-border-color hover:border-accent-gold/50 text-xs tracking-wider uppercase font-semibold text-white transition-all cursor-pointer animate-none"
           >
             Giới thiệu
           </button>
           <button 
             onClick={() => setActivePanel('skills')} 
-            className="px-4 py-3 bg-bg-secondary hover:bg-white/5 border border-border-subtle hover:border-accent-gold/50 text-xs tracking-wider uppercase font-semibold text-white transition-all cursor-pointer animate-none"
+            className="px-4 py-3 bg-bg-surface hover:bg-white/5 border border-border-color hover:border-accent-gold/50 text-xs tracking-wider uppercase font-semibold text-white transition-all cursor-pointer animate-none"
           >
             Kỹ năng
           </button>
           <button 
             onClick={() => setActivePanel('projects')} 
-            className="px-4 py-3 bg-bg-secondary hover:bg-white/5 border border-border-subtle hover:border-accent-gold/50 text-xs tracking-wider uppercase font-semibold text-white transition-all cursor-pointer animate-none"
+            className="px-4 py-3 bg-bg-surface hover:bg-white/5 border border-border-color hover:border-accent-gold/50 text-xs tracking-wider uppercase font-semibold text-white transition-all cursor-pointer animate-none"
           >
             Dự án
           </button>
           <button 
             onClick={() => setActivePanel('blog')} 
-            className="px-4 py-3 bg-bg-secondary hover:bg-white/5 border border-border-subtle hover:border-accent-gold/50 text-xs tracking-wider uppercase font-semibold text-white transition-all cursor-pointer animate-none"
+            className="px-4 py-3 bg-bg-surface hover:bg-white/5 border border-border-color hover:border-accent-gold/50 text-xs tracking-wider uppercase font-semibold text-white transition-all cursor-pointer animate-none"
           >
             Blog
           </button>
           <button 
             onClick={() => setActivePanel('contact')} 
-            className="col-span-2 px-4 py-3 bg-bg-secondary hover:bg-white/5 border border-border-subtle hover:border-accent-gold/50 text-xs tracking-wider uppercase font-semibold text-white transition-all cursor-pointer animate-none"
+            className="col-span-2 px-4 py-3 bg-bg-surface hover:bg-white/5 border border-border-color hover:border-accent-gold/50 text-xs tracking-wider uppercase font-semibold text-white transition-all cursor-pointer animate-none"
           >
             Liên hệ
           </button>
@@ -160,7 +160,7 @@ export const App: React.FC = () => {
       
       {/* Lagging Cursor Ring */}
       <div 
-        className={`hidden sm:block fixed pointer-events-none z-50 rounded-full border border-accent-gold/30 -translate-x-1/2 -translate-y-1/2 transition-all duration-200 ${cursorHovered ? 'w-10 h-10 border-accent-gold/60 bg-accent-gold/5 shadow-[0_0_15px_rgba(212,168,83,0.15)]' : 'w-7 h-7'}`}
+        className={`hidden sm:block fixed pointer-events-none z-50 rounded-full border border-accent-gold/30 -translate-x-1/2 -translate-y-1/2 transition-all duration-200 ${cursorHovered ? 'w-10 h-10 border-accent-gold/60 bg-accent-gold/5 shadow-[0_0_15px_rgba(168,159,145,0.15)]' : 'w-7 h-7'}`}
         style={{ left: `${trailPos.x}px`, top: `${trailPos.y}px` }}
       />
 

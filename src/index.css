@@ -1,16 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  /* Design Tokens — Deep Space Editorial Rebuild */
-  --bg-primary: #050508;        /* Almost black, NOT pure black */
-  --bg-secondary: #0a0a10;      /* Card backgrounds */
-  --bg-elevated: #12121a;       /* Hover states */
-  --text-primary: #f0f0f5;      /* Off-white, easy on eyes */
-  --text-secondary: #8888a0;    /* Muted */
-  --accent-gold: #d4a853;       /* ONLY accent color, used SPARINGLY */
+  /* Design Tokens — Minimalist Earthy Rebuild */
+  --bg-main: #121212;       /* Soft Black */
+  --bg-surface: #1E1E1C;    /* Dark Warm Grey for cards */
+  --bg-elevated: #2A2927;   /* Hover states */
   
-  --border-subtle: rgba(255, 255, 255, 0.06);
-  --glass: rgba(10, 10, 16, 0.7);
+  --text-primary: #E6E4E0;  /* Off-white/Cream */
+  --text-secondary: #9CA3AF;/* Muted Grey */
+  --text-accent: #A89F91;   /* Warm Taupe/Bronze */
+  
+  --border-color: #333333;  /* Subtle borders */
+  --glass-bg: rgba(30, 30, 28, 0.8);
   --font-display-serif: "Fraunces", serif;
 }
 
@@ -19,13 +20,14 @@
   --font-display: "Fraunces", serif;
   --font-body: "Inter", ui-sans-serif, sans-serif;
 
-  --color-bg-dark: var(--bg-primary);
+  --color-bg-dark: var(--bg-main);
   --color-fg-light: var(--text-primary);
   --color-gray-muted: var(--text-secondary);
   --color-gray-light: var(--text-primary);
-  --color-gray-border: var(--border-subtle);
+  --color-gray-border: var(--border-color);
   
-  --color-accent-gold: var(--accent-gold);
+  /* Map gold classes to the new warm bronze accent color */
+  --color-accent-gold: var(--text-accent);
 }
 
 @layer utilities {
@@ -41,7 +43,7 @@
 
 /* Base Body Styles */
 body {
-  background-color: var(--bg-primary);
+  background-color: var(--bg-main);
   color: var(--text-primary);
   font-family: var(--font-sans);
   overflow-x: hidden;
@@ -56,11 +58,11 @@ body {
   background: transparent;
 }
 .scrollbar-thin::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(230, 228, 224, 0.1);
   border-radius: 9999px;
 }
 .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(230, 228, 224, 0.2);
 }
 
 /* Editorial Style Utilities */
@@ -69,7 +71,7 @@ body {
   font-weight: 500;
   font-size: 10px;
   letter-spacing: 0.4em;
-  color: var(--accent-gold);
+  color: var(--text-accent);
   text-transform: uppercase;
 }
 
@@ -85,17 +87,6 @@ body {
   color: var(--text-secondary);
 }
 
-/* Minimalist CSS dot grid background */
-.dot-grid {
-  background-size: 24px 24px;
-  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-}
-
-/* Subtle corner blur gradient */
-.corner-blur {
-  background: radial-gradient(circle at 80% 20%, rgba(80, 60, 140, 0.08) 0%, transparent 50%);
-}
-
 /* Animated scroll line */
 @keyframes scrollPulse {
   0% { transform: scaleY(0); transform-origin: top; }
@@ -105,5 +96,5 @@ body {
 }
 
 .scroll-line-animation {
-  animation: scrollPulse 2s infinite ease-in-out;
+  animation: scrollPulse 2.5s infinite ease-in-out;
 }

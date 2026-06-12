@@ -19,31 +19,24 @@ export const FloatingObject: React.FC<FloatingObjectProps> = ({
   label,
 }) => {
   const meshRef = useRef<THREE.Mesh>(null);
-  const coreMeshRef = useRef<THREE.Mesh>(null);
   const [hovered, setHovered] = useState(false);
   const { setActivePanel } = useAppState();
 
-  // Unified color matching the single gold accent design
-  const colorStr = '#d4a853';
+  // Color from the earthy visual system - Warm Taupe/Bronze
+  const bronzeColor = '#A89F91';
 
   useFrame((state, delta) => {
     if (!meshRef.current) return;
 
-    // Gentle rotation, slightly faster on hover
-    const speedMult = hovered ? 1.6 : 1.0;
-    meshRef.current.rotation.x += delta * 0.1 * speedMult;
-    meshRef.current.rotation.y += delta * 0.15 * speedMult;
-    meshRef.current.rotation.z += delta * 0.03 * speedMult;
-
-    // Counter-rotate core
-    if (coreMeshRef.current) {
-      coreMeshRef.current.rotation.x -= delta * 0.12 * speedMult;
-      coreMeshRef.current.rotation.y -= delta * 0.08 * speedMult;
-    }
+    // Gentle slow rotation
+    const speedMult = hovered ? 1.4 : 1.0;
+    meshRef.current.rotation.x += delta * 0.08 * speedMult;
+    meshRef.current.rotation.y += delta * 0.12 * speedMult;
+    meshRef.current.rotation.z += delta * 0.02 * speedMult;
 
     // Parallax position shift based on cursor
-    const parallaxX = state.pointer.x * 0.3;
-    const parallaxY = state.pointer.y * 0.3;
+    const parallaxX = state.pointer.x * 0.25;
+    const parallaxY = state.pointer.y * 0.25;
     
     const targetX = position[0] + parallaxX;
     const targetY = position[1] + parallaxY;
@@ -53,15 +46,9 @@ export const FloatingObject: React.FC<FloatingObjectProps> = ({
     meshRef.current.position.y = THREE.MathUtils.lerp(meshRef.current.position.y, targetY, 0.06);
     meshRef.current.position.z = THREE.MathUtils.lerp(meshRef.current.position.z, targetZ, 0.06);
 
-    // Hover scale (1.18x) and emissive transition
-    const targetScale = hovered ? 1.18 : 1.0;
+    // Hover scale (1.15x)
+    const targetScale = hovered ? 1.15 : 1.0;
     meshRef.current.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 0.1);
-
-    const outerMaterial = meshRef.current.material as THREE.MeshPhysicalMaterial;
-    if (outerMaterial) {
-      const targetGlow = hovered ? 0.8 : 0.25;
-      outerMaterial.emissiveIntensity = THREE.MathUtils.lerp(outerMaterial.emissiveIntensity, targetGlow, 0.1);
-    }
   });
 
   const renderGeometry = () => {
@@ -87,7 +74,7 @@ export const FloatingObject: React.FC<FloatingObjectProps> = ({
   };
 
   return (
-    <Float speed={1.5} floatIntensity={0.6} rotationIntensity={0.15}>
+    <Float speed={1.2} floatIntensity={0.5} rotationIntensity={0.1}>
       <mesh
         ref={meshRef}
         onClick={handleClick}
@@ -101,48 +88,29 @@ export const FloatingObject: React.FC<FloatingObjectProps> = ({
           document.body.style.cursor = 'default';
         }}
       >
-        {/* outer wireframe shell */}
         {renderGeometry()}
+        {/* Solid matte bronze physical material */}
         <meshPhysicalMaterial
-          color={colorStr}
-          roughness={0.6}
-          metalness={0.7}
-          wireframe={true}
-          emissive={new THREE.Color(colorStr)}
-          emissiveIntensity={0.25}
-          transparent={true}
-          opacity={0.7}
-          toneMapped={false}
+          color={bronzeColor}
+          roughness={0.75}
+          metalness={0.8}
+          clearcoat={0.1}
+          clearcoatRoughness={0.5}
+          reflectivity={0.2}
+          toneMapped={true}
         />
-
-        {/* Inner solid glass core */}
-        <mesh ref={coreMeshRef} scale={0.72}>
-          {renderGeometry()}
-          <meshPhysicalMaterial
-            color={colorStr}
-            roughness={0.7}
-            metalness={0.3}
-            transmission={0.5}
-            thickness={0.5}
-            opacity={0.6}
-            transparent={true}
-            emissive={new THREE.Color(colorStr)}
-            emissiveIntensity={hovered ? 0.35 : 0.1}
-            toneMapped={false}
-          />
-        </mesh>
         
         {/* Floating HTML tooltip badge */}
         {hovered && (
-          <Html distanceFactor={6} position={[0, 1.2, 0]} center>
+          <Html distanceFactor={6} position={[0, 1.25, 0]} center>
             <div 
               style={{
-                background: '#0a0a10',
-                border: '1px solid rgba(212, 168, 83, 0.25)',
-                color: '#f0f0f5',
-                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5)'
+                background: '#1E1E1C',
+                border: '1px solid #333333',
+                color: '#E6E4E0',
+                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.4)'
               }}
-              className="px-3.5 py-1 text-[9px] uppercase tracking-[0.3em] font-medium whitespace-nowrap select-none pointer-events-none font-sans"
+              className="px-3.5 py-1.5 text-[9px] uppercase tracking-[0.3em] font-medium whitespace-nowrap select-none pointer-events-none font-sans"
             >
               {label}
             </div>
