@@ -1,8 +1,8 @@
 import React, { useState, useEffect, Suspense } from 'react';
-import { motion } from 'framer-motion';
 import { Sparkles, HelpCircle } from 'lucide-react';
 import Scene from './components/Scene';
 import InfoPanel from './components/InfoPanel';
+import HeroSection from './components/HeroSection';
 import WebGLErrorBoundary from './components/ui/WebGLErrorBoundary';
 import AdminDashboard from './components/AdminDashboard';
 import { useAppState } from './store';
@@ -195,29 +195,12 @@ export const App: React.FC = () => {
         </span>
       </div>
 
-      {/* Center Title and Breathing Text */}
-      <div className="absolute inset-0 flex flex-col justify-center items-center pointer-events-none z-10">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, ease: 'easeOut' }}
-          className="text-center px-4"
-        >
-          {/* Glassmorphic Container with Subtle Glow & Infinite Breathing scale */}
-          <motion.div
-            animate={{ scale: [1, 1.04, 1] }}
-            transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
-            className="px-8 py-5 rounded-3xl bg-white/[0.03] backdrop-blur-md border border-white/10 shadow-[0_0_50px_rgba(255,255,255,0.02)] flex flex-col items-center justify-center space-y-1 max-w-[90vw]"
-          >
-            <h2 className="text-5xl sm:text-7xl font-extrabold tracking-tight text-white font-sans text-center bg-clip-text bg-gradient-to-r from-white via-white to-neutral-400 drop-shadow-[0_0_15px_rgba(255,255,255,0.25)]">
-              Quang Long
-            </h2>
-            <p className="text-[10px] sm:text-xs tracking-[0.4em] text-neutral-400 uppercase font-bold text-center">
-              HỒ SƠ NĂNG LỰC
-            </p>
-          </motion.div>
-        </motion.div>
-      </div>
+      {/* ── Mission Control Hero Section ── */}
+      <HeroSection
+        isMobile={isMobile}
+        onExplore={() => setActivePanel('about')}
+        onContact={() => setActivePanel('contact')}
+      />
 
       {/* Interactive Helper Text HUD (Bottom Center) */}
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 pointer-events-none flex items-center space-x-1.5 text-[10px] tracking-[0.25em] text-neutral-500 uppercase font-bold">
